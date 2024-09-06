@@ -46,12 +46,8 @@ final class Database
 
   public function doesUsersTableExists(): bool
   {
-    $sql = "SHOW TABLES LIKE '" . PREFIX . "USERS';";
-    $return = $this->db->query($sql)->fetch();
-    if ($return && $return[0] == PREFIX . "USERS") {
-      return true;
-    } else {
-      return false;
-    }
+    $sql = "SHOW TABLES FROM " . DB_NAME . " LIKE '" . PREFIX . "USERS';";
+    $result = $this->db->query($sql)->fetch();
+    return $result !== false; 
   }
 }
