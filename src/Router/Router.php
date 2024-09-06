@@ -4,13 +4,22 @@ namespace src\Router;
 
 use ReflectionClass;
 use ReflectionMethod;
+use src\Controllers\PageController;
 use src\Router\Route;
 
 class Router
 {
   private array $routes = [];
+  private array $controllers = [
+    PageController::class
+  ];
 
-  public function registerRoute(string $method, string $path, callable $callback): void
+  public function __construct()
+  {
+    $this->loadRoutesFromControllers($this->controllers);
+  }
+
+  private function registerRoute(string $method, string $path, callable $callback): void
   {
     $this->routes[$method][$path] = $callback;
   }
@@ -21,11 +30,11 @@ class Router
       call_user_func($this->routes[$method][$path]);
     } else {
       http_response_code(404);
-      echo "404 Not Found.";
+      echo "404 : Page Not Found.";
     }
   }
 
-  public function loadRoutesFromControllers(array $controllers): void
+  private function loadRoutesFromControllers(array $controllers): void
   {
     foreach ($controllers as $controller) {
       $controller = new $controller();
@@ -36,7 +45,11 @@ class Router
 
         foreach ($attributes as $attribute) {
           $route = $attribute->newInstance();
-          $this->registerRoute($route->method, $route->path, [$controller, $method->getName()]);
+          $this->registerRoute(
+            $route->method,
+            $route->path,
+            [$controller, $method->getName()]
+          );
         }
       }
     }

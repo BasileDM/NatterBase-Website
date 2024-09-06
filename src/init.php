@@ -2,7 +2,6 @@
 
 session_start();
 
-use src\Controllers\PageController;
 use src\Router\Router;
 
 require_once __DIR__ . '/autoload.php';
@@ -16,9 +15,7 @@ require_once __DIR__ . "/../config.local.php";
 
 $router = new Router();
 
-$router->loadRoutesFromControllers([PageController::class]);
-
-$route = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $method = $_SERVER['REQUEST_METHOD'];
+$route = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $router->dispatch($method, $route);
