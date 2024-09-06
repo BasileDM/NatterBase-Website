@@ -29,7 +29,7 @@ final class Database
     }
   }
 
-  public function init(): string|bool
+  public function init(): bool
   {
     if ($this->doesUsersTableExists()) {
       return false;
@@ -39,7 +39,7 @@ final class Database
         $this->db->query($sql);
         return true;
       } catch (PDOException $error) {
-        throw new RuntimeException($error->getMessage());
+        throw new RuntimeException("Database initialization failed: " . $error->getMessage());
       }
     }
   }

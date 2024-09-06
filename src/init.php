@@ -12,8 +12,8 @@ $db = new Database();
 
 try {
   if ($db->init()) echo "Database tables created successfully!";
-} catch (Exception $e) {
-  error_log($e->getMessage());
+} catch (RuntimeException $e) {
+  echo $e->getMessage();
 }
 
 $router = new Router();
