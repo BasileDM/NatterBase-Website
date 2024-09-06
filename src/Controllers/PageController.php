@@ -15,4 +15,11 @@ class PageController
     $this->render("home");
     exit;
   }
+
+  #[Route('GET', HOME_URL . 'about')]
+  public function displayAboutPage(): void
+  {
+    echo "about";
+    exit;
+  }
 }

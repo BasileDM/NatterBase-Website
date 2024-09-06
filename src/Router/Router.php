@@ -24,23 +24,19 @@ class Router
     $this->routes[$method][$path] = $callback;
   }
 
-  public function dispatch(string $method, string $path): void
+  private function getMethods(object $class): array
   {
-    if (isset($this->routes[$method][$path])) {
-      call_user_func($this->routes[$method][$path]);
-    } else {
-      http_response_code(404);
-      echo "404 : Page Not Found.";
-    }
+    $reflector = new ReflectionClass($class);
+    return $reflector->getMethods(ReflectionMethod::IS_PUBLIC);
   }
 
   private function loadRoutesFromControllers(array $controllers): void
   {
     foreach ($controllers as $controller) {
       $controller = new $controller();
-      $reflector = new ReflectionClass($controller);
+      $controllerMethods = $this->getMethods($controller);
 
-      foreach ($reflector->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+      foreach ($controllerMethods as $method) {
         $attributes = $method->getAttributes(Route::class);
 
         foreach ($attributes as $attribute) {
@@ -52,6 +48,16 @@ class Router
           );
         }
       }
+    }
+  }
+
+  public function dispatch(string $method, string $path): void
+  {
+    if (isset($this->routes[$method][$path])) {
+      call_user_func($this->routes[$method][$path]);
+    } else {
+      http_response_code(404);
+      echo "404 : Page Not Found.";
     }
   }
 }
