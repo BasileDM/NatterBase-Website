@@ -1,14 +1,16 @@
 <?php
 
-namespace src\controllers;
+namespace src\Controllers;
 
+use src\Router\Route;
 use src\Services\Response;
 
 class HomeController
 {
   use Response;
 
-  public function displayHomePage()
+  #[Route('GET', HOME_URL)]
+  public function displayHomePage(): void
   {
     $this->render("home");
     exit;
