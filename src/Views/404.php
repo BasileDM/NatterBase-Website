@@ -3,7 +3,7 @@ include __DIR__ . '/Includes/header.php';
 ?>
 
 <main>
-  <p>This is the about page.</p>
+  <p>Error 404 - Page not found</p>
 </main>
 
 <?php

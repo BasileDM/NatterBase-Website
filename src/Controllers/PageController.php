@@ -22,4 +22,10 @@ class PageController
     $this->render("about");
     exit;
   }
+
+  public function displayNotFoundPage(): void
+  {
+    $this->render("404");
+    exit;
+  }
 }
