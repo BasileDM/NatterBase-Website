@@ -5,7 +5,7 @@ namespace src\Controllers;
 use src\Router\Route;
 use src\Services\Response;
 
-class HomeController
+class PageController
 {
   use Response;
 
