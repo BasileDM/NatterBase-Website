@@ -1,3 +1,7 @@
+<?php
+$current_page = $_SERVER['REQUEST_URI'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,8 +25,8 @@
       <div class="hidden sm:flex items-center justify-between w-full">
         <nav class="flex-1">
           <ul class="flex justify-center space-x-4">
-            <li><a href="/" class="hover:text-gray-300">Home</a></li>
-            <li><a href="/about" class="hover:text-gray-300">About</a></li>
+            <li><a href="/" class="<?= $current_page == '/' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Home</a></li>
+            <li><a href="/about" class="<?= $current_page == '/about' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">About</a></li>
           </ul>
         </nav>
         <a href="/login" class="btn btn-base">Connection</a>
