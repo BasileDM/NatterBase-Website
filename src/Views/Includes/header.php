@@ -25,7 +25,7 @@
             <li><a href="/about" class="hover:text-gray-300">About</a></li>
           </ul>
         </nav>
-        <a href="/login" class="btn btn-base">Connexion</a>
+        <a href="/login" class="btn btn-base">Connection</a>
       </div>
 
       <!-- Burger button -->
