@@ -9,7 +9,7 @@
 </head>
 
 <body class="bg-gray-800 text-white">
-  <header class="bg-gray-900 text-white shadow">
+  <header class="bg-gray-900 text-white shadow border-b-[1px] border-gray-700">
     <div class="container w-11/12 mx-auto flex justify-between items-center py-2">
       <h1 class="text-2xl font-bold">NatterBase</h1>
       <nav class="flex-1">
