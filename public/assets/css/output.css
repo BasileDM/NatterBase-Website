@@ -761,6 +761,34 @@ video {
   animation: slideOut 0.5s ease-in-out;
 }
 
+@keyframes toastSlideIn {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-toastSlideIn {
+  animation: toastSlideIn 0.5s ease-in-out;
+}
+
+@keyframes toastSlideOut {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(150%);
+  }
+}
+
+.animate-toastSlideOut {
+  animation: toastSlideOut 0.5s ease-in-out;
+}
+
 .items-center {
   align-items: center;
 }
