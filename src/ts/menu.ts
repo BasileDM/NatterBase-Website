@@ -1,6 +1,11 @@
-export function toggleMenu() {
-  const toggleButton = document.getElementById('menu-toggle');
-  const sidebar = document.getElementById('sidebar');
+export function toggleMenu(): void {
+  const toggleButton = document.getElementById('menu-toggle') as HTMLElement;
+  const sidebar = document.getElementById('sidebar') as HTMLElement;
+
+  if (!toggleButton || !sidebar) {
+    console.error('Menu toggle or sidebar element not found');
+    return;
+  }
 
   // Burger button toggle
   toggleButton.addEventListener('click', function() {
@@ -20,8 +25,8 @@ export function toggleMenu() {
   });
 
   // Close sidebar when clicking outside of it
-  document.addEventListener('click', function(event) {
-    if (!sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
+  document.addEventListener('click', function(event: MouseEvent) {
+    if (!sidebar.contains(event.target as Node) && !toggleButton.contains(event.target as Node)) {
       sidebar.classList.remove('animate-slideIn');
       sidebar.classList.add('animate-slideOut');
 
