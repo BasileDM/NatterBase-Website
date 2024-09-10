@@ -10,5 +10,6 @@ include __DIR__ . '/Includes/sidebar.php';
 
 <?php
 include __DIR__ . '/Includes/loginModal.html';
+include __DIR__ . '/Includes/toast.html';
 include __DIR__ . '/Includes/footer.php';
 ?>
