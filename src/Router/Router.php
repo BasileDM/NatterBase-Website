@@ -57,7 +57,8 @@ class Router
       call_user_func($this->routes[$method][$path]);
     } else {
       http_response_code(404);
-      echo "404 : Page Not Found.";
+      $pageController = new PageController();
+      $pageController->displayNotFoundPage();
     }
   }
 }

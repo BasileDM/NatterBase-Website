@@ -19,7 +19,13 @@ class PageController
   #[Route('GET', HOME_URL . 'about')]
   public function displayAboutPage(): void
   {
-    echo "about";
+    $this->render("about");
+    exit;
+  }
+
+  public function displayNotFoundPage(): void
+  {
+    $this->render("404");
     exit;
   }
 }
