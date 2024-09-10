@@ -1,6 +1,6 @@
 <?php
 include __DIR__ . '/Includes/header.php';
-include __DIR__ . '/Components/sidebar.php';
+include __DIR__ . '/Includes/sidebar.php';
 ?>
 
 <main>
@@ -9,5 +9,6 @@ include __DIR__ . '/Components/sidebar.php';
 </main>
 
 <?php
+include __DIR__ . '/Includes/loginModal.html';
 include __DIR__ . '/Includes/footer.php';
 ?>
