@@ -649,7 +649,7 @@ video {
 .toast-error {
   border-left-width: 4px;
   --tw-border-opacity: 1;
-  border-color: rgb(239 68 68 / var(--tw-border-opacity));
+  border-left-color: rgb(239 68 68 / var(--tw-border-opacity));
 }
 
 .fixed {
