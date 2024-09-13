@@ -7,12 +7,9 @@ function loadClass($class)
   $classPath = str_replace('\\', '/', $class) . '.php';
   $filePath = __DIR__ . '/' . $classPath;
 
-  if (file_exists($filePath))
-  {
+  if (file_exists($filePath)) {
     require_once $filePath;
-  }
-  else
-  {
+  } else {
     error_log('Class ' . $class . ' not found at path: ' . $filePath);
     throw new Exception('Class ' . $class . ' not found.');
   }

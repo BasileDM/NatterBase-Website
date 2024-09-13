@@ -4,8 +4,7 @@ include __DIR__ . '/Includes/interface.php';
 ?>
 
 <main>
-  <h2 class="text-3xl text-red-600">Home</h2>
-  <p>This is the home page.</p>
+  <p>Error 404 - Page not found</p>
 </main>
 
 <?php
