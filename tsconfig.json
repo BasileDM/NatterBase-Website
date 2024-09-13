@@ -8,6 +8,6 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*", "public/assets/js/unused.js"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
 }
