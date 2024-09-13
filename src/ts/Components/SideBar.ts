@@ -1,38 +1,54 @@
-export function toggleMenu(): void {
-  const toggleButton = document.getElementById('menu-toggle') as HTMLElement;
-  const sidebar = document.getElementById('sidebar') as HTMLElement;
+import { UIComponent } from '../Abstracts/UIComponent.js';
 
-  if (!toggleButton || !sidebar) {
-    console.error('Menu toggle or sidebar element not found');
-    return;
+export class Sidebar extends UIComponent {
+  private sidebarElement : HTMLElement;
+  private toggleButton : HTMLElement;
+
+  constructor() {
+    super();
+    this.sidebarElement = document.getElementById('sidebar') as HTMLElement;
+    this.toggleButton = document.getElementById('sidebar-toggle-btn') as HTMLElement;
   }
 
-  // Burger button toggle
-  toggleButton.addEventListener('click', function() {
-    if (sidebar.classList.contains('hidden')) {
-      sidebar.classList.remove('hidden');
-      sidebar.classList.remove('animate-slideOut');
-      sidebar.classList.add('animate-slideIn');
+  open(): void {
+    this.sidebarElement.classList.remove('hidden');
+    this.sidebarElement.classList.remove('animate-slideOut');
+    this.sidebarElement.classList.add('animate-slideIn');
+  }
+
+  close(): void {
+    this.sidebarElement.classList.remove('animate-slideIn');
+    this.sidebarElement.classList.add('animate-slideOut');
+
+    setTimeout(() => {
+      this.sidebarElement.classList.add('hidden');
+    }, 450);
+  }
+
+  toggle(): void {
+    if (this.sidebarElement.classList.contains('hidden')) {
+      this.open();
     }
     else {
-      sidebar.classList.remove('animate-slideIn');
-      sidebar.classList.add('animate-slideOut');
-
-      setTimeout(() => {
-        sidebar.classList.add('hidden');
-      }, 450);
+      this.close();
     }
-  });
+  }
 
-  // Close sidebar when clicking outside of it
-  document.addEventListener('click', function(event: MouseEvent) {
-    if (!sidebar.contains(event.target as Node) && !toggleButton.contains(event.target as Node)) {
-      sidebar.classList.remove('animate-slideIn');
-      sidebar.classList.add('animate-slideOut');
+  bindEvents(): void {
+    this.toggleButton.addEventListener('click', () => {
+      if (this.sidebarElement.classList.contains('hidden')) {
+        this.open();
+      }
+      else {
+        this.close();
+      }
+    });
 
-      setTimeout(() => {
-        sidebar.classList.add('hidden');
-      }, 450);
-    }
-  });
+    // Close sidebar when clicking outside of it
+    document.addEventListener('click', (event: MouseEvent) => {
+      if (!this.sidebarElement.contains(event.target as Node) && !this.toggleButton.contains(event.target as Node)) {
+        this.close();
+      }
+    });
+  }
 }

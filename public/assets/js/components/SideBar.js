@@ -1,33 +1,44 @@
-export function toggleMenu() {
-    const toggleButton = document.getElementById('menu-toggle');
-    const sidebar = document.getElementById('sidebar');
-    if (!toggleButton || !sidebar) {
-        console.error('Menu toggle or sidebar element not found');
-        return;
+import { UIComponent } from '../Abstracts/UIComponent.js';
+export class Sidebar extends UIComponent {
+    constructor() {
+        super();
+        this.sidebarElement = document.getElementById('sidebar');
+        this.toggleButton = document.getElementById('sidebar-toggle-btn');
     }
-    // Burger button toggle
-    toggleButton.addEventListener('click', function () {
-        if (sidebar.classList.contains('hidden')) {
-            sidebar.classList.remove('hidden');
-            sidebar.classList.remove('animate-slideOut');
-            sidebar.classList.add('animate-slideIn');
+    open() {
+        this.sidebarElement.classList.remove('hidden');
+        this.sidebarElement.classList.remove('animate-slideOut');
+        this.sidebarElement.classList.add('animate-slideIn');
+    }
+    close() {
+        this.sidebarElement.classList.remove('animate-slideIn');
+        this.sidebarElement.classList.add('animate-slideOut');
+        setTimeout(() => {
+            this.sidebarElement.classList.add('hidden');
+        }, 450);
+    }
+    toggle() {
+        if (this.sidebarElement.classList.contains('hidden')) {
+            this.open();
         }
         else {
-            sidebar.classList.remove('animate-slideIn');
-            sidebar.classList.add('animate-slideOut');
-            setTimeout(() => {
-                sidebar.classList.add('hidden');
-            }, 450);
+            this.close();
         }
-    });
-    // Close sidebar when clicking outside of it
-    document.addEventListener('click', function (event) {
-        if (!sidebar.contains(event.target) && !toggleButton.contains(event.target)) {
-            sidebar.classList.remove('animate-slideIn');
-            sidebar.classList.add('animate-slideOut');
-            setTimeout(() => {
-                sidebar.classList.add('hidden');
-            }, 450);
-        }
-    });
+    }
+    bindEvents() {
+        this.toggleButton.addEventListener('click', () => {
+            if (this.sidebarElement.classList.contains('hidden')) {
+                this.open();
+            }
+            else {
+                this.close();
+            }
+        });
+        // Close sidebar when clicking outside of it
+        document.addEventListener('click', (event) => {
+            if (!this.sidebarElement.contains(event.target) && !this.toggleButton.contains(event.target)) {
+                this.close();
+            }
+        });
+    }
 }

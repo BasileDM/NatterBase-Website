@@ -1,8 +1,9 @@
 import { Modal } from './Components/Modal.js';
-import { toggleMenu } from './Components/SideBar.js';
+import { Sidebar } from './Components/Sidebar.js';
 
 document.addEventListener('DOMContentLoaded', function() : void {
-  toggleMenu();
+  const sidebar = new Sidebar();
+  sidebar.bindEvents();
   const loginModal = new Modal('login-modal');
   loginModal.bindEvents('navbar-login-button', 'modal-close-btn');
 });
