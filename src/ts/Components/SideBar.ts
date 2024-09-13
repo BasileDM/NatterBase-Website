@@ -1,28 +1,29 @@
-import { UIComponent } from '../Abstracts/UIComponent.js';
-
-export class Sidebar extends UIComponent {
-  private sidebarElement : HTMLElement;
-  private toggleButton : HTMLElement;
+export class Sidebar {
+  private sidebarElement: HTMLElement;
+  private toggleButton: HTMLElement;
+  private openAnimationClass = 'animate-slideIn';
+  private closeAnimationClass = 'animate-slideOut';
+  private animationDuration = 450;
 
   constructor() {
-    super();
     this.sidebarElement = document.getElementById('sidebar') as HTMLElement;
-    this.toggleButton = document.getElementById('sidebar-toggle-btn') as HTMLElement;
+    this.toggleButton = document.getElementById('burger-btn') as HTMLElement;
+    this.bindEvents();
   }
 
   open(): void {
     this.sidebarElement.classList.remove('hidden');
-    this.sidebarElement.classList.remove('animate-slideOut');
-    this.sidebarElement.classList.add('animate-slideIn');
+    this.sidebarElement.classList.remove(this.closeAnimationClass);
+    this.sidebarElement.classList.add(this.openAnimationClass);
   }
 
   close(): void {
-    this.sidebarElement.classList.remove('animate-slideIn');
-    this.sidebarElement.classList.add('animate-slideOut');
+    this.sidebarElement.classList.remove(this.openAnimationClass);
+    this.sidebarElement.classList.add(this.closeAnimationClass);
 
     setTimeout(() => {
       this.sidebarElement.classList.add('hidden');
-    }, 450);
+    }, this.animationDuration);
   }
 
   toggle(): void {
@@ -36,15 +37,9 @@ export class Sidebar extends UIComponent {
 
   bindEvents(): void {
     this.toggleButton.addEventListener('click', () => {
-      if (this.sidebarElement.classList.contains('hidden')) {
-        this.open();
-      }
-      else {
-        this.close();
-      }
+      this.toggle();
     });
 
-    // Close sidebar when clicking outside of it
     document.addEventListener('click', (event: MouseEvent) => {
       if (!this.sidebarElement.contains(event.target as Node) && !this.toggleButton.contains(event.target as Node)) {
         this.close();

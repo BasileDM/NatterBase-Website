@@ -1,21 +1,23 @@
-import { UIComponent } from '../Abstracts/UIComponent.js';
-export class Sidebar extends UIComponent {
+export class Sidebar {
     constructor() {
-        super();
+        this.openAnimationClass = 'animate-slideIn';
+        this.closeAnimationClass = 'animate-slideOut';
+        this.animationDuration = 450;
         this.sidebarElement = document.getElementById('sidebar');
-        this.toggleButton = document.getElementById('sidebar-toggle-btn');
+        this.toggleButton = document.getElementById('burger-btn');
+        this.bindEvents();
     }
     open() {
         this.sidebarElement.classList.remove('hidden');
-        this.sidebarElement.classList.remove('animate-slideOut');
-        this.sidebarElement.classList.add('animate-slideIn');
+        this.sidebarElement.classList.remove(this.closeAnimationClass);
+        this.sidebarElement.classList.add(this.openAnimationClass);
     }
     close() {
-        this.sidebarElement.classList.remove('animate-slideIn');
-        this.sidebarElement.classList.add('animate-slideOut');
+        this.sidebarElement.classList.remove(this.openAnimationClass);
+        this.sidebarElement.classList.add(this.closeAnimationClass);
         setTimeout(() => {
             this.sidebarElement.classList.add('hidden');
-        }, 450);
+        }, this.animationDuration);
     }
     toggle() {
         if (this.sidebarElement.classList.contains('hidden')) {
@@ -27,14 +29,8 @@ export class Sidebar extends UIComponent {
     }
     bindEvents() {
         this.toggleButton.addEventListener('click', () => {
-            if (this.sidebarElement.classList.contains('hidden')) {
-                this.open();
-            }
-            else {
-                this.close();
-            }
+            this.toggle();
         });
-        // Close sidebar when clicking outside of it
         document.addEventListener('click', (event) => {
             if (!this.sidebarElement.contains(event.target) && !this.toggleButton.contains(event.target)) {
                 this.close();
