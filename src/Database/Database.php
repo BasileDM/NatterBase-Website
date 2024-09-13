@@ -18,6 +18,10 @@ final class Database
     $this->db = $this->connect();
   }
 
+  public function getDb(): PDO {
+    return $this->db;
+  }
+
   private function connect(): PDO|string
   {
     try {

@@ -76,3 +76,9 @@ CREATE TABLE Relation_Bots_Features(
   FOREIGN KEY(id_bot) REFERENCES Bots(id_bot),
   FOREIGN KEY(id_bot_feature) REFERENCES Bot_Features(id_bot_feature)
 );
+
+INSERT INTO User_Roles (name) VALUES('user');
+INSERT INTO User_Roles (name) VALUES('admin');
+
+INSERT INTO Users (mail, username, password_hash, is_activated, gdpr, twitch_id, twitch_username, id_role)
+VALUES('admin@admin.com', 'admin', '$2y$10$tfBK4jlXBc.HDoBW3cWK2eoH76SJu.rUlTJQa0/JzIaAeE/yfNmLW', true, '2022-01-01', '123456789', 'admin', 2);
