@@ -1,23 +1,25 @@
 export class Sidebar {
   private sidebarElement: HTMLElement;
   private toggleButton: HTMLElement;
-  private openAnimationClass = 'animate-slideIn';
-  private closeAnimationClass = 'animate-slideOut';
-  private animationDuration = 450;
+  private openAnimationClass: string;
+  private closeAnimationClass: string;
+  private animationDuration: number = 450;
 
   constructor() {
     this.sidebarElement = document.getElementById('sidebar') as HTMLElement;
     this.toggleButton = document.getElementById('burger-btn') as HTMLElement;
+    this.openAnimationClass = 'animate-slideIn';
+    this.closeAnimationClass = 'animate-slideOut';
     this.bindEvents();
   }
 
-  open(): void {
+  private open(): void {
     this.sidebarElement.classList.remove('hidden');
     this.sidebarElement.classList.remove(this.closeAnimationClass);
     this.sidebarElement.classList.add(this.openAnimationClass);
   }
 
-  close(): void {
+  private close(): void {
     this.sidebarElement.classList.remove(this.openAnimationClass);
     this.sidebarElement.classList.add(this.closeAnimationClass);
 
@@ -26,7 +28,7 @@ export class Sidebar {
     }, this.animationDuration);
   }
 
-  toggle(): void {
+  private toggle(): void {
     if (this.sidebarElement.classList.contains('hidden')) {
       this.open();
     }
@@ -35,7 +37,7 @@ export class Sidebar {
     }
   }
 
-  bindEvents(): void {
+  private bindEvents(): void {
     this.toggleButton.addEventListener('click', () => {
       this.toggle();
     });

@@ -1,9 +1,10 @@
 export class Modal {
   private modalElement: HTMLDialogElement;
-  private closeButtonId = 'modal-close-btn';
+  private closeButtonId: string;
 
   constructor(modalId: string, triggerButtonIds: string[]) {
     this.modalElement = document.getElementById(modalId) as HTMLDialogElement;
+    this.closeButtonId = 'modal-close-btn';
     this.bindEvents(triggerButtonIds);
   }
 
@@ -16,7 +17,6 @@ export class Modal {
   }
 
   bindEvents(triggerButtonIds: string[]): void {
-    // Bind open events to trigger buttons
     triggerButtonIds.forEach(buttonId => {
       const button = document.getElementById(buttonId);
       if (button) {
@@ -29,7 +29,7 @@ export class Modal {
       closeButton.addEventListener('click', () => this.close());
     }
 
-    // Close modal when clicking outside the modal content
+    // Close modal when clicking outside
     this.modalElement.addEventListener('click', (event) => {
       if (event.target === this.modalElement) {
         this.close();

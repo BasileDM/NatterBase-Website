@@ -1,26 +1,43 @@
 export class Toast {
-    constructor(toastId) {
-        this.toastElement = document.getElementById(toastId);
+    constructor() {
+        this.toastElement = document.getElementById('toast');
+        this.closeButton = document.getElementById('toast-close-btn');
+        this.showAnimationClass = 'animate-toastSlideIn';
+        this.closeAnimationClass = 'animate-toastSlideOut';
+        this.messageElement = document.getElementById('toast-message');
+        this.iconElement = document.getElementById('toast-icon');
+        this.bindEvents();
     }
-    show(animationClass) {
-        this.toastElement.classList.remove('hidden');
-        if (animationClass) {
-            this.toastElement.classList.add(animationClass);
-        }
-        // Automatically close after 3 seconds
+    show() {
+        this.toastElement.classList.remove('hidden', this.closeAnimationClass);
+        this.toastElement.classList.add(this.showAnimationClass);
         setTimeout(() => {
-            this.close('animate-fadeOut');
+            this.close();
         }, 3000);
     }
-    close(animationClass) {
-        if (animationClass) {
-            this.toastElement.classList.add(animationClass);
-            setTimeout(() => {
-                this.toastElement.classList.add('hidden');
-            }, 450);
-        }
-        else {
+    close() {
+        this.toastElement.classList.remove(this.showAnimationClass);
+        this.toastElement.classList.add(this.closeAnimationClass);
+        setTimeout(() => {
             this.toastElement.classList.add('hidden');
+        }, 450);
+    }
+    bindEvents() {
+        this.closeButton.addEventListener('click', () => {
+            this.close();
+        });
+    }
+    display(type, message) {
+        this.messageElement.textContent = message;
+        // Apply different styles based on the type
+        if (type === 'success') {
+            this.toastElement.classList.add('toast-success');
+            this.iconElement.textContent = '✔️';
         }
+        else if (type === 'error') {
+            this.toastElement.classList.add('toast-error');
+            this.iconElement.textContent = '❌';
+        }
+        this.show();
     }
 }

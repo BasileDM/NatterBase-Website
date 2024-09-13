@@ -1,10 +1,10 @@
 export class Sidebar {
     constructor() {
-        this.openAnimationClass = 'animate-slideIn';
-        this.closeAnimationClass = 'animate-slideOut';
         this.animationDuration = 450;
         this.sidebarElement = document.getElementById('sidebar');
         this.toggleButton = document.getElementById('burger-btn');
+        this.openAnimationClass = 'animate-slideIn';
+        this.closeAnimationClass = 'animate-slideOut';
         this.bindEvents();
     }
     open() {
