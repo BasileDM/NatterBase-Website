@@ -48,6 +48,6 @@ final class Database
   {
     $sql = "SHOW TABLES FROM " . DB_NAME . " LIKE '" . PREFIX . "USERS';";
     $result = $this->db->query($sql)->fetch();
-    return $result !== false; 
+    return $result !== false;
   }
 }
