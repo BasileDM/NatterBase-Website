@@ -14,4 +14,16 @@
   .btn-alert {
     @apply bg-red-600 text-white hover:bg-red-500;
   }
+
+  .toast {
+    @apply fixed bottom-5 right-5 bg-gray-800 text-white p-4 rounded-lg shadow-lg flex items-center space-x-4 backdrop-blur-lg border-[1px] border-gray-700;
+  }
+
+  .toast-success {
+    @apply border-l-8 border-l-green-500;
+  }
+
+  .toast-error {
+    @apply border-l-4 border-l-red-500;
+  }
 }
