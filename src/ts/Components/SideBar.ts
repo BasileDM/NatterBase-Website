@@ -13,6 +13,18 @@ export class Sidebar {
     this.bindEvents();
   }
 
+  private bindEvents(): void {
+    this.toggleButton.addEventListener('click', () => {
+      this.toggle();
+    });
+
+    document.addEventListener('click', (event: MouseEvent) => {
+      if (!this.sidebarElement.contains(event.target as Node) && !this.toggleButton.contains(event.target as Node)) {
+        this.close();
+      }
+    });
+  }
+
   private open(): void {
     this.sidebarElement.classList.remove('hidden');
     this.sidebarElement.classList.remove(this.closeAnimationClass);
@@ -35,17 +47,5 @@ export class Sidebar {
     else {
       this.close();
     }
-  }
-
-  private bindEvents(): void {
-    this.toggleButton.addEventListener('click', () => {
-      this.toggle();
-    });
-
-    document.addEventListener('click', (event: MouseEvent) => {
-      if (!this.sidebarElement.contains(event.target as Node) && !this.toggleButton.contains(event.target as Node)) {
-        this.close();
-      }
-    });
   }
 }

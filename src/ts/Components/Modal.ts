@@ -8,15 +8,7 @@ export class Modal {
     this.bindEvents(triggerButtonIds);
   }
 
-  open(): void {
-    this.modalElement.showModal();
-  }
-
-  close(): void {
-    this.modalElement.close();
-  }
-
-  bindEvents(triggerButtonIds: string[]): void {
+  private bindEvents(triggerButtonIds: string[]): void {
     triggerButtonIds.forEach(buttonId => {
       const button = document.getElementById(buttonId);
       if (button) {
@@ -35,5 +27,13 @@ export class Modal {
         this.close();
       }
     });
+  }
+
+  private open(): void {
+    this.modalElement.showModal();
+  }
+
+  private close(): void {
+    this.modalElement.close();
   }
 }

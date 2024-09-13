@@ -8,6 +8,11 @@ export class Toast {
         this.iconElement = document.getElementById('toast-icon');
         this.bindEvents();
     }
+    bindEvents() {
+        this.closeButton.addEventListener('click', () => {
+            this.close();
+        });
+    }
     show() {
         this.toastElement.classList.remove('hidden', this.closeAnimationClass);
         this.toastElement.classList.add(this.showAnimationClass);
@@ -21,11 +26,6 @@ export class Toast {
         setTimeout(() => {
             this.toastElement.classList.add('hidden');
         }, 450);
-    }
-    bindEvents() {
-        this.closeButton.addEventListener('click', () => {
-            this.close();
-        });
     }
     display(type, message) {
         this.messageElement.textContent = message;

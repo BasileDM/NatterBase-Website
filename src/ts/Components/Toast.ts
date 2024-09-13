@@ -16,6 +16,12 @@ export class Toast {
     this.bindEvents();
   }
 
+  private bindEvents(): void {
+    this.closeButton.addEventListener('click', () => {
+      this.close();
+    });
+  }
+
   private show(): void {
     this.toastElement.classList.remove('hidden', this.closeAnimationClass);
     this.toastElement.classList.add(this.showAnimationClass);
@@ -32,12 +38,6 @@ export class Toast {
     setTimeout(() => {
       this.toastElement.classList.add('hidden');
     }, 450);
-  }
-
-  private bindEvents(): void {
-    this.closeButton.addEventListener('click', () => {
-      this.close();
-    });
   }
 
   public display(type: string, message: string): void {

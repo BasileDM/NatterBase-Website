@@ -6,5 +6,5 @@ document.addEventListener('DOMContentLoaded', function() : void {
   new Sidebar();
   new Modal('login-modal', ['navbar-login-button', 'sidebar-login-button']);
   const toast = new Toast();
-  toast.display('success', 'Login Successful');
+  toast.display('success', 'You are now logged in !');
 });

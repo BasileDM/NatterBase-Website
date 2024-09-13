@@ -4,12 +4,6 @@ export class Modal {
         this.closeButtonId = 'modal-close-btn';
         this.bindEvents(triggerButtonIds);
     }
-    open() {
-        this.modalElement.showModal();
-    }
-    close() {
-        this.modalElement.close();
-    }
     bindEvents(triggerButtonIds) {
         triggerButtonIds.forEach(buttonId => {
             const button = document.getElementById(buttonId);
@@ -27,5 +21,11 @@ export class Modal {
                 this.close();
             }
         });
+    }
+    open() {
+        this.modalElement.showModal();
+    }
+    close() {
+        this.modalElement.close();
     }
 }

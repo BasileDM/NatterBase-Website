@@ -7,6 +7,16 @@ export class Sidebar {
         this.closeAnimationClass = 'animate-slideOut';
         this.bindEvents();
     }
+    bindEvents() {
+        this.toggleButton.addEventListener('click', () => {
+            this.toggle();
+        });
+        document.addEventListener('click', (event) => {
+            if (!this.sidebarElement.contains(event.target) && !this.toggleButton.contains(event.target)) {
+                this.close();
+            }
+        });
+    }
     open() {
         this.sidebarElement.classList.remove('hidden');
         this.sidebarElement.classList.remove(this.closeAnimationClass);
@@ -26,15 +36,5 @@ export class Sidebar {
         else {
             this.close();
         }
-    }
-    bindEvents() {
-        this.toggleButton.addEventListener('click', () => {
-            this.toggle();
-        });
-        document.addEventListener('click', (event) => {
-            if (!this.sidebarElement.contains(event.target) && !this.toggleButton.contains(event.target)) {
-                this.close();
-            }
-        });
     }
 }
