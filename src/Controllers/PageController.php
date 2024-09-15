@@ -2,7 +2,7 @@
 
 namespace src\Controllers;
 
-use src\Router\Route;
+use src\Router\Attributes\Route;
 use src\Services\Response;
 
 class PageController

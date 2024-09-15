@@ -2,59 +2,56 @@
 
 namespace src\Router;
 
-use ReflectionClass;
-use ReflectionMethod;
 use src\Controllers\PageController;
-use src\Router\Route;
+use src\Router\Attributes\Route;
+use src\Utils\ReflectionUtils;
 
 class Router
 {
   private array $routes = [];
-  private array $controllers = [
-    PageController::class
-  ];
+  private array $controllers;
 
   public function __construct()
   {
+    $this->controllers = [
+      PageController::class
+    ];
     $this->loadRoutesFromControllers($this->controllers);
+    $this->handleRequest();
   }
 
-  private function registerRoute(string $method, string $path, callable $callback): void
+  private function loadRoutesFromControllers(array $controllerClasses): void
   {
-    $this->routes[$method][$path] = $callback;
-  }
+    foreach ($controllerClasses as $ctrlClass) {
+      $ctrlInstance = new $ctrlClass();
+      $ctrlMethods = ReflectionUtils::getPublicMethods($ctrlInstance);
 
-  private function getMethods(object $class): array
-  {
-    $reflector = new ReflectionClass($class);
-    return $reflector->getMethods(ReflectionMethod::IS_PUBLIC);
-  }
+      foreach ($ctrlMethods as $ctrlMethod) {
+        $routeAttribute = $ctrlMethod->getAttributes(Route::class)[0] ?? [];
+        if (!$routeAttribute) continue;
 
-  private function loadRoutesFromControllers(array $controllers): void
-  {
-    foreach ($controllers as $controller) {
-      $controller = new $controller();
-      $controllerMethods = $this->getMethods($controller);
-
-      foreach ($controllerMethods as $method) {
-        $attributes = $method->getAttributes(Route::class);
-
-        foreach ($attributes as $attribute) {
-          $route = $attribute->newInstance();
-          $this->registerRoute(
-            $route->method,
-            $route->path,
-            [$controller, $method->getName()]
-          );
-        }
+        $routeInstance = $routeAttribute->newInstance();
+        $this->registerRoute(
+          $routeInstance->method,
+          $routeInstance->path,
+          [$ctrlInstance, $ctrlMethod->getName()]
+        );
       }
     }
   }
 
-  public function dispatch(string $method, string $path): void
+  private function registerRoute(string $requestMethod, string $path, callable $function): void
   {
-    if (isset($this->routes[$method][$path])) {
-      call_user_func($this->routes[$method][$path]);
+    $this->routes[$requestMethod][$path] = $function;
+  }
+
+  public function handleRequest(): void
+  {
+    $requestMethod = $_SERVER['REQUEST_METHOD'];
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+    if (isset($this->routes[$requestMethod][$path])) {
+      call_user_func($this->routes[$requestMethod][$path]);
     } else {
       http_response_code(404);
       $pageController = new PageController();
