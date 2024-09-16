@@ -2,6 +2,7 @@
 
 namespace src\Router;
 
+use src\Controllers\AuthController;
 use src\Controllers\PageController;
 use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
@@ -15,7 +16,8 @@ class Router
   public function __construct()
   {
     $this->controllers = [
-      PageController::class
+      PageController::class,
+      AuthController::class
     ];
     $this->loadRoutesFromControllers($this->controllers);
   }

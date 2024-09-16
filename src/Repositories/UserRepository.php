@@ -16,14 +16,26 @@ final class UserRepository
     $this->pdo = $db->getDb();
   }
 
-  public function getUserById(int $id): User
+  public function getUserById(int $id): User|bool
   {
-    $query = 'SELECT Users.*, User_Roles.name AS role_name, User_Roles.id_role AS role_id
+    $query = 'SELECT Users.*, User_Roles.name AS role_name
               FROM Users
               LEFT JOIN User_Roles ON Users.id_role = User_Roles.id_role
               WHERE id_user = :id';
     $statement = $this->pdo->prepare($query);
     $statement->execute([':id' => $id]);
+    $user = $statement->fetchObject(User::class);
+    return $user;
+  }
+
+  public function getUserByMail(string $mail): User|bool
+  {
+    $query = 'SELECT Users.*, User_Roles.name AS role_name
+              FROM Users
+              LEFT JOIN User_Roles ON Users.id_role = User_Roles.id_role
+              WHERE mail = :mail';
+    $statement = $this->pdo->prepare($query);
+    $statement->execute([':mail' => $mail]);
     $user = $statement->fetchObject(User::class);
     return $user;
   }

@@ -24,6 +24,13 @@ final class PageController
     exit;
   }
 
+  #[Route('GET', HOME_URL . 'app')]
+  public function displayAppPage(): void
+  {
+    $this->render("app");
+    exit;
+  }
+
   public function displayErrorPage(string $message): void
   {
     $this->render("Error", ["message" => $message]);

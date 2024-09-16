@@ -1,4 +1,5 @@
 import { RequestHelper } from '../Utils/RequestHelper';
+import { Toast } from './Toast';
 
 export class LoginModal {
   private modalElement: HTMLDialogElement;
@@ -42,6 +43,8 @@ export class LoginModal {
         const response = await RequestHelper.post('/login', formData);
         if (response) {
           console.log('successful login');
+          window.location.href = '/app';
+          new Toast('success', 'You are now logged in !');
           this.close();
         }
       });

@@ -14,7 +14,6 @@ final class User
   private string $gdpr;
   private string $twitchId;
   private string $twitchUsername;
-  private int $roleId;
   private string $roleName;
 
   use Hydration;
@@ -27,16 +26,16 @@ final class User
     return $this->idUser;
   }
 
-    /**
-     * Set the value of idUser
-     *
-     * @param   int  $idUser  
-     * 
-     */
-    public function setIdUser(int $idUser)
-    {
-        $this->idUser = $idUser;
-    }
+  /**
+   * Set the value of idUser
+   *
+   * @param   int  $idUser  
+   * 
+   */
+  public function setIdUser(int $idUser)
+  {
+    $this->idUser = $idUser;
+  }
 
   /**
    * Get the value of mail
@@ -46,16 +45,16 @@ final class User
     return $this->mail;
   }
 
-    /**
-     * Set the value of mail
-     *
-     * @param   string  $mail  
-     * 
-     */
-    public function setMail(string $mail)
-    {
-        $this->mail = $mail;
-    }
+  /**
+   * Set the value of mail
+   *
+   * @param   string  $mail  
+   * 
+   */
+  public function setMail(string $mail)
+  {
+    $this->mail = $mail;
+  }
 
   /**
    * Get the value of username
@@ -65,16 +64,16 @@ final class User
     return $this->username;
   }
 
-    /**
-     * Set the value of username
-     *
-     * @param   string  $username  
-     * 
-     */
-    public function setUsername(string $username)
-    {
-        $this->username = $username;
-    }
+  /**
+   * Set the value of username
+   *
+   * @param   string  $username  
+   * 
+   */
+  public function setUsername(string $username)
+  {
+    $this->username = $username;
+  }
 
   /**
    * Get the value of passwordHash
@@ -84,16 +83,16 @@ final class User
     return $this->passwordHash;
   }
 
-    /**
-     * Set the value of passwordHash
-     *
-     * @param   string  $passwordHash  
-     * 
-     */
-    public function setPasswordHash(string $passwordHash)
-    {
-        $this->passwordHash = $passwordHash;
-    }
+  /**
+   * Set the value of passwordHash
+   *
+   * @param   string  $passwordHash  
+   * 
+   */
+  public function setPasswordHash(string $passwordHash)
+  {
+    $this->passwordHash = $passwordHash;
+  }
 
   /**
    * Get the value of isActivated
@@ -103,16 +102,16 @@ final class User
     return $this->isActivated;
   }
 
-    /**
-     * Set the value of isActivated
-     *
-     * @param   bool  $isActivated  
-     * 
-     */
-    public function setIsActivated(bool $isActivated)
-    {
-        $this->isActivated = $isActivated;
-    }
+  /**
+   * Set the value of isActivated
+   *
+   * @param   bool  $isActivated  
+   * 
+   */
+  public function setIsActivated(bool $isActivated)
+  {
+    $this->isActivated = $isActivated;
+  }
 
   /**
    * Get the value of gdpr
@@ -122,16 +121,16 @@ final class User
     return $this->gdpr;
   }
 
-    /**
-     * Set the value of gdpr
-     *
-     * @param   string  $gdpr  
-     * 
-     */
-    public function setGdpr(string $gdpr)
-    {
-        $this->gdpr = $gdpr;
-    }
+  /**
+   * Set the value of gdpr
+   *
+   * @param   string  $gdpr  
+   * 
+   */
+  public function setGdpr(string $gdpr)
+  {
+    $this->gdpr = $gdpr;
+  }
 
   /**
    * Get the value of twitchId
@@ -141,16 +140,16 @@ final class User
     return $this->twitchId;
   }
 
-    /**
-     * Set the value of twitchId
-     *
-     * @param   string  $twitchId  
-     * 
-     */
-    public function setTwitchId(string $twitchId)
-    {
-        $this->twitchId = $twitchId;
-    }
+  /**
+   * Set the value of twitchId
+   *
+   * @param   string  $twitchId  
+   * 
+   */
+  public function setTwitchId(string $twitchId)
+  {
+    $this->twitchId = $twitchId;
+  }
 
   /**
    * Get the value of twitchUsername
@@ -160,35 +159,16 @@ final class User
     return $this->twitchUsername;
   }
 
-    /**
-     * Set the value of twitchUsername
-     *
-     * @param   string  $twitchUsername  
-     * 
-     */
-    public function setTwitchUsername(string $twitchUsername)
-    {
-        $this->twitchUsername = $twitchUsername;
-    }
-
   /**
-   * Get the value of roleId
+   * Set the value of twitchUsername
+   *
+   * @param   string  $twitchUsername  
+   * 
    */
-  public function getRoleId(): int
+  public function setTwitchUsername(string $twitchUsername)
   {
-    return $this->roleId;
+    $this->twitchUsername = $twitchUsername;
   }
-
-    /**
-     * Set the value of roleId
-     *
-     * @param   int  $roleId  
-     * 
-     */
-    public function setRoleId(int $roleId)
-    {
-        $this->roleId = $roleId;
-    }
 
   /**
    * Get the value of roleName
@@ -198,14 +178,14 @@ final class User
     return $this->roleName;
   }
 
-    /**
-     * Set the value of roleName
-     *
-     * @param   string  $roleName  
-     * 
-     */
-    public function setRoleName(string $roleName)
-    {
-        $this->roleName = $roleName;
-    }
+  /**
+   * Set the value of roleName
+   *
+   * @param   string  $roleName  
+   * 
+   */
+  public function setRoleName(string $roleName)
+  {
+    $this->roleName = $roleName;
+  }
 }
