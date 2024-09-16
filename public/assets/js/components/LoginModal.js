@@ -1,5 +1,4 @@
-import { RequestHelper } from '../Utils/RequestHelper';
-import { Toast } from './Toast';
+import { RequestHelper } from '../Utils/RequestHelper.js';
 export class LoginModal {
     constructor(modalId, triggerButtonIds) {
         this.modalElement = document.getElementById(modalId);
@@ -33,10 +32,9 @@ export class LoginModal {
                 };
                 const response = await RequestHelper.post('/login', formData);
                 if (response) {
-                    console.log('successful login');
-                    window.location.href = '/app';
-                    new Toast('success', 'You are now logged in !');
                     this.close();
+                    sessionStorage.setItem('showToast', 'You are now logged in!');
+                    window.location.href = '/app';
                 }
             });
         }

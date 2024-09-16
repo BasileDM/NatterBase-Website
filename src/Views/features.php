@@ -4,7 +4,7 @@ include __DIR__ . '/Includes/interface.php';
 ?>
 
 <main>
-  <p>This is the about page.</p>
+  <p>This is the features page.</p>
 </main>
 
 <?php

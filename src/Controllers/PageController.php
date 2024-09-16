@@ -17,14 +17,15 @@ final class PageController
     exit;
   }
 
-  #[Route('GET', HOME_URL . 'about')]
+  #[Route('GET', HOME_URL . 'features')]
   public function displayAboutPage(): void
   {
-    $this->render("about");
+    $this->render("features");
     exit;
   }
 
   #[Route('GET', HOME_URL . 'app')]
+  #[Authorization(1)]
   public function displayAppPage(): void
   {
     $this->render("app");

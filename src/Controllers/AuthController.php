@@ -18,8 +18,7 @@ final class AuthController
     if(!$mail || !$password) {
       http_response_code(400);
       echo json_encode([
-        'success' => false,
-        'message' => 'Missing parameters',
+        'message' => 'Please fill out all the fields',
       ]);
       exit;
     }
@@ -27,7 +26,6 @@ final class AuthController
     if (!Authenticator::authenticate($mail, $password)) {
       http_response_code(401);
       echo json_encode([
-        'success' => false,
         'message' => 'Invalid credentials',
       ]);
       exit;
@@ -35,8 +33,19 @@ final class AuthController
 
     http_response_code(200);
     echo json_encode([
-      'success' => true,
       'message' => 'Login successful',
     ]);
+  }
+
+  #[Route('GET', '/logout')]
+  public function logout(): void
+  {
+    http_response_code(200);
+    session_destroy();
+    echo json_encode([
+      'success' => true,
+      'message' => 'Logout successful',
+    ]);
+    header('Location: /');
   }
 }

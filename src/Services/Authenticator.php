@@ -11,7 +11,7 @@ final class Authenticator
   {
     $userRepository = new UserRepository();
     $user = $userRepository->getUserByMail($mail);
-    
+
     if (!$user) {
       return false;
     }
@@ -20,6 +20,24 @@ final class Authenticator
       return false;
     }
 
+    $_SESSION['isAuth'] = true;
+    $_SESSION['userId'] = $user->getIdUser();
+    $_SESSION['username'] = $user->getUsername();
+    $_SESSION['mail'] = $user->getMail();
+    $_SESSION['authLevel'] = self::getAuthLevelFromRole($user->getRoleName());
+
     return $user;
+  }
+
+  private static function getAuthLevelFromRole(string $roleName): int
+  {
+    switch ($roleName) {
+      case 'admin':
+        return 2;
+      case 'user':
+        return 1;
+      default:
+        return 0;
+    }
   }
 }

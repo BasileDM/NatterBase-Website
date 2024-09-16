@@ -1,5 +1,4 @@
-import { RequestHelper } from '../Utils/RequestHelper';
-import { Toast } from './Toast';
+import { RequestHelper } from '../Utils/RequestHelper.js';
 
 export class LoginModal {
   private modalElement: HTMLDialogElement;
@@ -36,16 +35,17 @@ export class LoginModal {
     if (this.submitButton) {
       this.submitButton.addEventListener('click', async (event) => {
         event.preventDefault();
+
         const formData = {
           mail: (document.getElementById('mail') as HTMLInputElement).value,
           password: (document.getElementById('password') as HTMLInputElement).value,
         };
+
         const response = await RequestHelper.post('/login', formData);
         if (response) {
-          console.log('successful login');
-          window.location.href = '/app';
-          new Toast('success', 'You are now logged in !');
           this.close();
+          sessionStorage.setItem('showToast', 'You are now logged in!');
+          window.location.href = '/app';
         }
       });
     }

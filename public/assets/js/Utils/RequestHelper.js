@@ -1,4 +1,6 @@
+import { Toast } from '../Components/Toast.js';
 export class RequestHelper {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static async post(url, data) {
         try {
             const response = await fetch(url, {
@@ -8,13 +10,17 @@ export class RequestHelper {
                 },
                 body: JSON.stringify(data),
             });
+            const result = await response.json();
             if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
+                new Toast('error', result.message || 'An error occurred');
+                return null;
             }
-            return await response.json();
+            return result;
         }
         catch (error) {
-            console.error('Request failed', error);
+            console.error('Unexpected error: ', error);
+            new Toast('error', 'Failed sending request. Try again later.');
+            return null;
         }
     }
     static async get(url) {

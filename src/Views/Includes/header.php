@@ -1,5 +1,6 @@
 <?php
 $current_page = $_SERVER['REQUEST_URI'];
+var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +11,7 @@ $current_page = $_SERVER['REQUEST_URI'];
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="<?= HOME_URL ?>assets/css/output.css">
   <script type="module" src="<?= HOME_URL ?>assets/js/main.js"></script>
-  <?php if (isset($_SESSION['user_id'])): ?>
+  <?php if (isset($_SESSION['userId'])): ?>
     <script type="module" src="<?= HOME_URL ?>assets/js/app.js"></script>
   <?php endif ?>
   <title>NatterBase</title>
@@ -26,10 +27,10 @@ $current_page = $_SERVER['REQUEST_URI'];
         <nav class="flex-1">
           <ul class="flex justify-center space-x-4">
             <li><a href="/" class="<?= $current_page == '/' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Home</a></li>
-            <li><a href="/about" class="<?= $current_page == '/about' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">About</a></li>
+            <li><a href="/features" class="<?= $current_page == '/features' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Features</a></li>
           </ul>
         </nav>
-        <div class="btn btn-base" id="navbar-login-button">Connection</div>
+        <div class="btn btn-base" id="navbar-login-button">Web app</div>
       </div>
 
       <!-- Burger button -->
