@@ -4,7 +4,7 @@ include __DIR__ . '/Includes/interface.php';
 ?>
 
 <main>
-  <p>Error 404 - Page not found</p>
+  <p><?= 'Error ' . http_response_code() . ': ' . $view_message ?></p>
 </main>
 
 <?php

@@ -17,3 +17,4 @@ try {
 }
 
 $router = new Router();
+$router->handleRequest();

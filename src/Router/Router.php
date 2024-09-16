@@ -18,7 +18,6 @@ class Router
       PageController::class
     ];
     $this->loadRoutesFromControllers($this->controllers);
-    $this->handleRequest();
   }
 
   private function loadRoutesFromControllers(array $controllerClasses): void
@@ -31,11 +30,10 @@ class Router
         $routeAttribute = $ctrlMethod->getAttributes(Route::class)[0] ?? [];
         if (!$routeAttribute) continue;
 
-        $routeInstance = $routeAttribute->newInstance();
-
         $authAttribute = $ctrlMethod->getAttributes(Authorization::class)[0] ?? null;
         $authLevel = $authAttribute ? $authAttribute->newInstance()->authLevel : 0;
 
+        $routeInstance = $routeAttribute->newInstance();
         $this->registerRoute(
           $routeInstance->method,
           $routeInstance->path,
@@ -54,19 +52,27 @@ class Router
     ];
   }
 
-  private function handleRequest(): void
+  public function handleRequest(): void
   {
+    $pageController = new PageController();
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    $route = $this->routes[$requestMethod][$path];
-    $userAuthLevel = isset($_SESSION['authLevel']) ? $_SESSION['authLevel'] : 0;
+    $route = $this->routes[$requestMethod][$path] ?? null;
+    $userAuthLevel = $_SESSION['authLevel'] ?? 0;
 
-    if (isset($route) && $userAuthLevel >= $route['authLevel']) {
-      call_user_func($route['callback']);
-    } else {
+    if (!$route) {
       http_response_code(404);
-      $pageController = new PageController();
-      $pageController->displayNotFoundPage();
+      $pageController->displayErrorPage('Page not found.');
+      return;
     }
+
+    if ($userAuthLevel < $route['authLevel']) {
+      http_response_code(403);
+      $pageController->displayErrorPage('Please log in or register to access this content.');
+      return;
+    }
+
+    http_response_code(200);
+    call_user_func($route['callback']);
   }
 }

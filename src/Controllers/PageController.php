@@ -2,6 +2,7 @@
 
 namespace src\Controllers;
 
+use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
 use src\Services\Response;
 
@@ -17,15 +18,16 @@ class PageController
   }
 
   #[Route('GET', HOME_URL . 'about')]
+  #[Authorization(1)]
   public function displayAboutPage(): void
   {
     $this->render("about");
     exit;
   }
 
-  public function displayNotFoundPage(): void
+  public function displayErrorPage(string $message): void
   {
-    $this->render("404");
+    $this->render("Error", ["message" => $message]);
     exit;
   }
 }
