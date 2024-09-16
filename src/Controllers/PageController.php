@@ -18,7 +18,6 @@ class PageController
   }
 
   #[Route('GET', HOME_URL . 'about')]
-  #[Authorization(1)]
   public function displayAboutPage(): void
   {
     $this->render("about");

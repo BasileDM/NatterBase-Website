@@ -1,4 +1,4 @@
-export class Modal {
+export class LoginModal {
   private modalElement: HTMLDialogElement;
   private closeButtonId: string;
 

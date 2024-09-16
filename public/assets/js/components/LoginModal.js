@@ -1,4 +1,4 @@
-export class Modal {
+export class LoginModal {
     constructor(modalId, triggerButtonIds) {
         this.modalElement = document.getElementById(modalId);
         this.closeButtonId = 'modal-close-btn';
