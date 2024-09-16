@@ -596,6 +596,10 @@ video {
   padding-right: 1rem;
 }
 
+.btn:hover {
+  cursor: pointer;
+}
+
 .btn-base {
   --tw-bg-opacity: 1;
   background-color: rgb(59 130 246 / var(--tw-bg-opacity));
@@ -650,6 +654,10 @@ video {
   border-left-width: 4px;
   --tw-border-opacity: 1;
   border-left-color: rgb(239 68 68 / var(--tw-border-opacity));
+}
+
+.static {
+  position: static;
 }
 
 .fixed {

@@ -1,6 +1,6 @@
 <dialog id="login-modal" class="border-[1px] border-gray-700 rounded-lg p-6 max-w-lg mx-auto bg-gray-800 text-white shadow-lg">
   <h3 class="text-lg font-bold mb-4">Login</h3>
-  <button id="modal-close-btn" class="absolute top-3 right-3 text-gray-400 hover:text-white">X</button>
+  <button id="login-modal-close-btn" class="absolute top-3 right-3 text-gray-400 hover:text-white">X</button>
   <form method="dialog" class="space-y-4">
     <div>
       <label for="username" class="block text-sm font-medium">Username*</label>
@@ -11,7 +11,7 @@
       <input id="password" type="password" class="w-full p-2 rounded-md bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
     </div>
     <div class="flex justify-end">
-      <button type="submit" class="btn btn-base">Login</button>
+      <button id="login-modal-submit-btn" type="submit" class="btn btn-base">Login</button>
     </div>
   </form>
 </dialog>

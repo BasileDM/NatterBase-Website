@@ -1,10 +1,14 @@
+import { RequestHelper } from '../Utils/RequestHelper';
+
 export class LoginModal {
   private modalElement: HTMLDialogElement;
-  private closeButtonId: string;
+  private closeButton: HTMLElement;
+  private submitButton: HTMLElement;
 
   constructor(modalId: string, triggerButtonIds: string[]) {
     this.modalElement = document.getElementById(modalId) as HTMLDialogElement;
-    this.closeButtonId = 'modal-close-btn';
+    this.closeButton = document.getElementById('login-modal-close-btn') as HTMLElement;
+    this.submitButton = document.getElementById('login-modal-submit-btn') as HTMLElement;
     this.bindEvents(triggerButtonIds);
   }
 
@@ -16,9 +20,8 @@ export class LoginModal {
       }
     });
 
-    const closeButton = document.getElementById(this.closeButtonId);
-    if (closeButton) {
-      closeButton.addEventListener('click', () => this.close());
+    if (this.closeButton) {
+      this.closeButton.addEventListener('click', () => this.close());
     }
 
     // Close modal when clicking outside
@@ -27,6 +30,22 @@ export class LoginModal {
         this.close();
       }
     });
+
+    // Submit button
+    if (this.submitButton) {
+      this.submitButton.addEventListener('click', async (event) => {
+        event.preventDefault();
+        const formData = {
+          username: (document.getElementById('username') as HTMLInputElement).value,
+          password: (document.getElementById('password') as HTMLInputElement).value,
+        };
+        const response = await RequestHelper.post('/login', formData);
+        if (response) {
+          console.log('successful login');
+          this.close();
+        }
+      });
+    }
   }
 
   private open(): void {

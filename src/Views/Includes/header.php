@@ -29,7 +29,7 @@ $current_page = $_SERVER['REQUEST_URI'];
             <li><a href="/about" class="<?= $current_page == '/about' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">About</a></li>
           </ul>
         </nav>
-        <a href="#" class="btn btn-base" id="navbar-login-button">Connection</a>
+        <div class="btn btn-base" id="navbar-login-button">Connection</div>
       </div>
 
       <!-- Burger button -->
