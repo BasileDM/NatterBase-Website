@@ -27,7 +27,7 @@ export class LoginModal {
             this.submitButton.addEventListener('click', async (event) => {
                 event.preventDefault();
                 const formData = {
-                    username: document.getElementById('username').value,
+                    mail: document.getElementById('mail').value,
                     password: document.getElementById('password').value,
                 };
                 const response = await RequestHelper.post('/login', formData);

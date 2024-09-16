@@ -6,7 +6,7 @@ use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
 use src\Services\Response;
 
-class PageController
+final class PageController
 {
   use Response;
 
