@@ -4,7 +4,7 @@ namespace src\Services;
 
 trait Response
 {
-  public function render(string $view, array $data = ['section' => '', 'action' => ''])
+  private function render(string $view, array $data = ['section' => '', 'action' => ''])
   {
     if (!empty($data)) {
       foreach ($data as $key => $value) {
@@ -18,5 +18,17 @@ trait Response
       $action = '';
     }
     include_once __DIR__ . '/../Views/' . $view . ".php";
+  }
+
+  private function jsonResponse(int $code, string $message = '', string $redirect = ''): void 
+  {
+    http_response_code($code);
+    echo json_encode([
+      'message' => $message
+    ]);
+    if (!empty($redirect)) {
+      header('Location: ' . $redirect);
+    }
+    exit;
   }
 }

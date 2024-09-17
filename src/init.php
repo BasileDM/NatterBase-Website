@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 use src\Database\Database;
@@ -17,8 +16,4 @@ try {
 }
 
 $router = new Router();
-
-$method = $_SERVER['REQUEST_METHOD'];
-$route = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
-$router->dispatch($method, $route);
+$router->handleRequest();

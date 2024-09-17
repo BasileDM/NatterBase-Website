@@ -2,63 +2,79 @@
 
 namespace src\Router;
 
-use ReflectionClass;
-use ReflectionMethod;
+use src\Controllers\AuthController;
 use src\Controllers\PageController;
-use src\Router\Route;
+use src\Router\Attributes\Authorization;
+use src\Router\Attributes\Route;
+use src\Utils\ReflectionUtils;
 
 class Router
 {
   private array $routes = [];
-  private array $controllers = [
-    PageController::class
-  ];
+  private array $controllers;
 
   public function __construct()
   {
+    $this->controllers = [
+      PageController::class,
+      AuthController::class
+    ];
     $this->loadRoutesFromControllers($this->controllers);
   }
 
-  private function registerRoute(string $method, string $path, callable $callback): void
+  private function loadRoutesFromControllers(array $controllerClasses): void
   {
-    $this->routes[$method][$path] = $callback;
-  }
+    foreach ($controllerClasses as $ctrlClass) {
+      $ctrlInstance = new $ctrlClass();
+      $ctrlMethods = ReflectionUtils::getPublicMethods($ctrlInstance);
 
-  private function getMethods(object $class): array
-  {
-    $reflector = new ReflectionClass($class);
-    return $reflector->getMethods(ReflectionMethod::IS_PUBLIC);
-  }
+      foreach ($ctrlMethods as $ctrlMethod) {
+        $routeAttribute = $ctrlMethod->getAttributes(Route::class)[0] ?? [];
+        if (!$routeAttribute) continue;
 
-  private function loadRoutesFromControllers(array $controllers): void
-  {
-    foreach ($controllers as $controller) {
-      $controller = new $controller();
-      $controllerMethods = $this->getMethods($controller);
+        $authAttribute = $ctrlMethod->getAttributes(Authorization::class)[0] ?? null;
+        $authLevel = $authAttribute ? $authAttribute->newInstance()->authLevel : 0;
 
-      foreach ($controllerMethods as $method) {
-        $attributes = $method->getAttributes(Route::class);
-
-        foreach ($attributes as $attribute) {
-          $route = $attribute->newInstance();
-          $this->registerRoute(
-            $route->method,
-            $route->path,
-            [$controller, $method->getName()]
-          );
-        }
+        $routeInstance = $routeAttribute->newInstance();
+        $this->registerRoute(
+          $routeInstance->method,
+          $routeInstance->path,
+          [$ctrlInstance, $ctrlMethod->getName()],
+          $authLevel
+        );
       }
     }
   }
 
-  public function dispatch(string $method, string $path): void
+  private function registerRoute(string $requestMethod, string $path, callable $callback, int $authLevel): void
   {
-    if (isset($this->routes[$method][$path])) {
-      call_user_func($this->routes[$method][$path]);
-    } else {
+    $this->routes[$requestMethod][$path] = [
+      'callback' => $callback,
+      'authLevel' => $authLevel
+    ];
+  }
+
+  public function handleRequest(): void
+  {
+    $pageController = new PageController();
+    $requestMethod = $_SERVER['REQUEST_METHOD'];
+    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $route = $this->routes[$requestMethod][$path] ?? null;
+    $userAuthLevel = $_SESSION['authLevel'] ?? 0;
+
+    if (!$route) {
       http_response_code(404);
-      $pageController = new PageController();
-      $pageController->displayNotFoundPage();
+      $pageController->displayErrorPage('Page not found.');
+      return;
     }
+
+    if ($userAuthLevel < $route['authLevel']) {
+      http_response_code(403);
+      $pageController->displayErrorPage('Please log in or register to access this content.');
+      return;
+    }
+
+    http_response_code(200);
+    call_user_func($route['callback']);
   }
 }
