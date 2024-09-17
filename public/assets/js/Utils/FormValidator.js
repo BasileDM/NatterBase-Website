@@ -4,6 +4,7 @@ export class FormValidator {
         this.inputFields = this.formElement.querySelectorAll('input');
     }
     displayFormErrors(errors) {
+        console.log(errors);
         // Clear any error class or message
         this.inputFields.forEach((input) => {
             input.classList.remove('invalid-input');
@@ -18,7 +19,7 @@ export class FormValidator {
             const input = this.formElement.querySelector(`input[id*='${key}']`);
             if (input) {
                 input.classList.add('invalid-input');
-                const errorSpan = this.formElement.querySelector(`.${input.id}-error-display`);
+                const errorSpan = this.formElement.querySelector(`#${input.id}-error-display`);
                 if (errorSpan) {
                     errorSpan.textContent = errors[key];
                 }

@@ -25,6 +25,15 @@ final class Validator
       }
     }
 
+    if (isset($inputs['username'])) {
+      $result = self::validateUsername($inputs['username']);
+      if (isset($result['error'])) {
+        $errors['username'] = $result['error'];
+      } else {
+        $sanitizedInputs['username'] = $result['sanitized'];
+      }
+    }
+
     if (isset($inputs['password'])) {
       $result = self::validatePassword($inputs['password']);
       if (isset($result['error'])) {
@@ -36,7 +45,7 @@ final class Validator
 
     if (isset($inputs['confirmPassword'])) {
       if (!isset($inputs['password']) || $inputs['confirmPassword'] !== $inputs['password']) {
-        $errors['confirmPassword'] = 'Passwords do not match';
+        $errors['password'] = 'Passwords do not match';
       }
     }
 
@@ -70,5 +79,22 @@ final class Validator
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
     return ['sanitized' => $hashedPassword];
+  }
+
+  private static function validateUsername(string $username): array
+  {
+    $username = self::sanitizeString($username);
+    if (strlen($username) < 3 || strlen($username) > 80) {
+      return ['error' => 'Username must be between 3 and 80 characters'];
+    }
+    return ['sanitized' => $username];
+  }
+
+  private static function sanitizeString(string $string): string
+  {
+    $string = trim($string);
+    $string = strip_tags($string);
+    $string = htmlspecialchars($string);
+    return $string;
   }
 }
