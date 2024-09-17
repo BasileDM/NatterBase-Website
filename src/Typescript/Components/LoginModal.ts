@@ -108,8 +108,9 @@ export class LoginModal {
           this.close();
           window.location.href = '/home?confirmRegistration=true';
         }
-        catch {
-          new Toast('error', 'Failed sending request. Try again later.');
+        catch (error) {
+          console.error('Unexpected error: ', error);
+          new Toast('error', '500: Server error. Try again later.');
         }
       });
     }

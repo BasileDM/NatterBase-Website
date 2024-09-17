@@ -42,9 +42,8 @@ final class Validator
 
     if (!empty($errors)) {
       return ['errors' => $errors];
-    } else {
-      return ['sanitized' => $sanitizedInputs];
     }
+    return ['sanitized' => $sanitizedInputs];
   }
 
   private static function validateMail(string $email): array

@@ -17,13 +17,14 @@ final class AuthController
     $request = json_decode(file_get_contents('php://input'), true);
     $validationResult = Validator::validateInputs($request);
 
-    if (isset($validationResult['error'])) {
-      $this->jsonResponse(400, $validationResult['error']);
-      return;
+    if (isset($validationResult['errors'])) {
+      $this->formErrorsResponse(400, $validationResult['errors']);
+      exit;
     } else {
       Authenticator::register($validationResult['sanitized']);
+      $this->jsonResponse(200, 'Registration successful!', '/login');
+      exit;
     }
-    $this->jsonResponse(200, 'Registration successful!', '/login');
   }
 
   #[Route('POST', '/login')]

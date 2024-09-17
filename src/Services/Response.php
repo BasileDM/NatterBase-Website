@@ -31,4 +31,13 @@ trait Response
     }
     exit;
   }
+
+  private function formErrorsResponse(int $code, array $errors): void
+  {
+    http_response_code($code);
+    echo json_encode([
+      'formErrors' => $errors
+    ]);
+    exit;
+  }
 }
