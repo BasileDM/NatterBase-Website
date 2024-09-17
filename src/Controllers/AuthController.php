@@ -4,9 +4,11 @@ namespace src\Controllers;
 
 use src\Router\Attributes\Route;
 use src\Services\Authenticator;
+use src\Services\Response;
 
 final class AuthController
 {
+  use Response;
 
   #[Route('POST', '/login')]
   public function login(): void
@@ -15,37 +17,25 @@ final class AuthController
     $mail = $request['mail'] ?? null;
     $password = $request['password'] ?? null;
 
-    if(!$mail || !$password) {
-      http_response_code(400);
-      echo json_encode([
-        'message' => 'Please fill out all the fields',
-      ]);
-      exit;
-    }
+    $responseCode = match (true) {
+      !$mail || !$password => 400,
+      !Authenticator::authenticate($mail, $password) => 401,
+      default => 200,
+    };
 
-    if (!Authenticator::authenticate($mail, $password)) {
-      http_response_code(401);
-      echo json_encode([
-        'message' => 'Invalid credentials',
-      ]);
-      exit;
-    }
+    $message = match ($responseCode) {
+      400 => 'Please fill out all the fields',
+      401 => 'Invalid credentials',
+      200 => 'Login successful',
+    };
 
-    http_response_code(200);
-    echo json_encode([
-      'message' => 'Login successful',
-    ]);
+    $this->jsonResponse($message, $responseCode);
   }
 
   #[Route('GET', '/logout')]
   public function logout(): void
   {
-    http_response_code(200);
     session_destroy();
-    echo json_encode([
-      'success' => true,
-      'message' => 'Logout successful',
-    ]);
-    header('Location: /');
+    $this->jsonResponse('Logout successful', 200, HOME_URL);
   }
 }

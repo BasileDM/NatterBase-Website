@@ -10,21 +10,21 @@ final class PageController
 {
   use Response;
 
-  #[Route('GET', HOME_URL)]
+  #[Route('GET', '/')]
   public function displayHomePage(): void
   {
     $this->render("home");
     exit;
   }
 
-  #[Route('GET', HOME_URL . 'features')]
+  #[Route('GET', '/features')]
   public function displayAboutPage(): void
   {
     $this->render("features");
     exit;
   }
 
-  #[Route('GET', HOME_URL . 'app')]
+  #[Route('GET', '/app')]
   #[Authorization(1)]
   public function displayAppPage(): void
   {
