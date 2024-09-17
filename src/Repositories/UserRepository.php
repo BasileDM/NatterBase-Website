@@ -39,4 +39,24 @@ final class UserRepository
     $user = $statement->fetchObject(User::class);
     return $user;
   }
+
+  public function insertUser(User $user): User
+  {
+    $user->setIsActivated(0);
+    $user->setGdpr(date('Y-m-d H:i:s'));
+    $user->setRoleName('user');
+    $query = 'INSERT INTO Users (mail, username, passwordHash, isActivated, gdpr, id_role)
+              VALUES (:mail, :username, :passwordHash, :isActivated, :gdpr, :id_role)';
+    $statement = $this->pdo->prepare($query);
+    $statement->execute([
+      ':mail' => $user->getMail(),
+      ':username' => $user->getUsername(),
+      ':password' => $user->getPasswordHash(),
+      ':isActivated' => $user->isIsActivated(),
+      ':gdpr' => $user->getGdpr(),
+      
+    ]);
+    $user->setIdUser($this->pdo->lastInsertId());
+    return $user;
+  }
 }
