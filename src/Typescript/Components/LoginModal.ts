@@ -108,7 +108,7 @@ export class LoginModal {
             return;
           }
           this.close();
-          window.location.href = '/home?confirmRegistration=true';
+          window.location.href = '/home?notice=registered';
         }
         catch (error) {
           console.error('Unexpected error: ', error);

@@ -21,8 +21,8 @@ final class AuthController
       $this->formErrorsResponse(400, $validationResult['errors']);
       exit;
     } else {
-      Authenticator::register($validationResult['sanitized']);
-      $this->jsonResponse(200, 'Registration successful!', '/login');
+      // Authenticator::register($validationResult['sanitized']);
+      $this->jsonResponse(200, 'Registration successful!');
       exit;
     }
   }

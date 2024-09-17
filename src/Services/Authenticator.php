@@ -9,7 +9,9 @@ final class Authenticator
 {
   public static function register(array $inputs): void
   {
-    var_dump($inputs);
+    $userRepository = new UserRepository();
+    $user = new User($inputs['mail'], $inputs['username'], $inputs['password'], 'user');
+    $userRepository->insertUser($user);
   }
 
   public static function authenticate(string $mail, string $password): bool|User
