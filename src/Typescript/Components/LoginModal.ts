@@ -1,3 +1,4 @@
+import { FormValidator } from '../Utils/FormValidator.js';
 import { RequestHelper } from '../Utils/RequestHelper.js';
 import { Toast } from './Toast.js';
 
@@ -101,8 +102,9 @@ export class LoginModal {
         try {
           const response = await RequestHelper.post('/register', formData);
           const responseBody = await response.json();
-          if (!response.ok) {
-            new Toast('error', responseBody.message || 'An error occurred');
+          if (responseBody.formErrors) {
+            const formValidator = new FormValidator('register-form');
+            formValidator.displayFormErrors(responseBody.formErrors);
             return;
           }
           this.close();

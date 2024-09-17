@@ -26,4 +26,8 @@
   .toast-error {
     @apply border-l-4 border-l-red-500;
   }
+
+  .invalid-input {
+    @apply border-red-500 border-[1px];
+  }
 }
