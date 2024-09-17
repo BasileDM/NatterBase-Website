@@ -7,6 +7,11 @@ use src\Repositories\UserRepository;
 
 final class Authenticator
 {
+  public static function register(array $inputs): void
+  {
+    var_dump($inputs);
+  }
+
   public static function authenticate(string $mail, string $password): bool|User
   {
     $userRepository = new UserRepository();

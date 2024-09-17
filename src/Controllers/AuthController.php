@@ -15,15 +15,14 @@ final class AuthController
   public function register(): void
   {
     $request = json_decode(file_get_contents('php://input'), true);
-    $mail = $request['mail'] ?? null;
-    $username = $request['username'] ?? null;
-    $password = $request['password'] ?? null;
-    $confirmPassword = $request['confirmPassword'] ?? null;
-    $formErrors = Validator::validateInputs($mail, $username, $password, $confirmPassword);
-    if (!empty($formErrors)) {
-      $this->jsonResponse(400, 'Please fill out all the fields', formErrors: $formErrors);
+    $validationResult = Validator::validateInputs($request);
+
+    if (isset($validationResult['error'])) {
+      $this->jsonResponse(400, $validationResult['error']);
+      return;
+    } else {
+      Authenticator::register($validationResult['sanitized']);
     }
-    $user = Authenticator::register($mail, $username, $password);
     $this->jsonResponse(200, 'Registration successful!', '/login');
   }
 
