@@ -5,6 +5,7 @@ namespace src\Controllers;
 use src\Router\Attributes\Route;
 use src\Services\Authenticator;
 use src\Services\Response;
+use src\Utils\Validator;
 
 final class AuthController
 {
@@ -13,7 +14,17 @@ final class AuthController
   #[Route('POST', '/register')]
   public function register(): void
   {
-    $this->jsonResponse(200, 'Register page');
+    $request = json_decode(file_get_contents('php://input'), true);
+    $mail = $request['mail'] ?? null;
+    $username = $request['username'] ?? null;
+    $password = $request['password'] ?? null;
+    $confirmPassword = $request['confirmPassword'] ?? null;
+    $formErrors = Validator::validateInputs($mail, $username, $password, $confirmPassword);
+    if (!empty($formErrors)) {
+      $this->jsonResponse(400, 'Please fill out all the fields', formErrors: $formErrors);
+    }
+    $user = Authenticator::register($mail, $username, $password);
+    $this->jsonResponse(200, 'Registration successful!', '/login');
   }
 
   #[Route('POST', '/login')]

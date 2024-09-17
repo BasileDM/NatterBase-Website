@@ -91,9 +91,13 @@ export class LoginModal {
       this.submitRegisterFormBtn.addEventListener('click', async (event) => {
         event.preventDefault();
         const formData = {
-          mail: (document.getElementById('mail') as HTMLInputElement).value,
-          password: (document.getElementById('password') as HTMLInputElement).value,
+          mail: (document.getElementById('mail-register') as HTMLInputElement).value,
+          username: (document.getElementById('username') as HTMLInputElement).value,
+          password: (document.getElementById('password-register') as HTMLInputElement).value,
+          confirmPassword: (document.getElementById('password-confirm') as HTMLInputElement).value,
+          gdpr: (document.getElementById('gdpr') as HTMLInputElement).checked
         };
+
         try {
           const response = await RequestHelper.post('/register', formData);
           const responseBody = await response.json();
