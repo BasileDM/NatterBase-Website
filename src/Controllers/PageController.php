@@ -11,6 +11,13 @@ final class PageController
   use Response;
 
   #[Route('GET', '/')]
+  public function redirectToHomePage(): void
+  {
+    header("Location: /home");
+    exit;
+  }
+
+  #[Route('GET', '/home')]
   public function displayHomePage(): void
   {
     $this->render("home");

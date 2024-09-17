@@ -1,6 +1,6 @@
 <dialog
   id="login-modal"
-  class="overflow-hidden border-[1px] border-gray-700 rounded-lg p-6 max-w-lg mx-auto bg-gray-800 text-white shadow-lg"
+  class="max-h-[80vh] overflow-y-auto border-[1px] border-gray-700 rounded-lg p-6 max-w-lg mx-auto bg-gray-800 text-white shadow-lg"
 >
   <h3 id="login-modal-title" class="text-lg font-bold mb-4">Login</h3>
   <button id="login-modal-close-btn" class="absolute top-3 right-3 text-gray-400 hover:text-white">X</button>
@@ -31,6 +31,9 @@
   </form>
   <!-- Register form -->
   <form id="register-form" method="dialog" class="hidden space-y-4">
+    <div id="modal-login-btn" class="flex justify-end text-sm text-gray-400 hover:text-white">
+      <span class="hover:underline hover:cursor-pointer">Already have an account? Login here!</span>
+    </div>
     <div>
       <label for="mail-register" class="block text-sm font-medium">Mail*</label>
       <input

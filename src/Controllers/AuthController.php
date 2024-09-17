@@ -10,6 +10,12 @@ final class AuthController
 {
   use Response;
 
+  #[Route('POST', '/register')]
+  public function register(): void
+  {
+    $this->jsonResponse(200, 'Register page');
+  }
+
   #[Route('POST', '/login')]
   public function login(): void
   {

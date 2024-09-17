@@ -10,6 +10,7 @@ export class LoginModal {
         this.submitLoginFormBtn = document.getElementById('login-modal-submit-btn');
         this.submitRegisterFormBtn = document.getElementById('register-modal-submit-btn');
         this.registerButton = document.getElementById('modal-register-btn');
+        this.loginButton = document.getElementById('modal-login-btn');
         this.bindEvents(triggerButtonIds);
     }
     bindEvents(triggerButtonIds) {
@@ -35,6 +36,12 @@ export class LoginModal {
             this.registerForm.classList.remove('hidden');
             this.loginForm.classList.add('hidden');
             this.titleElement.textContent = 'Register';
+        });
+        // Display login form
+        this.loginButton.addEventListener('click', () => {
+            this.registerForm.classList.add('hidden');
+            this.loginForm.classList.remove('hidden');
+            this.titleElement.textContent = 'Login';
         });
         // Submit login form button
         if (this.submitLoginFormBtn) {

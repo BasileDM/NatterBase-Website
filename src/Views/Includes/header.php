@@ -30,7 +30,11 @@ var_dump($_SESSION);
             <li><a href="/features" class="<?= $current_page == '/features' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Features</a></li>
           </ul>
         </nav>
-        <div class="btn btn-base" id="navbar-login-button">Web app</div>
+        <?php if (isset($_SESSION['isAuth'])): ?>
+          <a id="navbar-app-button" class="btn btn-base" href="/app">Web app</a>
+        <?php else: ?>
+          <div id="navbar-login-button" class="btn btn-base">Web app</div>
+        <?php endif ?>
       </div>
 
       <!-- Burger button -->
