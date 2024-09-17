@@ -20,7 +20,7 @@ trait Response
     include_once __DIR__ . '/../Views/' . $view . ".php";
   }
 
-  private function jsonResponse(string $message, int $code = 200, string $redirect = ''): void 
+  private function jsonResponse(int $code, string $message = '', string $redirect = ''): void 
   {
     http_response_code($code);
     echo json_encode([
