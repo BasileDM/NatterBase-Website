@@ -11,6 +11,7 @@ final class Validator
       'username' => $request['username'] ?? null,
       'password' => $request['password'] ?? null,
       'confirmPassword' => $request['confirmPassword'] ?? null,
+      'gdpr' => $request['gdpr'] ?? null
     ];
 
     $errors = [];
@@ -49,6 +50,12 @@ final class Validator
       }
     }
 
+    if (isset($inputs['gdpr'])) {
+      if ($inputs['gdpr'] !== true) {
+        $errors['gdpr'] = 'You must accept the GDPR';
+      }
+    }
+
     if (!empty($errors)) {
       return ['errors' => $errors];
     }
@@ -59,7 +66,7 @@ final class Validator
   {
     $sanitizedEmail = filter_var($email, FILTER_SANITIZE_EMAIL);
 
-    if (!filter_var($sanitizedEmail, FILTER_VALIDATE_EMAIL)) {
+    if ($sanitizedEmail !== $email || !filter_var($sanitizedEmail, FILTER_VALIDATE_EMAIL)) {
       return ['error' => 'Invalid email address'];
     }
 
@@ -83,7 +90,12 @@ final class Validator
 
   private static function validateUsername(string $username): array
   {
-    $username = self::sanitizeString($username);
+    $cleanUsername = self::sanitizeString($username);
+
+    if ($cleanUsername !== $username) {
+      return ['error' => 'Invalid username'];
+    }
+
     if (strlen($username) < 3 || strlen($username) > 80) {
       return ['error' => 'Username must be between 3 and 80 characters'];
     }
