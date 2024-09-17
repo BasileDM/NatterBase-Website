@@ -1,4 +1,5 @@
 import { RequestHelper } from '../Utils/RequestHelper.js';
+import { Toast } from './Toast.js';
 export class LoginModal {
     constructor(modalId, triggerButtonIds) {
         this.modalElement = document.getElementById(modalId);
@@ -30,11 +31,19 @@ export class LoginModal {
                     mail: document.getElementById('mail').value,
                     password: document.getElementById('password').value,
                 };
-                const response = await RequestHelper.post('/login', formData);
-                if (response) {
+                try {
+                    const response = await RequestHelper.post('/login', formData);
+                    const responseBody = await response.json();
+                    if (!response.ok) {
+                        new Toast('error', responseBody.message || 'An error occurred');
+                        return;
+                    }
                     this.close();
                     sessionStorage.setItem('showToast', 'You are now logged in!');
                     window.location.href = '/app';
+                }
+                catch {
+                    new Toast('error', 'Failed sending request. Try again later.');
                 }
             });
         }
