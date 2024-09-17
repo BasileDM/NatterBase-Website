@@ -13,7 +13,7 @@ export class FormValidator {
     // Clear any error class or message
     this.inputFields.forEach((input) => {
       input.classList.remove('invalid-input');
-      const errorSpan = this.formElement.querySelector(`.${input.id}-error-display`);
+      const errorSpan = this.formElement.querySelector(`#${input.id}-error-display`);
       if (errorSpan) {
         errorSpan.textContent = '';
       }

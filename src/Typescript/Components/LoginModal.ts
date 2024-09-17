@@ -52,14 +52,14 @@ export class LoginModal {
       this.registerForm.classList.remove('hidden');
       this.loginForm.classList.add('hidden');
       this.titleElement.textContent = 'Register';
-    })
+    });
 
     // Display login form
     this.loginButton.addEventListener('click', () => {
       this.registerForm.classList.add('hidden');
       this.loginForm.classList.remove('hidden');
       this.titleElement.textContent = 'Login';
-    })
+    });
 
     // Submit login form button
     if (this.submitLoginFormBtn) {
@@ -96,7 +96,7 @@ export class LoginModal {
           username: (document.getElementById('username') as HTMLInputElement).value,
           password: (document.getElementById('password-register') as HTMLInputElement).value,
           confirmPassword: (document.getElementById('password-confirm') as HTMLInputElement).value,
-          gdpr: (document.getElementById('gdpr') as HTMLInputElement).checked
+          gdpr: (document.getElementById('gdpr') as HTMLInputElement).checked,
         };
 
         try {

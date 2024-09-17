@@ -77,7 +77,7 @@ export class LoginModal {
                     username: document.getElementById('username').value,
                     password: document.getElementById('password-register').value,
                     confirmPassword: document.getElementById('password-confirm').value,
-                    gdpr: document.getElementById('gdpr').checked
+                    gdpr: document.getElementById('gdpr').checked,
                 };
                 try {
                     const response = await RequestHelper.post('/register', formData);
