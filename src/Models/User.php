@@ -18,10 +18,17 @@ final class User
 
   use Hydration;
 
-  // public function getRoleId(): int
-  // {
-  //   return self::getAuthLevelFromRole($this->roleName);
-  // }
+  public function getAuthLevelFromRole(): int
+  {
+    switch ($this->getRoleName()) {
+      case 'admin':
+        return 2;
+      case 'user':
+        return 1;
+      default:
+        return 0;
+    }
+  }
 
   /**
    * Get the value of idUser
