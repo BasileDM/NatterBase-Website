@@ -45,15 +45,15 @@ final class UserRepository
     $roleId = $this->getRoleIdFromName($user->getRoleName());
 
     $query = 'INSERT INTO Users (mail, username, password_hash, is_activated, gdpr, id_role)
-              VALUES (:mail, :username, :passwordHash, :isActivated, :gdpr, :id_role)';
+              VALUES (:mail, :username, :passwordHash, :isActivated, :gdpr, :idRole)';
     $statement = $this->pdo->prepare($query);
     $statement->execute([
       ':mail' => $user->getMail(),
       ':username' => $user->getUsername(),
-      ':password' => $user->getPasswordHash(),
+      ':passwordHash' => $user->getPasswordHash(),
       ':isActivated' => $user->isIsActivated(),
       ':gdpr' => $user->getGdpr(),
-      ':id_role' => $roleId
+      ':idRole' => $roleId
     ]);
     $user->setIdUser($this->pdo->lastInsertId());
     return $user;

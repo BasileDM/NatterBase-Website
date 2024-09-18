@@ -13,8 +13,8 @@ final class User
   private string $passwordHash;
   private bool $isActivated;
   private string $gdpr;
-  private string $twitchId;
-  private string $twitchUsername;
+  private string|null $twitchId;
+  private string|null $twitchUsername;
   private string $roleName;
 
   use Hydration;
@@ -22,13 +22,11 @@ final class User
   public function create(array $inputs): User|false
   {
     $this->hydrateFromInputs($inputs);
-    var_dump($this);
-    exit;
     $userRepository = new UserRepository();
-    $mail = $this->getMail();
-    $existingUser = $userRepository->getUserByMail($mail);
+    $existingUser = $userRepository->getUserByMail($this->getMail());
 
-    if ($existingUser) return false;
+    if ($existingUser)
+      return false;
     else {
       $this->setIsActivated(0);
       $this->setGdpr(date('Y-m-d H:i:s'));
@@ -165,7 +163,7 @@ final class User
   /**
    * Get the value of twitchId
    */
-  public function getTwitchId(): string
+  public function getTwitchId(): string|null
   {
     return $this->twitchId;
   }
@@ -176,7 +174,7 @@ final class User
    * @param   string  $twitchId  
    * 
    */
-  public function setTwitchId(string $twitchId)
+  public function setTwitchId(string|null $twitchId)
   {
     $this->twitchId = $twitchId;
   }
@@ -184,7 +182,7 @@ final class User
   /**
    * Get the value of twitchUsername
    */
-  public function getTwitchUsername(): string
+  public function getTwitchUsername(): string|null
   {
     return $this->twitchUsername;
   }
@@ -195,7 +193,7 @@ final class User
    * @param   string  $twitchUsername  
    * 
    */
-  public function setTwitchUsername(string $twitchUsername)
+  public function setTwitchUsername(string|null $twitchUsername)
   {
     $this->twitchUsername = $twitchUsername;
   }

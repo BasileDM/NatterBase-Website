@@ -91,6 +91,7 @@ export class LoginModal {
     if (this.submitRegisterFormBtn) {
       this.submitRegisterFormBtn.addEventListener('click', async (event) => {
         event.preventDefault();
+
         const formData = {
           mail: (document.getElementById('mail-register') as HTMLInputElement).value,
           username: (document.getElementById('username') as HTMLInputElement).value,
