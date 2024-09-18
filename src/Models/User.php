@@ -28,7 +28,7 @@ final class User
     if ($existingUser)
       return false;
     else {
-      $this->setIsActivated(0);
+      $this->setIsActivated(false);
       $this->setGdpr(date('Y-m-d H:i:s'));
       $this->setRoleName('user');
       return $userRepository->insert($this);

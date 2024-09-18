@@ -28,8 +28,6 @@ final class AuthController
     if (!$result) {
       $this->jsonResponse(400, 'User already exists');
     } else {
-      var_dump($result);
-      exit;
       $this->jsonResponse(200, 'Registration successful', '/login');
     }
   }
