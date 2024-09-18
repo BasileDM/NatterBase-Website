@@ -40,11 +40,8 @@ final class UserRepository
     return $user;
   }
 
-  public function insertUser(User $user): User
+  public function insert(User $user): User
   {
-    $user->setIsActivated(0);
-    $user->setGdpr(date('Y-m-d H:i:s'));
-    $user->setRoleName('user');
     $roleId = $this->getRoleIdFromName($user->getRoleName());
 
     $query = 'INSERT INTO Users (mail, username, password_hash, is_activated, gdpr, id_role)
@@ -67,6 +64,6 @@ final class UserRepository
     $query = 'SELECT id_role FROM User_Roles WHERE name = :roleName';
     $statement = $this->pdo->prepare($query);
     $statement->execute([':roleName' => $roleName]);
-    return $statement->fetch();
+    return $statement->fetchColumn();
   }
 }

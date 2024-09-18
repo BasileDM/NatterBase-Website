@@ -2,6 +2,7 @@
 
 namespace src\Controllers;
 
+use src\Models\User;
 use src\Router\Attributes\Route;
 use src\Services\Authenticator;
 use src\Services\Response;
@@ -20,10 +21,14 @@ final class AuthController
     if (isset($validationResult['errors'])) {
       $this->formErrorsResponse(400, $validationResult['errors']);
       exit;
+    }
+
+    $user = new User();
+    $result = $user->create($validationResult['sanitized']);
+    if (!$result) {
+      $this->jsonResponse(400, 'User already exists');
     } else {
-      // Authenticator::register($validationResult['sanitized']);
-      $this->jsonResponse(200, 'Registration successful!');
-      exit;
+      $this->jsonResponse(200, 'Registration successful', '/login');
     }
   }
 

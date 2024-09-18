@@ -40,7 +40,7 @@ final class Validator
       if (isset($result['error'])) {
         $errors['password'] = $result['error'];
       } else {
-        $sanitizedInputs['password'] = $result['sanitized'];
+        $sanitizedInputs['passwordHash'] = $result['sanitized'];
       }
     }
 

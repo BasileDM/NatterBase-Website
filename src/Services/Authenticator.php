@@ -5,17 +5,8 @@ namespace src\Services;
 use src\Models\User;
 use src\Repositories\UserRepository;
 
-use function PHPSTORM_META\type;
-
 final class Authenticator
 {
-  public static function register(array $inputs): void
-  {
-    $userRepository = new UserRepository();
-    $user = new User($inputs['mail'], $inputs['username'], $inputs['password'], 'user');
-    $userRepository->insertUser($user);
-  }
-
   public static function authenticate(string $mail, string $password): User|false
   {
     $userRepository = new UserRepository();
