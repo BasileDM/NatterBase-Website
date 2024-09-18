@@ -16,7 +16,7 @@ final class UserRepository
     $this->pdo = $db->getDb();
   }
 
-  public function getUserById(int $id): User|bool
+  public function getUserById(int $id): User|false
   {
     $query = 'SELECT Users.*, User_Roles.name AS role_name
               FROM Users
@@ -28,7 +28,7 @@ final class UserRepository
     return $user;
   }
 
-  public function getUserByMail(string $mail): User|bool
+  public function getUserByMail(string $mail): User|false
   {
     $query = 'SELECT Users.*, User_Roles.name AS role_name
               FROM Users
@@ -38,5 +38,32 @@ final class UserRepository
     $statement->execute([':mail' => $mail]);
     $user = $statement->fetchObject(User::class);
     return $user;
+  }
+
+  public function insert(User $user): User
+  {
+    $roleId = $this->getRoleIdFromName($user->getRoleName());
+
+    $query = 'INSERT INTO Users (mail, username, password_hash, is_activated, gdpr, id_role)
+              VALUES (:mail, :username, :passwordHash, :isActivated, :gdpr, :idRole)';
+    $statement = $this->pdo->prepare($query);
+    $statement->execute([
+      ':mail' => $user->getMail(),
+      ':username' => $user->getUsername(),
+      ':passwordHash' => $user->getPasswordHash(),
+      ':isActivated' => $user->isIsActivated(),
+      ':gdpr' => $user->getGdpr(),
+      ':idRole' => $roleId
+    ]);
+    $user->setIdUser($this->pdo->lastInsertId());
+    return $user;
+  }
+
+  public function getRoleIdFromName(string $roleName): int
+  {
+    $query = 'SELECT id_role FROM User_Roles WHERE name = :roleName';
+    $statement = $this->pdo->prepare($query);
+    $statement->execute([':roleName' => $roleName]);
+    return $statement->fetchColumn();
   }
 }

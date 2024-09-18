@@ -1,3 +1,4 @@
+import { Toast } from '../Components/Toast.js';
 export class RequestHelper {
     static async post(url, data) {
         try {
@@ -14,6 +15,15 @@ export class RequestHelper {
             console.error('Unexpected error: ', error);
             throw new Error('Failed sending request. Try again later.');
         }
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static async handleResponse(response) {
+        const responseBody = await response.json();
+        if (!response.ok && responseBody.message) {
+            new Toast('error', 'Error: ' + responseBody.message);
+            return false;
+        }
+        return responseBody;
     }
     static async get(url) {
         try {

@@ -2,6 +2,7 @@
 
 namespace src\Models;
 
+use src\Repositories\UserRepository;
 use src\Services\Hydration;
 
 final class User
@@ -12,11 +13,38 @@ final class User
   private string $passwordHash;
   private bool $isActivated;
   private string $gdpr;
-  private string $twitchId;
-  private string $twitchUsername;
+  private string|null $twitchId;
+  private string|null $twitchUsername;
   private string $roleName;
 
   use Hydration;
+
+  public function create(array $inputs): User|false
+  {
+    $this->hydrateFromInputs($inputs);
+    $userRepository = new UserRepository();
+    $existingUser = $userRepository->getUserByMail($this->getMail());
+
+    if ($existingUser)
+      return false;
+    else {
+      $this->setIsActivated(false);
+      $this->setGdpr(gmdate('Y-m-d H:i:s'));
+      $this->setRoleName('user');
+      return $userRepository->insert($this);
+    }
+  }
+  public function getAuthLevelFromRole(): int
+  {
+    switch ($this->getRoleName()) {
+      case 'admin':
+        return 2;
+      case 'user':
+        return 1;
+      default:
+        return 0;
+    }
+  }
 
   /**
    * Get the value of idUser
@@ -135,7 +163,7 @@ final class User
   /**
    * Get the value of twitchId
    */
-  public function getTwitchId(): string
+  public function getTwitchId(): string|null
   {
     return $this->twitchId;
   }
@@ -146,7 +174,7 @@ final class User
    * @param   string  $twitchId  
    * 
    */
-  public function setTwitchId(string $twitchId)
+  public function setTwitchId(string|null $twitchId)
   {
     $this->twitchId = $twitchId;
   }
@@ -154,7 +182,7 @@ final class User
   /**
    * Get the value of twitchUsername
    */
-  public function getTwitchUsername(): string
+  public function getTwitchUsername(): string|null
   {
     return $this->twitchUsername;
   }
@@ -165,7 +193,7 @@ final class User
    * @param   string  $twitchUsername  
    * 
    */
-  public function setTwitchUsername(string $twitchUsername)
+  public function setTwitchUsername(string|null $twitchUsername)
   {
     $this->twitchUsername = $twitchUsername;
   }

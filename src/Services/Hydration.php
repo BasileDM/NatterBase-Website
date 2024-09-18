@@ -27,4 +27,12 @@ trait Hydration
       if (method_exists($this, $setter)) $this->$setter($value);
     }
   }
+
+  private function hydrateFromInputs(array $inputs): void
+  {
+    foreach ($inputs as $key => $value) {
+      $setter = "set" . ucfirst($key);
+      if (method_exists($this, $setter)) $this->$setter($value);
+    }
+  }
 }

@@ -26,4 +26,25 @@
   .toast-error {
     @apply border-l-4 border-l-red-500;
   }
+  
+  .banner {
+    @apply w-full text-center z-50;
+    /* @apply w-full text-center fixed top-0 left-0 z-50; */
+  }
+
+  .banner-alert {
+    @apply bg-red-900 text-white shadow-md;
+  }
+
+  .banner-warning {
+    @apply bg-yellow-700 text-white;
+  }
+
+  .banner-success {
+    @apply bg-green-700 text-white shadow-md;
+  }
+
+  .invalid-input {
+    @apply border-red-500 border-[1px];
+  }
 }

@@ -11,6 +11,13 @@ final class PageController
   use Response;
 
   #[Route('GET', '/')]
+  public function redirectToHomePage(): void
+  {
+    header("Location: /home");
+    exit;
+  }
+
+  #[Route('GET', '/home')]
   public function displayHomePage(): void
   {
     $this->render("home");
@@ -34,7 +41,7 @@ final class PageController
 
   public function displayErrorPage(string $message): void
   {
-    $this->render("Error", ["message" => $message]);
+    $this->render("error", ["message" => $message]);
     exit;
   }
 }

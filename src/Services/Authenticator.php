@@ -7,7 +7,7 @@ use src\Repositories\UserRepository;
 
 final class Authenticator
 {
-  public static function authenticate(string $mail, string $password): bool|User
+  public static function authenticate(string $mail, string $password): User|false
   {
     $userRepository = new UserRepository();
     $user = $userRepository->getUserByMail($mail);
@@ -24,20 +24,8 @@ final class Authenticator
     $_SESSION['userId'] = $user->getIdUser();
     $_SESSION['username'] = $user->getUsername();
     $_SESSION['mail'] = $user->getMail();
-    $_SESSION['authLevel'] = self::getAuthLevelFromRole($user->getRoleName());
+    $_SESSION['authLevel'] = $user->getAuthLevelFromRole();
 
     return $user;
-  }
-
-  private static function getAuthLevelFromRole(string $roleName): int
-  {
-    switch ($roleName) {
-      case 'admin':
-        return 2;
-      case 'user':
-        return 1;
-      default:
-        return 0;
-    }
   }
 }

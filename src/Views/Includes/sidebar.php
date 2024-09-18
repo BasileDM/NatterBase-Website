@@ -4,5 +4,9 @@
     <li><a href="/" class="hover:text-gray-300">Home</a></li>
     <li><a href="/features" class="hover:text-gray-300">Features</a></li>
   </ul>
-  <div id="sidebar-login-button" class="btn btn-base mt-auto">Web app</div>
+  <?php if (isset($_SESSION['isAuth'])): ?>
+  <a id="sidebar-app-button" class="btn btn-base mt-auto" href="/app">Web app</a>
+  <?php else: ?>
+  <span id="sidebar-login-button" class="btn btn-base mt-auto">Web app</span>
+  <?php endif ?>
 </aside>

@@ -26,9 +26,16 @@ trait Response
     echo json_encode([
       'message' => $message
     ]);
-    if (!empty($redirect)) {
-      header('Location: ' . $redirect);
-    }
+    if (!empty($redirect)) header('Location: ' . $redirect);
+    exit;
+  }
+
+  private function formErrorsResponse(int $code, array $errors): void
+  {
+    http_response_code($code);
+    echo json_encode([
+      'formErrors' => $errors
+    ]);
     exit;
   }
 }
