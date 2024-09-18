@@ -20,14 +20,14 @@ final class PageController
   #[Route('GET', '/home')]
   public function displayHomePage(): void
   {
-    $this->render("home");
+    $this->render("home", ["section" => "home"]);
     exit;
   }
 
   #[Route('GET', '/features')]
   public function displayAboutPage(): void
   {
-    $this->render("features");
+    $this->render("features", ["section" => "features"]);
     exit;
   }
 
@@ -35,13 +35,14 @@ final class PageController
   #[Authorization(1)]
   public function displayAppPage(): void
   {
-    $this->render("app");
+    $userData = $_SESSION['userId'] ?? null;
+    $this->render("app", ["section" => "app", "data" => $userData]);
     exit;
   }
 
   public function displayErrorPage(string $message): void
   {
-    $this->render("error", ["message" => $message]);
+    $this->render("error", ["section" => "error", "message" => $message]);
     exit;
   }
 }

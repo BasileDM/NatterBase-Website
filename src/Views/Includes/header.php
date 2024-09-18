@@ -1,7 +1,3 @@
-<?php
-$current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,8 +21,8 @@ $current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
       <div class="hidden sm:flex items-center justify-between w-full">
         <nav class="flex-1">
           <ul class="flex justify-center space-x-4">
-            <li><a href="/" class="<?= $current_page == '/home' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Home</a></li>
-            <li><a href="/features" class="<?= $current_page == '/features' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Features</a></li>
+            <li><a href="/" class="<?= $view_section == 'home' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Home</a></li>
+            <li><a href="/features" class="<?= $view_section == 'features' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Features</a></li>
           </ul>
         </nav>
         <?php if (isset($_SESSION['isAuth'])): ?>
