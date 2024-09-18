@@ -29,7 +29,7 @@ final class User
       return false;
     else {
       $this->setIsActivated(false);
-      $this->setGdpr(date('Y-m-d H:i:s'));
+      $this->setGdpr(gmdate('Y-m-d H:i:s'));
       $this->setRoleName('user');
       return $userRepository->insert($this);
     }
