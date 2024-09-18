@@ -38,16 +38,19 @@ final class AuthController
     $request = json_decode(file_get_contents('php://input'), true);
     $mail = $request['mail'] ?? null;
     $password = $request['password'] ?? null;
+    $user = Authenticator::authenticate($mail, $password);
 
     $statusCode = match (true) {
       !$mail || !$password => 400,
-      !Authenticator::authenticate($mail, $password) => 401,
+      !$user => 401,
+      !$user->isIsActivated() => 403,
       default => 200,
     };
 
     $message = match ($statusCode) {
       400 => 'Please fill out all the fields',
       401 => 'Invalid credentials',
+      403 => 'Check your mails and activate your account first!',
       200 => 'Login successful',
     };
 
