@@ -4,7 +4,6 @@ export class FormValidator {
         this.inputFields = this.formElement.querySelectorAll('input');
     }
     displayFormErrors(errors) {
-        console.log(errors);
         // Clear any error class or message
         this.inputFields.forEach((input) => {
             input.classList.remove('invalid-input');

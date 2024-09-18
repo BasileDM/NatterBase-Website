@@ -53,10 +53,9 @@ export class LoginModal {
                     password: document.getElementById('password').value,
                 };
                 try {
-                    const response = await RequestHelper.post('/login', formData);
-                    const responseBody = await response.json();
-                    if (!response.ok) {
-                        new Toast('error', responseBody.message || 'An error occurred');
+                    const response = await RequestHelper.post('/login', formData)
+                        .then(RequestHelper.handleResponse);
+                    if (!response) {
                         return;
                     }
                     this.close();
@@ -80,11 +79,14 @@ export class LoginModal {
                     gdpr: document.getElementById('gdpr').checked,
                 };
                 try {
-                    const response = await RequestHelper.post('/register', formData);
-                    const responseBody = await response.json();
+                    const responseBody = await RequestHelper
+                        .post('/register', formData)
+                        .then(RequestHelper.handleResponse);
+                    if (!responseBody) {
+                        return;
+                    }
                     if (responseBody.formErrors) {
-                        const formValidator = new FormValidator('register-form');
-                        formValidator.displayFormErrors(responseBody.formErrors);
+                        new FormValidator('register-form').displayFormErrors(responseBody.formErrors);
                         return;
                     }
                     this.close();
@@ -92,7 +94,7 @@ export class LoginModal {
                 }
                 catch (error) {
                     console.error('Unexpected error: ', error);
-                    new Toast('error', '500: Server error. Try again later.');
+                    new Toast('error', 'Failed sending request. Try again later.');
                 }
             });
         }

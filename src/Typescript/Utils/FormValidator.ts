@@ -9,7 +9,6 @@ export class FormValidator {
   }
 
   public displayFormErrors(errors: Array<string>): void {
-    console.log(errors);
     // Clear any error class or message
     this.inputFields.forEach((input) => {
       input.classList.remove('invalid-input');
