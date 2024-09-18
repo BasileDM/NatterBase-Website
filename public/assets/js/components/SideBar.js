@@ -2,19 +2,34 @@ export class Sidebar {
     constructor() {
         this.animationDuration = 450;
         this.sidebarElement = document.getElementById('sidebar');
+        if (window.location.pathname == '/app') {
+            this.sidebarElement.classList.remove('hidden');
+        }
         this.toggleButton = document.getElementById('burger-btn');
         this.openAnimationClass = 'animate-slideIn';
         this.closeAnimationClass = 'animate-slideOut';
         this.bindEvents();
     }
     bindEvents() {
+        // Handle windows resizing
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 640 && window.location.pathname == '/app') {
+                this.open();
+            }
+            if (window.innerWidth > 640 && window.location.pathname != '/app') {
+                this.close();
+            }
+        });
         // Open sidebar
         this.toggleButton.addEventListener('click', () => {
             this.toggle();
         });
         // Close sidebar when clicking outside
         document.addEventListener('click', (event) => {
-            if (!this.sidebarElement.contains(event.target) && !this.toggleButton.contains(event.target)) {
+            if (window.innerWidth > 640)
+                return;
+            if (!this.sidebarElement.contains(event.target)
+                && !this.toggleButton.contains(event.target)) {
                 this.close();
             }
         });

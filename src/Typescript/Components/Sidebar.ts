@@ -7,6 +7,9 @@ export class Sidebar {
 
   constructor() {
     this.sidebarElement = document.getElementById('sidebar') as HTMLElement;
+    if (window.location.pathname == '/app') {
+      this.sidebarElement.classList.remove('hidden');
+    }
     this.toggleButton = document.getElementById('burger-btn') as HTMLElement;
     this.openAnimationClass = 'animate-slideIn';
     this.closeAnimationClass = 'animate-slideOut';
@@ -14,6 +17,16 @@ export class Sidebar {
   }
 
   private bindEvents(): void {
+    // Handle windows resizing
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 640 && window.location.pathname == '/app') {
+        this.open();
+      }
+      if (window.innerWidth > 640 && window.location.pathname != '/app') {
+        this.close();
+      }
+    });
+
     // Open sidebar
     this.toggleButton.addEventListener('click', () => {
       this.toggle();
@@ -21,7 +34,9 @@ export class Sidebar {
 
     // Close sidebar when clicking outside
     document.addEventListener('click', (event: MouseEvent) => {
-      if (!this.sidebarElement.contains(event.target as Node) && !this.toggleButton.contains(event.target as Node)) {
+      if (window.innerWidth > 640) return;
+      if (!this.sidebarElement.contains(event.target as Node)
+        && !this.toggleButton.contains(event.target as Node)) {
         this.close();
       }
     });

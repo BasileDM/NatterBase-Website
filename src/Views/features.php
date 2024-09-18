@@ -1,6 +1,5 @@
 <?php
 include __DIR__ . '/Includes/header.php';
-include __DIR__ . '/Includes/interface.php';
 ?>
 
 <main>

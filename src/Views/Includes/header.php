@@ -12,7 +12,7 @@
   <title>NatterBase</title>
 </head>
 
-<body class="bg-gray-800 text-white">
+<body class="bg-gray-800 text-white min-h-screen flex flex-col">
   <header class="bg-gray-900 text-white shadow border-b-[1px] border-gray-700">
     <div class="container w-11/12 mx-auto flex justify-between items-center py-2">
       <h1 class="text-2xl font-bold">NatterBase</h1>
@@ -41,3 +41,12 @@
     </div>
     <?php include __DIR__ . '/Components/banner.php'; ?>
   </header>
+
+  <!-- Sidebar and main content -->
+  <main class="flex flex-1 min-h-0 relative">
+    <?php include __DIR__ . '/sidebar.php'; ?>
+    <div class="flex-1 flex flex-col min-h-0 overflow-y-auto p-4">
+      <?php
+      include __DIR__ . '/Components/toast.html';
+      include __DIR__ . '/Components/loginModal.html';
+      ?>
