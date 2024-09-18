@@ -41,7 +41,7 @@ final class PageController
 
   public function displayErrorPage(string $message): void
   {
-    $this->render("Error", ["message" => $message]);
+    $this->render("error", ["message" => $message]);
     exit;
   }
 }
