@@ -93,13 +93,13 @@ final class Validator
     $cleanUsername = self::sanitizeString($username);
 
     if ($cleanUsername !== $username) {
-      return ['error' => 'Invalid username'];
+      return ['error' => 'Username can\'t contain special characters'];
     }
 
     if (strlen($username) < 3 || strlen($username) > 80) {
       return ['error' => 'Username must be between 3 and 80 characters'];
     }
-    return ['sanitized' => $username];
+    return ['sanitized' => $cleanUsername];
   }
 
   private static function sanitizeString(string $string): string
