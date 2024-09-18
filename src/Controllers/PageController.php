@@ -2,30 +2,46 @@
 
 namespace src\Controllers;
 
-use src\Router\Route;
+use src\Router\Attributes\Authorization;
+use src\Router\Attributes\Route;
 use src\Services\Response;
 
-class PageController
+final class PageController
 {
   use Response;
 
-  #[Route('GET', HOME_URL)]
+  #[Route('GET', '/')]
+  public function redirectToHomePage(): void
+  {
+    header("Location: /home");
+    exit;
+  }
+
+  #[Route('GET', '/home')]
   public function displayHomePage(): void
   {
     $this->render("home");
     exit;
   }
 
-  #[Route('GET', HOME_URL . 'about')]
+  #[Route('GET', '/features')]
   public function displayAboutPage(): void
   {
-    $this->render("about");
+    $this->render("features");
     exit;
   }
 
-  public function displayNotFoundPage(): void
+  #[Route('GET', '/app')]
+  #[Authorization(1)]
+  public function displayAppPage(): void
   {
-    $this->render("404");
+    $this->render("app");
+    exit;
+  }
+
+  public function displayErrorPage(string $message): void
+  {
+    $this->render("error", ["message" => $message]);
     exit;
   }
 }

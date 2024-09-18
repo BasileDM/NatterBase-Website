@@ -18,6 +18,10 @@ final class Database
     $this->db = $this->connect();
   }
 
+  public function getDb(): PDO {
+    return $this->db;
+  }
+
   private function connect(): PDO|string
   {
     try {
@@ -48,6 +52,6 @@ final class Database
   {
     $sql = "SHOW TABLES FROM " . DB_NAME . " LIKE '" . PREFIX . "USERS';";
     $result = $this->db->query($sql)->fetch();
-    return $result !== false; 
+    return $result !== false;
   }
 }

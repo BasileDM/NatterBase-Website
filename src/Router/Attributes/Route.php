@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Router;
+namespace src\Router\Attributes;
 
 #[\Attribute]
 class Route

@@ -1,5 +1,6 @@
 # Local PHP config file
 config.local.php
+/.vscode
 
 # Logs
 logs

@@ -1,5 +1,5 @@
 <?php
-$current_page = $_SERVER['REQUEST_URI'];
+$current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@ $current_page = $_SERVER['REQUEST_URI'];
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="<?= HOME_URL ?>assets/css/output.css">
   <script type="module" src="<?= HOME_URL ?>assets/js/main.js"></script>
-  <?php if (isset($_SESSION['user_id'])): ?>
+  <?php if (isset($_SESSION['userId'])): ?>
     <script type="module" src="<?= HOME_URL ?>assets/js/app.js"></script>
   <?php endif ?>
   <title>NatterBase</title>
@@ -25,11 +25,15 @@ $current_page = $_SERVER['REQUEST_URI'];
       <div class="hidden sm:flex items-center justify-between w-full">
         <nav class="flex-1">
           <ul class="flex justify-center space-x-4">
-            <li><a href="/" class="<?= $current_page == '/' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Home</a></li>
-            <li><a href="/about" class="<?= $current_page == '/about' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">About</a></li>
+            <li><a href="/" class="<?= $current_page == '/home' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Home</a></li>
+            <li><a href="/features" class="<?= $current_page == '/features' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Features</a></li>
           </ul>
         </nav>
-        <a href="#" class="btn btn-base" id="navbar-login-button">Connection</a>
+        <?php if (isset($_SESSION['isAuth'])): ?>
+          <a id="navbar-app-button" class="btn btn-base" href="/app">Web app</a>
+        <?php else: ?>
+          <span id="navbar-login-button" class="btn btn-base">Web app</span>
+        <?php endif ?>
       </div>
 
       <!-- Burger button -->
@@ -39,4 +43,5 @@ $current_page = $_SERVER['REQUEST_URI'];
         </svg>
       </button>
     </div>
+    <?php include __DIR__ . '/Components/banner.php'; ?>
   </header>

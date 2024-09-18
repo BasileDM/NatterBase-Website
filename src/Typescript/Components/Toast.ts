@@ -6,7 +6,7 @@ export class Toast {
   private showAnimationClass: string;
   private closeAnimationClass: string;
 
-  constructor() {
+  constructor(type: string, message: string) {
     this.toastElement = document.getElementById('toast') as HTMLElement;
     this.closeButton = document.getElementById('toast-close-btn') as HTMLElement;
     this.showAnimationClass = 'animate-toastSlideIn';
@@ -14,6 +14,7 @@ export class Toast {
     this.messageElement = document.getElementById('toast-message') as HTMLElement;
     this.iconElement = document.getElementById('toast-icon') as HTMLElement;
     this.bindEvents();
+    this.display(type, message);
   }
 
   private bindEvents(): void {
@@ -40,7 +41,7 @@ export class Toast {
     }, 450);
   }
 
-  public display(type: string, message: string): void {
+  private display(type: string, message: string): void {
     this.messageElement.textContent = message;
 
     // Apply different styles based on the type

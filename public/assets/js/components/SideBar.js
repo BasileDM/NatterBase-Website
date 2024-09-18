@@ -8,9 +8,11 @@ export class Sidebar {
         this.bindEvents();
     }
     bindEvents() {
+        // Open sidebar
         this.toggleButton.addEventListener('click', () => {
             this.toggle();
         });
+        // Close sidebar when clicking outside
         document.addEventListener('click', (event) => {
             if (!this.sidebarElement.contains(event.target) && !this.toggleButton.contains(event.target)) {
                 this.close();

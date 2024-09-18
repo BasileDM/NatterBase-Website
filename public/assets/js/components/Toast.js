@@ -1,5 +1,5 @@
 export class Toast {
-    constructor() {
+    constructor(type, message) {
         this.toastElement = document.getElementById('toast');
         this.closeButton = document.getElementById('toast-close-btn');
         this.showAnimationClass = 'animate-toastSlideIn';
@@ -7,6 +7,7 @@ export class Toast {
         this.messageElement = document.getElementById('toast-message');
         this.iconElement = document.getElementById('toast-icon');
         this.bindEvents();
+        this.display(type, message);
     }
     bindEvents() {
         this.closeButton.addEventListener('click', () => {
