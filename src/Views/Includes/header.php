@@ -32,7 +32,7 @@ $current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         <?php if (isset($_SESSION['isAuth'])): ?>
           <a id="navbar-app-button" class="btn btn-base" href="/app">Web app</a>
         <?php else: ?>
-          <div id="navbar-login-button" class="btn btn-base">Web app</div>
+          <span id="navbar-login-button" class="btn btn-base">Web app</span>
         <?php endif ?>
       </div>
 

@@ -14,10 +14,12 @@ export class Sidebar {
   }
 
   private bindEvents(): void {
+    // Open sidebar
     this.toggleButton.addEventListener('click', () => {
       this.toggle();
     });
 
+    // Close sidebar when clicking outside
     document.addEventListener('click', (event: MouseEvent) => {
       if (!this.sidebarElement.contains(event.target as Node) && !this.toggleButton.contains(event.target as Node)) {
         this.close();
