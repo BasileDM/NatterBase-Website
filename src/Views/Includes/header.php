@@ -44,4 +44,5 @@ var_dump($_SESSION);
         </svg>
       </button>
     </div>
+    <?php include __DIR__ . '/Components/banner.php'; ?>
   </header>
