@@ -5,9 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="<?= HOME_URL ?>assets/css/output.css">
-  <script type="module" src="<?= HOME_URL ?>assets/js/main.js"></script>
+  <script type="module" src="<?= HOME_URL ?>assets/js/main.js" defer></script>
   <?php if (isset($_SESSION['userId'])): ?>
-    <script type="module" src="<?= HOME_URL ?>assets/js/app.js"></script>
+    <script type="module" src="<?= HOME_URL ?>assets/js/app.js" defer></script>
   <?php endif ?>
   <title>NatterBase</title>
 </head>

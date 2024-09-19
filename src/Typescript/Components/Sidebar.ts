@@ -3,6 +3,8 @@ export class Sidebar {
   private sidebarElement: HTMLElement;
   private toggleButton: HTMLElement;
   private websiteNavElement: HTMLElement;
+  // eslint-disable-next-line no-undef
+  private appNavButtons: NodeListOf<HTMLElement>;
   private openAnimationClass: string;
   private closeAnimationClass: string;
   private animationDuration: number = 450;
@@ -17,13 +19,36 @@ export class Sidebar {
     if (window.innerWidth > 640) {
       this.websiteNavElement.classList.add('hidden');
     }
+    // eslint-disable-next-line no-undef
+    this.appNavButtons = this.sidebarElement.querySelectorAll('li[id*="app-nav-button"]') as NodeListOf<HTMLElement>;
+    console.log(this.appNavButtons);
+    console.log(this.sidebarElement.innerHTML);
     this.openAnimationClass = 'animate-slideIn';
     this.closeAnimationClass = 'animate-slideOut';
     this.bindEvents();
   }
 
   private bindEvents(): void {
-    // Handle windows resizing
+    // App navigation buttons
+    for (let i = 0; i < this.appNavButtons.length; i++) {
+      this.appNavButtons[i].addEventListener('click', () => {
+        // Get the section ID from the data-section attribute
+        const sectionId = this.appNavButtons[i].dataset.section;
+
+        // Hide all sections
+        document.querySelectorAll('section[id*="app"]').forEach((section) => {
+          section.classList.add('hidden');
+        });
+
+        // Show the relevant section
+        if (sectionId) {
+          const sectionElement = document.getElementById(sectionId);
+          sectionElement?.classList.remove('hidden');
+        }
+      });
+    }
+
+    // Handle window resizing
     window.addEventListener('resize', () => {
       if (window.innerWidth > 640) {
         this.websiteNavElement.classList.add('hidden');
@@ -39,7 +64,7 @@ export class Sidebar {
       }
     });
 
-    // Open sidebar
+    // Open sidebar from burger button
     this.toggleButton.addEventListener('click', () => {
       this.toggle();
     });

@@ -7,10 +7,10 @@
       <div class="p-4">
         <h3>App</h3>
         <ul class="flex-1 overflow-y-auto">
-          <li class="hover:text-gray-300 hover:cursor-pointer hover:bg-gray-600 p-2 rounded w-full">Dashboard</li>
-          <li class="hover:text-gray-300 hover:cursor-pointer hover:bg-gray-600 p-2 rounded w-full">Bot Features</li>
-          <li class="hover:text-gray-300 hover:cursor-pointer hover:bg-gray-600 p-2 rounded w-full">App settings</li>
-          <li class="hover:text-gray-300 hover:cursor-pointer hover:bg-gray-600 p-2 rounded w-full">Account</li>
+          <li id="dashboard-app-nav-button" data-section="app-dashboard" class="hover:text-gray-300 hover:cursor-pointer hover:bg-gray-600 p-2 rounded w-full">Dashboard</li>
+          <li id="bot-features-app-nav-button" data-section="app-bot-features" class="hover:text-gray-300 hover:cursor-pointer hover:bg-gray-600 p-2 rounded w-full">Bot Features</li>
+          <li id="settings-app-nav-button" data-section="app-settings" class="hover:text-gray-300 hover:cursor-pointer hover:bg-gray-600 p-2 rounded w-full">App settings</li>
+          <li id="account-app-nav-button" data-section="app-account" class="hover:text-gray-300 hover:cursor-pointer hover:bg-gray-600 p-2 rounded w-full">Account</li>
         </ul>
       </div>
     </div>
