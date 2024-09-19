@@ -25,7 +25,7 @@
   }
 
   .toast {
-    @apply fixed bottom-5 right-5 bg-gray-800 text-white p-4 rounded-lg shadow-lg flex items-center space-x-4 backdrop-blur-lg border-[1px] border-gray-700;
+    @apply fixed bottom-5 right-5 bg-gray-800 text-white p-4 rounded-lg shadow-lg flex items-center space-x-4 backdrop-blur-lg border-[1px] border-gray-700 z-50;
   }
 
   .toast-success {
