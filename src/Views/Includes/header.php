@@ -12,7 +12,7 @@
   <title>NatterBase</title>
 </head>
 
-<body class="bg-gray-800 text-white min-h-screen flex flex-col">
+<body class="bg-gray-800 text-white h-screen flex flex-col overflow-hidden">
   <header class="bg-gray-900 text-white shadow border-b-[1px] border-gray-700">
     <div class="container w-11/12 mx-auto flex justify-between items-center py-2">
       <h1 class="text-2xl font-bold">NatterBase</h1>
@@ -43,9 +43,9 @@
   </header>
 
   <!-- Sidebar and main content -->
-  <main class="flex flex-1 min-h-0 relative">
+  <main class="flex flex-1 relative overflow-hidden">
     <?php include __DIR__ . '/sidebar.php'; ?>
-    <div class="flex-1 flex flex-col min-h-0 overflow-y-auto p-4">
+    <div class="flex-1 p-4 overflow-y-auto">
       <?php
       include __DIR__ . '/Components/toast.html';
       include __DIR__ . '/Components/loginModal.html';

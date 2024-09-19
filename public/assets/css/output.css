@@ -755,8 +755,16 @@ p {
   margin-right: auto;
 }
 
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
+
 .mb-4 {
   margin-bottom: 1rem;
+}
+
+.mb-44 {
+  margin-bottom: 11rem;
 }
 
 .block {
@@ -779,16 +787,16 @@ p {
   height: 100%;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
 .max-h-\[80vh\] {
   max-height: 80vh;
 }
 
 .min-h-0 {
   min-height: 0px;
-}
-
-.min-h-screen {
-  min-height: 100vh;
 }
 
 .w-11\/12 {
@@ -819,8 +827,8 @@ p {
   flex: 1 1 0%;
 }
 
-.flex-auto {
-  flex: 1 1 auto;
+.flex-shrink-0 {
+  flex-shrink: 0;
 }
 
 .flex-grow {
@@ -917,6 +925,10 @@ p {
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .overflow-y-auto {
