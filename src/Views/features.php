@@ -2,9 +2,8 @@
 include __DIR__ . '/Includes/header.php';
 ?>
 
-<main>
-  <p>This is the features page.</p>
-</main>
+<h2>Features</h2>
+<p>This is the features page.</p>
 
 <?php
 include __DIR__ . '/Includes/footer.php';
