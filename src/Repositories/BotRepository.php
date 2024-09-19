@@ -4,7 +4,7 @@ namespace src\Repositories;
 
 use PDO;
 use src\Database\Database;
-use src\Models\BotProfile;
+use src\Models\Bot;
 
 final class BotRepository
 {
@@ -16,7 +16,7 @@ final class BotRepository
     $this->pdo = $db->getDb();
   }
 
-  public function insert(BotProfile $botProfile): BotProfile
+  public function insert(Bot $botProfile): Bot
   {
     $query = 'INSERT INTO Bots (name, creation_date, cooldown_time, max_openai_message_length, id_model, id_platform, id_user) 
               VALUES (:name, :creationDate, :cooldownTime, :maxOpenaiMessageLength, :idModel, :idPlatform, :idUser)';
@@ -34,30 +34,30 @@ final class BotRepository
     return $botProfile;
   }
 
-  public function getByNameAndUserId(string $name, int $userId): BotProfile|false
+  public function getByNameAndUserId(string $name, int $userId): Bot|false
   {
     $query = 'SELECT * FROM Bots WHERE name = :name AND id_user = :userId';
     $statement = $this->pdo->prepare($query);
     $statement->execute([':name' => $name, ':userId' => $userId]);
-    $botProfile = $statement->fetchObject(BotProfile::class);
+    $botProfile = $statement->fetchObject(Bot::class);
     return $botProfile;
   }
 
-  public function getByName(string $name): BotProfile|false
+  public function getByName(string $name): Bot|false
   {
     $query = 'SELECT * FROM Bots WHERE name = :name';
     $statement = $this->pdo->prepare($query);
     $statement->execute([':name' => $name]);
-    $botProfile = $statement->fetchObject(BotProfile::class);
+    $botProfile = $statement->fetchObject(Bot::class);
     return $botProfile;
   }
 
-  public function getById(int $id): BotProfile|false
+  public function getById(int $id): Bot|false
   {
     $query = 'SELECT * FROM Bots WHERE id_bot = :id';
     $statement = $this->pdo->prepare($query);
     $statement->execute([':id' => $id]);
-    $botProfile = $statement->fetchObject(BotProfile::class);
+    $botProfile = $statement->fetchObject(Bot::class);
     return $botProfile;
   }
 
@@ -66,7 +66,7 @@ final class BotRepository
     $query = 'SELECT * FROM Bots WHERE id_user = :userId';
     $statement = $this->pdo->prepare($query);
     $statement->execute([':userId' => $userId]);
-    $botProfiles = $statement->fetchAll(PDO::FETCH_CLASS, BotProfile::class);
+    $botProfiles = $statement->fetchAll(PDO::FETCH_CLASS, Bot::class);
     return $botProfiles;
   }
 }

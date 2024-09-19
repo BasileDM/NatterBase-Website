@@ -2,7 +2,7 @@
 
 namespace src\Controllers;
 
-use src\Models\BotProfile;
+use src\Models\Bot;
 use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
 use src\Services\Response;
@@ -23,7 +23,8 @@ final class BotController
       $this->formErrorsResponse(400, $validationResult['errors']);
       exit;
     } else {
-      $bot = new BotProfile();
+      $bot = new Bot();
+      // Manually adding session user id for auto hydration
       $validationResult['sanitized']['idUser'] = $_SESSION['userId'];
       $result = $bot->create($validationResult['sanitized']);
       if (!$result) {

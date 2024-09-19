@@ -4,10 +4,9 @@ namespace src\Models;
 
 use DateTime;
 use src\Repositories\BotRepository;
-use src\Repositories\UserRepository;
 use src\Services\Hydration;
 
-final class BotProfile
+final class Bot
 {
   private int $idBot;
   private string $name;
@@ -20,7 +19,7 @@ final class BotProfile
 
   use Hydration;
 
-  public function create(array $inputs): BotProfile|false
+  public function create(array $inputs): Bot|false
   {
     $this->hydrateFromInputs($inputs);
     $botRepository = new BotRepository();
