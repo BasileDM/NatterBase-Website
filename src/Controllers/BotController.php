@@ -2,6 +2,8 @@
 
 namespace src\Controllers;
 
+use src\Models\BotProfile;
+use src\Repositories\BotRepository;
 use src\Router\Attributes\Route;
 use src\Services\Response;
 use src\Utils\Validator;
@@ -20,6 +22,12 @@ final class BotController
       $this->formErrorsResponse(400, $validationResult['errors']);
       exit;
     } else {
+      $bot = new BotProfile();
+      $result = $bot->create($validationResult['sanitized']);
+      if (!$result) {
+        $this->jsonResponse(400, 'Could not create bot profile');
+      }
+
       $this->jsonResponse(200, 'Bot profile created successfully');
     }
   }
