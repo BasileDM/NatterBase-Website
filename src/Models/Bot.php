@@ -32,7 +32,6 @@ final class Bot
     }
   }
 
-
   /**
    * Get the value of idBot
    */
