@@ -21,8 +21,6 @@ export class Sidebar {
     }
     // eslint-disable-next-line no-undef
     this.appNavButtons = this.sidebarElement.querySelectorAll('li[id*="app-nav-button"]') as NodeListOf<HTMLElement>;
-    console.log(this.appNavButtons);
-    console.log(this.sidebarElement.innerHTML);
     this.openAnimationClass = 'animate-slideIn';
     this.closeAnimationClass = 'animate-slideOut';
     this.bindEvents();
