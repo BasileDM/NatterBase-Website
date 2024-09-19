@@ -1,11 +1,16 @@
 export class Sidebar {
     constructor() {
+        this.isOpen = false;
         this.animationDuration = 450;
         this.sidebarElement = document.getElementById('sidebar');
         if (window.location.pathname == '/app') {
             this.sidebarElement.classList.remove('hidden');
         }
         this.toggleButton = document.getElementById('burger-btn');
+        this.websiteNavElement = document.getElementById('website-mobile-nav');
+        if (window.innerWidth > 640) {
+            this.websiteNavElement.classList.add('hidden');
+        }
         this.openAnimationClass = 'animate-slideIn';
         this.closeAnimationClass = 'animate-slideOut';
         this.bindEvents();
@@ -13,10 +18,16 @@ export class Sidebar {
     bindEvents() {
         // Handle windows resizing
         window.addEventListener('resize', () => {
-            if (window.innerWidth > 640 && window.location.pathname == '/app') {
+            if (window.innerWidth > 640) {
+                this.websiteNavElement.classList.add('hidden');
+            }
+            else {
+                this.websiteNavElement.classList.remove('hidden');
+            }
+            if (!this.isOpen && window.innerWidth > 640 && window.location.pathname == '/app') {
                 this.open();
             }
-            if (window.innerWidth > 640 && window.location.pathname != '/app') {
+            if (this.isOpen && window.innerWidth > 640 && window.location.pathname != '/app') {
                 this.close();
             }
         });
@@ -35,11 +46,13 @@ export class Sidebar {
         });
     }
     open() {
+        this.isOpen = true;
         this.sidebarElement.classList.remove('hidden');
         this.sidebarElement.classList.remove(this.closeAnimationClass);
         this.sidebarElement.classList.add(this.openAnimationClass);
     }
     close() {
+        this.isOpen = false;
         this.sidebarElement.classList.remove(this.openAnimationClass);
         this.sidebarElement.classList.add(this.closeAnimationClass);
         setTimeout(() => {

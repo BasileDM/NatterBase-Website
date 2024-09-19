@@ -1,6 +1,7 @@
 <div id="sidebar" class="absolute sm:relative w-64 h-full sm:h-auto bg-gray-900/40 backdrop-blur-lg backdrop-filter border-r border-gray-700 text-white shadow z-10 hidden">
   <div class="flex flex-col h-full">
     <!-- Sidebar content -->
+    <?php if (isset($_SESSION['isAuth'])): ?>
     <div class="flex-grow">
       <!-- Dashboard navigation -->
       <div class="p-4">
@@ -13,8 +14,9 @@
         </ul>
       </div>
     </div>
+    <?php endif ?>
     <!-- Site navigation -->
-    <div class="p-4">
+    <div id="website-mobile-nav" class="p-4">
       <h3>Website navigation</h3>
       <ul class="flex-1 overflow-y-auto">
         <a href="/">
