@@ -16,6 +16,5 @@ export class ControlPanel {
   bindEvents() {
     console.log('Bot profiles: ');
     console.log(this.botProfiles);
-    console.log('Binding control panel events...');
   };
 }

@@ -5,14 +5,14 @@ import { Toast } from '../Toast.js';
 export class AbstractFormModal {
   private modalElement: HTMLDialogElement;
   private form: HTMLFormElement;
-  private titleElement: HTMLElement;
+  private submitRoute: string;
   private closeButton: HTMLElement;
   private submitButton: HTMLElement;
 
   constructor(modalId: string, triggerButtonIds: string[], private formId: string) {
     this.modalElement = document.getElementById(modalId) as HTMLDialogElement;
     this.form = document.getElementById(formId) as HTMLFormElement;
-    this.titleElement = this.modalElement.querySelector('h2') as HTMLElement;
+    this.submitRoute = this.form.dataset.route as string;
     this.closeButton = this.modalElement.querySelector('button[id*="close"]') as HTMLElement;
     this.submitButton = this.form.querySelector('button[id*="submit"]') as HTMLElement;
 
@@ -55,7 +55,7 @@ export class AbstractFormModal {
     const formObject = Object.fromEntries(formData.entries());
 
     try {
-      const response = await RequestHelper.post(`/${this.formId}`, formObject)
+      const response = await RequestHelper.post(`/${this.submitRoute}`, formObject)
         .then(RequestHelper.handleResponse);
 
       if (!response) {
@@ -68,8 +68,7 @@ export class AbstractFormModal {
       }
 
       this.close();
-      sessionStorage.setItem('showToast', 'Form submitted successfully!');
-      window.location.href = '/app';
+      new Toast('success', response.message);
     }
     catch (error) {
       console.error('Unexpected error: ', error);

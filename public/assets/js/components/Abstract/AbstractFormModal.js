@@ -6,7 +6,7 @@ export class AbstractFormModal {
         this.formId = formId;
         this.modalElement = document.getElementById(modalId);
         this.form = document.getElementById(formId);
-        this.titleElement = this.modalElement.querySelector('h2');
+        this.submitRoute = this.form.dataset.route;
         this.closeButton = this.modalElement.querySelector('button[id*="close"]');
         this.submitButton = this.form.querySelector('button[id*="submit"]');
         this.bindEvents(triggerButtonIds);
@@ -42,7 +42,7 @@ export class AbstractFormModal {
         const formData = new FormData(this.form);
         const formObject = Object.fromEntries(formData.entries());
         try {
-            const response = await RequestHelper.post(`/${this.formId}`, formObject)
+            const response = await RequestHelper.post(`/${this.submitRoute}`, formObject)
                 .then(RequestHelper.handleResponse);
             if (!response) {
                 return;
@@ -52,8 +52,7 @@ export class AbstractFormModal {
                 return;
             }
             this.close();
-            sessionStorage.setItem('showToast', 'Form submitted successfully!');
-            window.location.href = '/app';
+            new Toast('success', response.message);
         }
         catch (error) {
             console.error('Unexpected error: ', error);
