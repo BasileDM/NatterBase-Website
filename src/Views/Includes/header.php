@@ -1,7 +1,3 @@
-<?php
-$current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,14 +5,14 @@ $current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="<?= HOME_URL ?>assets/css/output.css">
-  <script type="module" src="<?= HOME_URL ?>assets/js/main.js"></script>
+  <script type="module" src="<?= HOME_URL ?>assets/js/main.js" defer></script>
   <?php if (isset($_SESSION['userId'])): ?>
-    <script type="module" src="<?= HOME_URL ?>assets/js/app.js"></script>
+    <script type="module" src="<?= HOME_URL ?>assets/js/app.js" defer></script>
   <?php endif ?>
   <title>NatterBase</title>
 </head>
 
-<body class="bg-gray-800 text-white">
+<body class="bg-gray-800 text-white h-screen flex flex-col overflow-hidden">
   <header class="bg-gray-900 text-white shadow border-b-[1px] border-gray-700">
     <div class="container w-11/12 mx-auto flex justify-between items-center py-2">
       <h1 class="text-2xl font-bold">NatterBase</h1>
@@ -25,8 +21,8 @@ $current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
       <div class="hidden sm:flex items-center justify-between w-full">
         <nav class="flex-1">
           <ul class="flex justify-center space-x-4">
-            <li><a href="/" class="<?= $current_page == '/home' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Home</a></li>
-            <li><a href="/features" class="<?= $current_page == '/features' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Features</a></li>
+            <li><a href="/" class="<?= $view_section == 'home' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Home</a></li>
+            <li><a href="/features" class="<?= $view_section == 'features' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">Features</a></li>
           </ul>
         </nav>
         <?php if (isset($_SESSION['isAuth'])): ?>
@@ -45,3 +41,12 @@ $current_page = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     </div>
     <?php include __DIR__ . '/Components/banner.php'; ?>
   </header>
+
+  <!-- Sidebar and main content -->
+  <main class="flex flex-1 relative overflow-hidden">
+    <?php include __DIR__ . '/sidebar.php'; ?>
+    <div class="flex-1 p-4 overflow-y-auto">
+      <?php
+      include __DIR__ . '/Components/toast.html';
+      include __DIR__ . '/Components/loginModal.html';
+      ?>

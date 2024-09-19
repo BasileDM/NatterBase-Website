@@ -1,11 +1,10 @@
 <?php
 include __DIR__ . '/Includes/header.php';
-include __DIR__ . '/Includes/interface.php';
 ?>
 
-<main>
-  <p><?= 'Error ' . http_response_code() . ': ' . $view_message ?></p>
-</main>
+<h2><?= 'Error ' . $view_code ?></h2>
+<p><?= $view_message ?></p>
+<a href="/">Go back to the home page</a>
 
 <?php
 include __DIR__ . '/Includes/footer.php';
