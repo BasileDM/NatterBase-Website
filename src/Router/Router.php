@@ -63,14 +63,12 @@ class Router
     $userAuthLevel = $_SESSION['authLevel'] ?? 0;
 
     if (!$route) {
-      http_response_code(404);
-      $pageController->displayErrorPage('Page not found.');
+      header("Location: /error?code=404");
       return;
     }
 
     if ($userAuthLevel < $route['authLevel']) {
-      http_response_code(403);
-      $pageController->displayErrorPage('Please log in or register to access this content.');
+      header("Location: /error?code=401");
       return;
     }
 
