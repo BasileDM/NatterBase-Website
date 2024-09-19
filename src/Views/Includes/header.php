@@ -1,3 +1,5 @@
+<?php var_dump($_SESSION); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

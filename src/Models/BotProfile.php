@@ -12,10 +12,10 @@ final class BotProfile
   private int $idBot;
   private string $name;
   private string $creationDate;
-  private int $cooldownTime;
-  private string $maxOpenaiMessageLength;
-  private int $idModel;
-  private int $idPlatform;
+  private int $cooldownTime = 0;
+  private string $maxOpenaiMessageLength = '120';
+  private int $idModel = 1;
+  private int $idPlatform = 1;
   private int $idUser;
 
   use Hydration;

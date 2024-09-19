@@ -3,7 +3,7 @@
 namespace src\Controllers;
 
 use src\Models\BotProfile;
-use src\Repositories\BotRepository;
+use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
 use src\Services\Response;
 use src\Utils\Validator;
@@ -13,6 +13,7 @@ final class BotController
   use Response;
 
   #[Route('POST', '/createBotProfile')]
+  #[Authorization(1)]
   public function createBotProfile(): void
   {
     $request = json_decode(file_get_contents('php://input'), true);
@@ -23,6 +24,7 @@ final class BotController
       exit;
     } else {
       $bot = new BotProfile();
+      $validationResult['sanitized']['idUser'] = $_SESSION['userId'];
       $result = $bot->create($validationResult['sanitized']);
       if (!$result) {
         $this->jsonResponse(400, 'Could not create bot profile');
