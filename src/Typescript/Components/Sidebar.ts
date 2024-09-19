@@ -18,6 +18,7 @@ export class Sidebar {
     this.websiteNavElement = document.getElementById('website-mobile-nav') as HTMLElement;
     if (window.innerWidth > 640) {
       this.websiteNavElement.classList.add('hidden');
+      document.getElementById('sidebar-app-button')?.classList.add('hidden');
     }
     // eslint-disable-next-line no-undef
     this.appNavButtons = this.sidebarElement.querySelectorAll('li[id*="app-nav-button"]') as NodeListOf<HTMLElement>;
@@ -50,9 +51,11 @@ export class Sidebar {
     window.addEventListener('resize', () => {
       if (window.innerWidth > 640) {
         this.websiteNavElement.classList.add('hidden');
+        document.getElementById('sidebar-app-button')?.classList.add('hidden');
       }
       else {
         this.websiteNavElement.classList.remove('hidden');
+        document.getElementById('sidebar-app-button')?.classList.remove('hidden');
       }
       if (!this.isOpen && window.innerWidth > 640 && window.location.pathname == '/app') {
         this.open();
