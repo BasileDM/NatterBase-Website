@@ -1,18 +1,11 @@
 <?php
 include __DIR__ . '/Includes/header.php';
-include __DIR__ . '/Includes/controlPanel.php'; 
+include __DIR__ . '/Includes/Components/controlPanel.php'; 
 ?>
 
 <section id="app-dashboard">
   <h2>Dashboard</h2>
   <p><?= "This is the dashboard: data = " . $view_data . ""; ?></p>
-  <p class="mb-96">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium repudiandae asperiores velit accusamus ad, expedita voluptas cumque deleniti. Ex amet accusantium dicta veritatis eum temporibus odio inventore cupiditate fugiat. Cumque.</p>
-  <p class="mb-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium repudiandae asperiores velit accusamus ad, expedita voluptas cumque deleniti. Ex amet accusantium dicta veritatis eum temporibus odio inventore cupiditate fugiat. Cumque.</p>
-  <p class="mb-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium repudiandae asperiores velit accusamus ad, expedita voluptas cumque deleniti. Ex amet accusantium dicta veritatis eum temporibus odio inventore cupiditate fugiat. Cumque.</p>
-  <p class="mb-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium repudiandae asperiores velit accusamus ad, expedita voluptas cumque deleniti. Ex amet accusantium dicta veritatis eum temporibus odio inventore cupiditate fugiat. Cumque.</p>
-  <p class="mb-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium repudiandae asperiores velit accusamus ad, expedita voluptas cumque deleniti. Ex amet accusantium dicta veritatis eum temporibus odio inventore cupiditate fugiat. Cumque.</p>
-  <p class="mb-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium repudiandae asperiores velit accusamus ad, expedita voluptas cumque deleniti. Ex amet accusantium dicta veritatis eum temporibus odio inventore cupiditate fugiat. Cumque.</p>
-  <p class="mb-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium repudiandae asperiores velit accusamus ad, expedita voluptas cumque deleniti. Ex amet accusantium dicta veritatis eum temporibus odio inventore cupiditate fugiat. Cumque.</p>
 </section>
 <section id="app-bot-features" class="hidden">
   <h2>Bot Features</h2>

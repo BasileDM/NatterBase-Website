@@ -34,12 +34,10 @@ export class Sidebar {
         // Get the section ID from the data-section attribute
         const sectionId = this.appNavButtons[i].dataset.section;
 
-        // Hide all sections
+        // Hide all sections and show the proper one
         document.querySelectorAll('section[id*="app"]').forEach((section) => {
           section.classList.add('hidden');
         });
-
-        // Show the relevant section
         if (sectionId) {
           const sectionElement = document.getElementById(sectionId);
           sectionElement?.classList.remove('hidden');
