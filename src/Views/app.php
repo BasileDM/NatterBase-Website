@@ -5,7 +5,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 
 <section id="app-dashboard">
   <h2>Dashboard</h2>
-  <p>"This is the dashboard: data = "<pre><?= var_dump($botProfiles) ?></pre>"</p>
+  <p>"This is the dashboard: data = "<pre><?= var_dump($view_userData) ?></pre>"</p>
 </section>
 <section id="app-bot-features" class="hidden">
   <h2>Bot Features</h2>

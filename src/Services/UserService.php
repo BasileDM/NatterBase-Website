@@ -2,16 +2,19 @@
 
 namespace src\Services;
 
+use ArrayAccess;
 use src\Models\User;
 use src\Repositories\UserRepository;
 
-final class UserService 
+final class UserService
 {
   private UserRepository $userRepository;
+  private BotService $botService;
 
   public function __construct()
   {
     $this->userRepository = new UserRepository();
+    $this->botService = new BotService();
   }
 
   public function create(array $inputs): User|false
@@ -28,5 +31,22 @@ final class UserService
       $user->setRoleName('user');
       return $this->userRepository->insert($user);
     }
+  }
+
+  private function getSafeArray(int $userId): array
+  {
+    $user = $this->userRepository->getUserById($userId);
+    return $user->toSafeInfoArray();
+  }
+
+  public function getAllCurrentUserData()
+  {
+    $userId = $_SESSION['userId'];
+    $userData = [
+      "user" => $this->getSafeArray($userId),
+      "botProfiles" => $this->botService->getUserBotsArray($userId),
+    ];
+
+    return $userData;
   }
 }

@@ -6,15 +6,18 @@ use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
 use src\Services\BotService;
 use src\Services\Response;
+use src\Services\UserService;
 use src\Utils\ErrorUtils;
 
 final class PageController
 {
   private $botService;
+  private $userService;
 
   public function __construct()
   {
     $this->botService = new BotService();
+    $this->userService = new UserService();
   }
 
   use Response;
@@ -44,10 +47,8 @@ final class PageController
   #[Authorization(1)]
   public function displayAppPage(): void
   {
-    $userData = [
-      "botProfiles" => $this->botService->getUserBotsArray($_SESSION['userId']),
-    ];
-    $this->render("app", ["section" => "app", "data" => $userData]);
+    $userData = $this->userService->getAllCurrentUserData();
+    $this->render("app", ["section" => "app", "userData" => $userData]);
     exit;
   }
 

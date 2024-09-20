@@ -18,6 +18,19 @@ final class User
 
   use Hydration;
 
+  public function toSafeInfoArray(): array
+  {
+    return [
+      'idUser' => $this->getIdUser(),
+      'mail' => $this->getMail(),
+      'username' => $this->getUsername(),
+      'isActivated' => $this->isIsActivated(),
+      'gdpr' => $this->getGdpr(),
+      'twitchUsername' => $this->getTwitchUsername(),
+      'roleName' => $this->getRoleName(),
+    ];
+  }
+
   public function getAuthLevelFromRole(): int
   {
     switch ($this->getRoleName()) {

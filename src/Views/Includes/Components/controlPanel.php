@@ -1,5 +1,5 @@
 <?php
-$botProfiles = $view_data['botProfiles'];
+$botProfiles = $view_userData['botProfiles'];
 ?>
 <div id="control-panel" class="pb-4 flex border-b border-gray-700 items-center justify-between">
   <div id="profile-buttons">
