@@ -3,13 +3,20 @@
 namespace src\Controllers;
 
 use src\Models\Bot;
-use src\Repositories\BotRepository;
 use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
+use src\Services\BotService;
 use src\Services\Response;
 
 final class PageController
 {
+  private $botService;
+
+  public function __construct()
+  {
+    $this->botService = new BotService();
+  }
+
   use Response;
 
   #[Route('GET', '/')]
@@ -37,9 +44,8 @@ final class PageController
   #[Authorization(1)]
   public function displayAppPage(): void
   {
-    $botRepository = new BotRepository();
-    $bots = $botRepository->getByUserId($_SESSION['userId']);
-    $botsArray = array_map(fn (Bot $bot) => $bot->toArray(), $bots);
+    $bots = $this->botService->getBotByUserId($_SESSION['userId']);
+    $botsArray = array_map(fn(Bot $bot) => $bot->toArray(), $bots);
     $userData = [
       "botProfiles" => $botsArray,
     ];

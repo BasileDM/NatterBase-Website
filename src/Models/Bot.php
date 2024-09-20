@@ -32,6 +32,8 @@ final class Bot
       'idModel' => $this->getIdModel(),
       'idPlatform' => $this->getIdPlatform(),
       'idUser' => $this->getIdUser(),
+      'botCommands' => $this->getBotCommands(),
+      'botFeatures' => $this->getBotFeatures(),
     ];
   }
 
