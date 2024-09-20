@@ -12,12 +12,15 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
   <p><?= "These are the bot features"; ?></p>
 </section>
 <section id="app-settings" class="hidden">
-  <h2>App settings</h2>
-  <p><?= "This is the app settings"; ?></p>
+  <h2>Bot settings</h2>
+  <p><?= "This is the bot settings"; ?></p>
 </section>
 <section id="app-account" class="hidden">
   <h2>Account settings</h2>
-  <p><?= "This is your account"; ?></p>
+  <p>Username : "<?= htmlspecialchars($view_userData["user"]["username"]) ?>"</p>
+  <p>Mail : "<?= htmlspecialchars($view_userData["user"]["mail"]) ?>"</p>
+  <p>Twitch username : "<?= htmlspecialchars($view_userData["user"]["twitchUsername"]) ?>"</p>
+  <p>Role : "<?= htmlspecialchars($view_userData["user"]["roleName"]) ?>"</p>
 </section>
 
 <?php
