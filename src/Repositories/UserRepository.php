@@ -16,6 +16,25 @@ final class UserRepository
     $this->pdo = $db->getDb();
   }
 
+  public function insert(User $user): User
+  {
+    $roleId = $this->getRoleIdFromName($user->getRoleName());
+
+    $query = 'INSERT INTO Users (mail, username, password_hash, is_activated, gdpr, id_role)
+              VALUES (:mail, :username, :passwordHash, :isActivated, :gdpr, :idRole)';
+    $statement = $this->pdo->prepare($query);
+    $statement->execute([
+      ':mail' => $user->getMail(),
+      ':username' => $user->getUsername(),
+      ':passwordHash' => $user->getPasswordHash(),
+      ':isActivated' => $user->isIsActivated(),
+      ':gdpr' => $user->getGdpr(),
+      ':idRole' => $roleId
+    ]);
+    $user->setIdUser($this->pdo->lastInsertId());
+    return $user;
+  }
+
   public function getUserById(int $id): User|false
   {
     $query = 'SELECT Users.*, User_Roles.name AS role_name
@@ -37,25 +56,6 @@ final class UserRepository
     $statement = $this->pdo->prepare($query);
     $statement->execute([':mail' => $mail]);
     $user = $statement->fetchObject(User::class);
-    return $user;
-  }
-
-  public function insert(User $user): User
-  {
-    $roleId = $this->getRoleIdFromName($user->getRoleName());
-
-    $query = 'INSERT INTO Users (mail, username, password_hash, is_activated, gdpr, id_role)
-              VALUES (:mail, :username, :passwordHash, :isActivated, :gdpr, :idRole)';
-    $statement = $this->pdo->prepare($query);
-    $statement->execute([
-      ':mail' => $user->getMail(),
-      ':username' => $user->getUsername(),
-      ':passwordHash' => $user->getPasswordHash(),
-      ':isActivated' => $user->isIsActivated(),
-      ':gdpr' => $user->getGdpr(),
-      ':idRole' => $roleId
-    ]);
-    $user->setIdUser($this->pdo->lastInsertId());
     return $user;
   }
 

@@ -10,6 +10,7 @@ export class Sidebar {
         this.websiteNavElement = document.getElementById('website-mobile-nav');
         if (window.innerWidth > 640) {
             this.websiteNavElement.classList.add('hidden');
+            document.getElementById('sidebar-app-button')?.classList.add('hidden');
         }
         // eslint-disable-next-line no-undef
         this.appNavButtons = this.sidebarElement.querySelectorAll('li[id*="app-nav-button"]');
@@ -23,11 +24,10 @@ export class Sidebar {
             this.appNavButtons[i].addEventListener('click', () => {
                 // Get the section ID from the data-section attribute
                 const sectionId = this.appNavButtons[i].dataset.section;
-                // Hide all sections
+                // Hide all sections and show the proper one
                 document.querySelectorAll('section[id*="app"]').forEach((section) => {
                     section.classList.add('hidden');
                 });
-                // Show the relevant section
                 if (sectionId) {
                     const sectionElement = document.getElementById(sectionId);
                     sectionElement?.classList.remove('hidden');
@@ -38,9 +38,11 @@ export class Sidebar {
         window.addEventListener('resize', () => {
             if (window.innerWidth > 640) {
                 this.websiteNavElement.classList.add('hidden');
+                document.getElementById('sidebar-app-button')?.classList.add('hidden');
             }
             else {
                 this.websiteNavElement.classList.remove('hidden');
+                document.getElementById('sidebar-app-button')?.classList.remove('hidden');
             }
             if (!this.isOpen && window.innerWidth > 640 && window.location.pathname == '/app') {
                 this.open();
