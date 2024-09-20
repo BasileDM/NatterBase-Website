@@ -1,7 +1,7 @@
 <div id="sidebar" class="absolute sm:relative w-64 h-full sm:h-auto bg-gray-900/40 backdrop-blur-lg backdrop-filter border-r border-gray-700 text-white shadow z-10 hidden flex-col">
   <div class="flex flex-col h-full">
     <!-- Sidebar content -->
-    <?php if (isset($_SESSION['isAuth'])): ?>
+    <?php if (isset($_SESSION['isAuth']) && $view_section == 'app'): ?>
     <div class="flex-grow">
       <!-- Dashboard navigation -->
       <div class="p-4">
