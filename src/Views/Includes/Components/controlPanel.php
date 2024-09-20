@@ -1,9 +1,15 @@
+<?php
+$botProfiles = $view_data['botProfiles'];
+?>
 <div id="control-panel" class="pb-4 flex border-b border-gray-700 items-center justify-between">
   <div id="profile-buttons">
     <div class="flex flex-col items-center">
       <div id="create-bot-profile" class="text-center btn btn-base">Create bot profile</div>
-      <select class="text-black self-center w-full" id="bot-profiles-selector" name="bot-profile" value="default">
-        <option class="text-center" value="default">Or select one...</option>
+      <select class="text-black self-center w-full" id="bot-profiles-selector" name="bot-profile">
+        <option class="text-center" value="default" selected>Or select one...</option>
+        <?php foreach ($botProfiles as $botProfile): ?>
+          <option class="text-center" value="<?= $botProfile['idBot'] ?>"><?= $botProfile['name'] ?></option>
+        <?php endforeach ?>
       </select>
     </div>
   </div>

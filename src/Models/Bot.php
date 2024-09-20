@@ -32,6 +32,20 @@ final class Bot
     }
   }
 
+  public function toArray(): array
+  {
+    return [
+      'idBot' => $this->getIdBot(),
+      'name' => $this->getName(),
+      'creationDate' => $this->getCreationDate(),
+      'cooldownTime' => $this->getCooldownTime(),
+      'maxOpenaiMessageLength' => $this->getMaxOpenaiMessageLength(),
+      'idModel' => $this->getIdModel(),
+      'idPlatform' => $this->getIdPlatform(),
+      'idUser' => $this->getIdUser(),
+    ];
+  }
+
   /**
    * Get the value of idBot
    */

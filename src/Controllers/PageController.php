@@ -2,6 +2,8 @@
 
 namespace src\Controllers;
 
+use src\Models\Bot;
+use src\Repositories\BotRepository;
 use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
 use src\Services\Response;
@@ -35,7 +37,12 @@ final class PageController
   #[Authorization(1)]
   public function displayAppPage(): void
   {
-    $userData = $_SESSION['userId'] ?? null;
+    $botRepository = new BotRepository();
+    $bots = $botRepository->getByUser($_SESSION['userId']);
+    $botsArray = array_map(fn (Bot $bot) => $bot->toArray(), $bots);
+    $userData = [
+      "botProfiles" => $botsArray,
+    ];
     $this->render("app", ["section" => "app", "data" => $userData]);
     exit;
   }
