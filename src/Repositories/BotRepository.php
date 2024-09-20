@@ -61,7 +61,7 @@ final class BotRepository
     return $botProfile;
   }
 
-  public function getByUser(int $userId): array
+  public function getByUserId(int $userId): array
   {
     $query = 'SELECT * FROM Bots WHERE id_user = :userId';
     $statement = $this->pdo->prepare($query);

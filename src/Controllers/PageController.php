@@ -38,7 +38,7 @@ final class PageController
   public function displayAppPage(): void
   {
     $botRepository = new BotRepository();
-    $bots = $botRepository->getByUser($_SESSION['userId']);
+    $bots = $botRepository->getByUserId($_SESSION['userId']);
     $botsArray = array_map(fn (Bot $bot) => $bot->toArray(), $bots);
     $userData = [
       "botProfiles" => $botsArray,

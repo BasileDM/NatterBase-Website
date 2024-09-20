@@ -2,9 +2,9 @@
 
 namespace src\Controllers;
 
-use src\Models\Bot;
 use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
+use src\Services\BotService;
 use src\Services\Response;
 use src\Utils\Validator;
 
@@ -23,10 +23,13 @@ final class BotController
       $this->formErrorsResponse(400, $validationResult['errors']);
       exit;
     } else {
-      $bot = new Bot();
-      // Manually adding session user id for auto hydration
-      $validationResult['sanitized']['idUser'] = $_SESSION['userId'];
-      $result = $bot->create($validationResult['sanitized']);
+      // Manually adding session user id for bot auto hydration
+      $saneInputs = $validationResult['sanitized'];
+      $saneInputs['idUser'] = $_SESSION['userId'];
+
+      $botService = new BotService();
+      $result = $botService->create($saneInputs);
+
       if (!$result) {
         $this->jsonResponse(400, 'Could not create bot profile');
       }

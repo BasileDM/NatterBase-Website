@@ -2,8 +2,6 @@
 
 namespace src\Models;
 
-use DateTime;
-use src\Repositories\BotRepository;
 use src\Services\Hydration;
 
 final class Bot
@@ -16,21 +14,12 @@ final class Bot
   private int $idModel = 1;
   private int $idPlatform = 1;
   private int $idUser;
+  /** @var BotCommand[] */
+  private array $botCommands = [];
+  /** @var BotFeature[] */
+  private array $botFeatures = [];
 
   use Hydration;
-
-  public function create(array $inputs): Bot|false
-  {
-    $this->hydrateFromInputs($inputs);
-    $botRepository = new BotRepository();
-    $existingBot = $botRepository->getByNameAndUserId($this->getName(), $this->getIdUser());
-    if ($existingBot)
-      return false;
-    else {
-      $this->setCreationDate((new DateTime())->format('Y-m-d H:i:s'));
-      return $botRepository->insert($this);
-    }
-  }
 
   public function toArray(): array
   {
@@ -196,5 +185,43 @@ final class Bot
     public function setIdUser(int $idUser)
     {
         $this->idUser = $idUser;
+    }
+
+  /**
+   * Get the value of botCommands
+   */
+  public function getBotCommands(): array
+  {
+    return $this->botCommands;
+  }
+
+    /**
+     * Set the value of botCommands
+     *
+     * @param   array  $botCommands  
+     * 
+     */
+    public function setBotCommands(array $botCommands)
+    {
+        $this->botCommands = $botCommands;
+    }
+
+  /**
+   * Get the value of botFeatures
+   */
+  public function getBotFeatures(): array
+  {
+    return $this->botFeatures;
+  }
+
+    /**
+     * Set the value of botFeatures
+     *
+     * @param   array  $botFeatures  
+     * 
+     */
+    public function setBotFeatures(array $botFeatures)
+    {
+        $this->botFeatures = $botFeatures;
     }
 }
