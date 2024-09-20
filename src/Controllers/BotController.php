@@ -23,16 +23,13 @@ final class BotController
   #[Authorization(1)]
   public function createBotProfile(): void
   {
-    $request = json_decode(file_get_contents('php://input'), true);
-    $validationResult = Validator::validateInputs($request);
+    $validation = Validator::validateInputs();
 
-    if (isset($validationResult['errors'])) {
-      $this->formErrorsResponse(400, $validationResult['errors']);
+    if (isset($validation['errors'])) {
+      $this->formErrorsResponse(400, $validation['errors']);
       exit;
     } else {
-      // Adding idUser as a key of the saneInputs assoc array (for bot auto hydration)
-      $saneInputs = $validationResult['sanitized'] + ['idUser' => $_SESSION['userId']];
-      $result = $this->botService->create($saneInputs);
+      $result = $this->botService->create($validation['sanitized']);
 
       if (!$result) {
         $this->jsonResponse(400, 'Could not create bot profile');

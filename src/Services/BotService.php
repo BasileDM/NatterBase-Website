@@ -24,6 +24,8 @@ final class BotService
   public function create(array $inputs): Bot|false
   {
     $newBot = new Bot();
+    // Adding idUser as a key of the saneInputs assoc array (for hydration)
+    $inputs += ['idUser' => $_SESSION['userId']];
     $newBot->hydrateFromInputs($inputs);
     $existingBot = $this->botRepository->getByNameAndUserId($newBot->getName(), $newBot->getIdUser());
     if ($existingBot) return false;
@@ -62,5 +64,12 @@ final class BotService
 
     $bot->setBotCommands($commands);
     $bot->setBotFeatures($features);
+  }
+
+  public function getUserBotsArray(int $userId): array
+  {
+    $bots = $this->getBotByUserId($userId);
+    $botsArray = array_map(fn(Bot $bot) => $bot->toArray(), $bots);
+    return $botsArray;
   }
 }

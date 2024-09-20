@@ -4,8 +4,9 @@ namespace src\Utils;
 
 final class Validator
 {
-  public static function validateInputs(array $request): array
+  public static function validateInputs(): array
   {
+    $request = json_decode(file_get_contents('php://input'), true);
     $inputs = [
       'mail' => $request['mail'] ?? null,
       'username' => $request['username'] ?? null,

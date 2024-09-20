@@ -44,10 +44,8 @@ final class PageController
   #[Authorization(1)]
   public function displayAppPage(): void
   {
-    $bots = $this->botService->getBotByUserId($_SESSION['userId']);
-    $botsArray = array_map(fn(Bot $bot) => $bot->toArray(), $bots);
     $userData = [
-      "botProfiles" => $botsArray,
+      "botProfiles" => $this->botService->getUserBotsArray($_SESSION['userId']),
     ];
     $this->render("app", ["section" => "app", "data" => $userData]);
     exit;
