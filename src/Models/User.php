@@ -2,7 +2,6 @@
 
 namespace src\Models;
 
-use src\Repositories\UserRepository;
 use src\Services\Hydration;
 
 final class User
@@ -19,21 +18,6 @@ final class User
 
   use Hydration;
 
-  public function create(array $inputs): User|false
-  {
-    $this->hydrateFromInputs($inputs);
-    $userRepository = new UserRepository();
-    $existingUser = $userRepository->getUserByMail($this->getMail());
-
-    if ($existingUser)
-      return false;
-    else {
-      $this->setIsActivated(false);
-      $this->setGdpr(gmdate('Y-m-d H:i:s'));
-      $this->setRoleName('user');
-      return $userRepository->insert($this);
-    }
-  }
   public function getAuthLevelFromRole(): int
   {
     switch ($this->getRoleName()) {

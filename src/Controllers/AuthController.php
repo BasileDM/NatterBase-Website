@@ -6,25 +6,31 @@ use src\Models\User;
 use src\Router\Attributes\Route;
 use src\Services\Authenticator;
 use src\Services\Response;
+use src\Services\UserService;
 use src\Utils\Validator;
 
 final class AuthController
 {
+  private UserService $userService;
+
+  public function __construct()
+  {
+    $this->userService = new UserService();
+  }
+
   use Response;
 
   #[Route('POST', '/register')]
   public function register(): void
   {
-    $request = json_decode(file_get_contents('php://input'), true);
-    $validationResult = Validator::validateInputs($request);
+    $validationResult = Validator::validateInputs();
 
     if (isset($validationResult['errors'])) {
       $this->formErrorsResponse(400, $validationResult['errors']);
       exit;
     }
 
-    $user = new User();
-    $result = $user->create($validationResult['sanitized']);
+    $result = $this->userService->create($validationResult['sanitized']);
     if (!$result) {
       $this->jsonResponse(400, 'User already exists');
     } else {
