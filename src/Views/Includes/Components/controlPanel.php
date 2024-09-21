@@ -8,7 +8,9 @@ $botProfiles = $view_userData['botProfiles'];
       <select class="text-black self-center w-full" id="bot-profiles-selector" name="bot-profile">
         <option class="text-center" value="default" selected>Or select one...</option>
         <?php foreach ($botProfiles as $key => $botProfile): ?>
-          <option class="text-center" value="<?= $botProfile['idBot'] ?>"><?= $botProfile['name'] ?></option>
+          <option class="text-center" value="<?= $botProfile['idBot'] ?>" data-index="<?= $key ?>">
+            <?= $botProfile['name'] ?>
+          </option>
         <?php endforeach ?>
       </select>
     </div>

@@ -7,14 +7,17 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
   <h2>Dashboard</h2>
   <p>"This is the dashboard: data = "<pre><?= var_dump($view_userData) ?></pre>"</p>
 </section>
+
 <section id="app-bot-features" class="hidden">
   <h2>Bot Features</h2>
   <p><?= "These are the bot features"; ?></p>
 </section>
+
 <section id="app-bot-settings" class="hidden">
   <h2>Bot settings</h2>
   <p><?= "This is the bot settings"; ?></p>
 </section>
+
 <section id="app-account" class="hidden">
   <h2>Account settings</h2>
   <p>Username : <?= htmlspecialchars($view_userData["user"]["username"] ?? '') ?></p>
