@@ -11,7 +11,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
   <h2>Bot Features</h2>
   <p><?= "These are the bot features"; ?></p>
 </section>
-<section id="app-settings" class="hidden">
+<section id="app-bot-settings" class="hidden">
   <h2>Bot settings</h2>
   <p><?= "This is the bot settings"; ?></p>
 </section>
