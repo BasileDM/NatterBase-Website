@@ -3,12 +3,14 @@ $botProfiles = $view_userData['botProfiles'];
 ?>
 <div id="control-panel" class="pb-4 flex border-b border-gray-700 items-center justify-between">
   <div id="profile-buttons">
-    <div class="flex flex-col items-center">
-      <div id="create-bot-profile" class="text-center btn btn-base">Create bot profile</div>
-      <select class="text-black self-center w-full" id="bot-profiles-selector" name="bot-profile">
-        <option class="text-center" value="default" selected>Or select one...</option>
+    <div class="flex flex-col items-center gap-2">
+      <div id="create-bot-profile" class="text-center btn btn-base w-full">Create a bot</div>
+      <select id="bot-profiles-selector" class="text-black self-center max-w-40 rounded text-center" name="bot-profile">
+        <option value="default" selected hidden>Select a bot</option>
         <?php foreach ($botProfiles as $key => $botProfile): ?>
-          <option class="text-center" value="<?= $botProfile['idBot'] ?>" data-index="<?= $key ?>">
+          <option
+            value="<?= $botProfile['idBot'] ?>"
+            data-index="<?= $key ?>">
             <?= $botProfile['name'] ?>
           </option>
         <?php endforeach ?>
