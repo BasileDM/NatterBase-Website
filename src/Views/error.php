@@ -7,5 +7,5 @@ include __DIR__ . '/Includes/header.php';
 <a href="/">Go back to the home page</a>
 
 <?php
-include __DIR__ . '/Includes/footer.php';
+include __DIR__ . '/Includes/footer.html';
 ?>

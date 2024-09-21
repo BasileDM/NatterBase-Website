@@ -27,5 +27,5 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 </section>
 
 <?php
-include __DIR__ . '/Includes/footer.php';
+include __DIR__ . '/Includes/footer.html';
 ?>

@@ -6,5 +6,5 @@ include __DIR__ . '/Includes/header.php';
 <p>This is the features page.</p>
 
 <?php
-include __DIR__ . '/Includes/footer.php';
+include __DIR__ . '/Includes/footer.html';
 ?>
