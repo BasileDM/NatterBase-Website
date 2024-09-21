@@ -18,6 +18,22 @@ export class RequestHelper {
     }
   }
 
+  static async get(url: string): Promise<Response> {
+    try {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      return response;
+    }
+    catch (error) {
+      console.error('Request failed', error);
+      throw new Error('Request failed. Try again later.');
+    }
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static async handleResponse(response: Response): Promise<any|false> {
     const responseBody = await response.json();
@@ -29,18 +45,9 @@ export class RequestHelper {
     return responseBody;
   }
 
-  static async get(url: string): Promise<Response|void> {
-    try {
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-
-      return await response.json();
-    }
-    catch (error) {
-      console.error('Request failed', error);
-    }
+  public static async getUserData(): Promise<JSON> {
+    const response = await RequestHelper.get('/api/userData');
+    const jsonResponseBody = await RequestHelper.handleResponse(response);
+    return jsonResponseBody;
   }
 }

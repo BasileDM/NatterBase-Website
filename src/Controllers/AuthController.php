@@ -2,7 +2,6 @@
 
 namespace src\Controllers;
 
-use src\Models\User;
 use src\Router\Attributes\Route;
 use src\Services\Authenticator;
 use src\Services\Response;
@@ -32,9 +31,9 @@ final class AuthController
 
     $result = $this->userService->create($validationResult['sanitized']);
     if (!$result) {
-      $this->jsonResponse(400, 'User already exists');
+      $this->jsonResponse(400, ['message' => 'User already exists']);
     } else {
-      $this->jsonResponse(200, 'Registration successful');
+      $this->jsonResponse(200, ['message' => 'Registration successful']);
     }
   }
 
@@ -60,13 +59,13 @@ final class AuthController
       200 => 'Login successful',
     };
 
-    $this->jsonResponse($statusCode, $message);
+    $this->jsonResponse($statusCode, ['message' => $message]);
   }
 
   #[Route('GET', '/logout')]
   public function logout(): void
   {
     session_destroy();
-    $this->jsonResponse(200, 'Logout successful', '/');
+    $this->jsonResponse(200, ['message' => 'Logout successful'], '/');
   }
 }

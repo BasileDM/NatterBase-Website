@@ -1,4 +1,4 @@
-import { ControlPanel } from './ControlPanel.js';
+import { ControlPanel } from '../Components/ControlPanel.js';
 export class AppInterface {
     constructor() {
         this.controlPanel = new ControlPanel();

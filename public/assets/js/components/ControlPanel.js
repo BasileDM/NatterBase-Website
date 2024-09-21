@@ -1,7 +1,8 @@
+import { UiUtils } from '../Utils/UiUtils.js';
 import { AbstractFormModal } from './Abstract/AbstractFormModal.js';
 export class ControlPanel {
     constructor() {
-        new AbstractFormModal('create-bot-profile-modal', ['create-bot-profile'], 'create-bot-profile-form');
+        this.createProfileModal = new AbstractFormModal('create-bot-profile-modal', ['create-bot-profile'], 'create-bot-profile-form');
         this.botProfileSelector = document.getElementById('bot-profiles-selector');
         // eslint-disable-next-line no-undef
         this.botProfiles = this.botProfileSelector.querySelectorAll('option');
@@ -10,6 +11,13 @@ export class ControlPanel {
     bindEvents() {
         console.log('Bot profiles: ');
         console.log(this.botProfiles);
+        // Bot profile selector
+        this.botProfileSelector.addEventListener('change', (event) => {
+            const target = event.target;
+            const targetOption = target.options[target.selectedIndex];
+            console.log(targetOption.value);
+            UiUtils.updateInterface();
+        });
     }
     ;
 }

@@ -32,10 +32,12 @@ export class Toast {
         this.messageElement.textContent = message;
         // Apply different styles based on the type
         if (type === 'success') {
+            this.toastElement.classList.remove('toast-error');
             this.toastElement.classList.add('toast-success');
             this.iconElement.textContent = '✔️';
         }
         else if (type === 'error') {
+            this.toastElement.classList.remove('toast-success');
             this.toastElement.classList.add('toast-error');
             this.iconElement.textContent = '❌';
         }
