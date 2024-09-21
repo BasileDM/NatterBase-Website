@@ -81,7 +81,7 @@ INSERT INTO User_Roles (name) VALUES('user');
 INSERT INTO User_Roles (name) VALUES('admin');
 
 INSERT INTO Users (mail, username, password_hash, is_activated, gdpr, twitch_id, twitch_username, id_role)
-VALUES('admin@admin.com', 'admin', '$2y$10$tfBK4jlXBc.HDoBW3cWK2eoH76SJu.rUlTJQa0/JzIaAeE/yfNmLW', true, '2022-01-01', '123456789', NULL, 2);
+VALUES('admin@admin.com', 'admin', '$2y$10$tfBK4jlXBc.HDoBW3cWK2eoH76SJu.rUlTJQa0/JzIaAeE/yfNmLW', true, CURRENT_DATE, NULL, NULL, 2);
 
 INSERT INTO Bot_Features (name, is_admin, is_subscriber, id_bot_feature_category)
 VALUES('Throw dice', true, false, 1);

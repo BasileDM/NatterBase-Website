@@ -10,10 +10,12 @@ require_once __DIR__ . "/../config.local.php";
 $db = new Database();
 
 try {
-  if ($db->init()) echo "Database tables created successfully!";
+  if ($db->init()) {
+    header("Location: /home?notice=dbCreated");
+    die();
+  }
 } catch (RuntimeException $e) {
   echo $e->getMessage();
 }
-
 $router = new Router();
 $router->handleRequest();

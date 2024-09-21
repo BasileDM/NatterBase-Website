@@ -58,7 +58,6 @@ class Router
 
   public function handleRequest(): void
   {
-    $pageController = new PageController();
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $route = $this->routes[$requestMethod][$path] ?? null;

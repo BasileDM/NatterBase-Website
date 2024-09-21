@@ -19,7 +19,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
   <h2>Account settings</h2>
   <p>Username : <?= htmlspecialchars($view_userData["user"]["username"] ?? '') ?></p>
   <p>Mail : <?= htmlspecialchars($view_userData["user"]["mail"] ?? '') ?></p>
-  <p>Twitch username : <?= htmlspecialchars($view_userData["user"]["twitchUsername"] ?? '') ?></p>
+  <p>Twitch username : <?= htmlspecialchars($view_userData["user"]["twitchUsername"] ?? 'Link your account now!') ?></p>
   <p>Role : <?= htmlspecialchars($view_userData["user"]["roleName"] ?? '') ?></p>
 </section>
 
