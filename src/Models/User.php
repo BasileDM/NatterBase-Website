@@ -2,7 +2,6 @@
 
 namespace src\Models;
 
-use src\Repositories\UserRepository;
 use src\Services\Hydration;
 
 final class User
@@ -19,21 +18,19 @@ final class User
 
   use Hydration;
 
-  public function create(array $inputs): User|false
+  public function toSafeInfoArray(): array
   {
-    $this->hydrateFromInputs($inputs);
-    $userRepository = new UserRepository();
-    $existingUser = $userRepository->getUserByMail($this->getMail());
-
-    if ($existingUser)
-      return false;
-    else {
-      $this->setIsActivated(false);
-      $this->setGdpr(gmdate('Y-m-d H:i:s'));
-      $this->setRoleName('user');
-      return $userRepository->insert($this);
-    }
+    return [
+      'idUser' => $this->getIdUser(),
+      'mail' => $this->getMail(),
+      'username' => $this->getUsername(),
+      'isActivated' => $this->isIsActivated(),
+      'gdpr' => $this->getGdpr(),
+      'twitchUsername' => $this->getTwitchUsername(),
+      'roleName' => $this->getRoleName(),
+    ];
   }
+
   public function getAuthLevelFromRole(): int
   {
     switch ($this->getRoleName()) {

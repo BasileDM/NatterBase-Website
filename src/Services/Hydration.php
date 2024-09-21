@@ -28,7 +28,7 @@ trait Hydration
     }
   }
 
-  private function hydrateFromInputs(array $inputs): void
+  public function hydrateFromInputs(array $inputs): void
   {
     foreach ($inputs as $key => $value) {
       $setter = "set" . ucfirst($key);

@@ -4,10 +4,22 @@ namespace src\Controllers;
 
 use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
+use src\Services\BotService;
 use src\Services\Response;
+use src\Services\UserService;
+use src\Utils\ErrorUtils;
 
 final class PageController
 {
+  private $botService;
+  private $userService;
+
+  public function __construct()
+  {
+    $this->botService = new BotService();
+    $this->userService = new UserService();
+  }
+
   use Response;
 
   #[Route('GET', '/')]
@@ -35,27 +47,15 @@ final class PageController
   #[Authorization(1)]
   public function displayAppPage(): void
   {
-    $userData = $_SESSION['userId'] ?? null;
-    $this->render("app", ["section" => "app", "data" => $userData]);
+    $userData = $this->userService->getAllCurrentUserData();
+    $this->render("app", ["section" => "app", "userData" => $userData]);
     exit;
   }
 
   #[Route('GET', '/error')]
   public function displayErrorPage(): void
   {
-    $code = $_GET['code'] ?? null;
-    if (!$code) $code = 404;
-    $message = match ((int)$code) {
-      400 => 'Bad Request',
-      401 => 'Please login or register to access the app',
-      403 => 'Forbidden',
-      404 => 'Page Not Found',
-      500 => 'Internal Server Error',
-      503 => 'Service Unavailable',
-      504 => 'Gateway Timeout',
-      429 => 'Too Many Requests',
-      default => 'Error',
-    };
+    [$code, $message] = ErrorUtils::getErrorCodeAndMessage();
     $this->render("error", ["section" => "error", "message" => $message, "code" => $code]);
     exit;
   }
