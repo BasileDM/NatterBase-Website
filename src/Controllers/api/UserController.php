@@ -22,8 +22,7 @@ final class UserController
   #[Authorization(1)]
   public function getUserData()
   {
-    var_dump($this->userService->getAllCurrentUserData());
-    exit;
-    return $this->jsonResponse(200, ['userData' => $this->userService->getAllCurrentUserData()]);
+    $currentUserData = $this->userService->getAllCurrentUserData();
+    return $this->jsonResponse(200, ['userData' => $currentUserData]);
   }
 }
