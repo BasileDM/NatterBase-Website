@@ -8,4 +8,5 @@ if (toastMessage) {
   sessionStorage.removeItem('showToast');
 }
 
+// Instantiate UI elements
 new ControlPanel();

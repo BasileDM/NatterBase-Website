@@ -15,7 +15,7 @@ export class ControlPanel {
     this.bindEvents();
   }
 
-  protected bindEvents() {
+  private bindEvents() {
     console.log('Bot profiles: ');
     console.log(this.botProfiles);
 
