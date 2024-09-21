@@ -18,10 +18,10 @@ trait Response
 
   private function jsonResponse(int $code, array $data = [], string $redirect = ''): void
   {
-    if (!empty($redirect)) header('Location: ' . $redirect);
     http_response_code($code);
     header('Content-Type: application/json');
     echo json_encode($data);
+    if (!empty($redirect)) header('Location: ' . $redirect);
     exit;
   }
 

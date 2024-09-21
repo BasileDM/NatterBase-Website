@@ -7,7 +7,7 @@ use src\Router\Attributes\Route;
 use src\Services\Response;
 use src\Services\UserService;
 
-final class UserController
+final class ApiUserController
 {
   private UserService $userService;
 
