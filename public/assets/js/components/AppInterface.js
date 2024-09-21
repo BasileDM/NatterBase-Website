@@ -1,4 +1,4 @@
-export class Dashboard {
+export class AppInterface {
     constructor() {
         this.bindEvents();
     }
