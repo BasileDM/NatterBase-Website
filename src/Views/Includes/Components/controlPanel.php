@@ -7,7 +7,7 @@ $botProfiles = $view_userData['botProfiles'];
       <div id="create-bot-profile" class="text-center btn btn-base">Create bot profile</div>
       <select class="text-black self-center w-full" id="bot-profiles-selector" name="bot-profile">
         <option class="text-center" value="default" selected>Or select one...</option>
-        <?php foreach ($botProfiles as $botProfile): ?>
+        <?php foreach ($botProfiles as $key => $botProfile): ?>
           <option class="text-center" value="<?= $botProfile['idBot'] ?>"><?= $botProfile['name'] ?></option>
         <?php endforeach ?>
       </select>
