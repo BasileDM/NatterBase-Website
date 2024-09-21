@@ -23,6 +23,6 @@ final class ApiUserController
   public function getUserData()
   {
     $currentUserData = $this->userService->getAllCurrentUserData();
-    return $this->jsonResponse(200, ['userData' => $currentUserData]);
+    return $this->jsonResponse(200, $currentUserData);
   }
 }

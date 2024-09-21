@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Toast } from '../Components/Toast.js';
 
 export class RequestHelper {
@@ -34,7 +35,6 @@ export class RequestHelper {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static async handleResponse(response: Response): Promise<any|false> {
     const responseBody = await response.json();
     if (!response.ok && responseBody.message) {
@@ -45,7 +45,7 @@ export class RequestHelper {
     return responseBody;
   }
 
-  public static async getUserData(): Promise<JSON> {
+  public static async getUserData(): Promise<any|false> {
     const response = await RequestHelper.get('/api/userData');
     const jsonResponseBody = await RequestHelper.handleResponse(response);
     return jsonResponseBody;

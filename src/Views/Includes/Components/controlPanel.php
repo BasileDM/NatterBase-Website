@@ -5,7 +5,7 @@ $botProfiles = $view_userData['botProfiles'];
   <div id="profile-buttons">
     <div class="flex flex-col items-center gap-2">
       <div id="create-bot-profile" class="text-center btn btn-base w-full">Create a bot</div>
-      <select id="bot-profiles-selector" class="text-black self-center max-w-40 rounded text-center" name="bot-profile">
+      <select id="bot-profiles-selector" class="text-black self-center w-full max-w-40 rounded text-center hover:cursor-pointer" name="bot-profile">
         <option value="default" selected hidden>Select a bot</option>
         <?php foreach ($botProfiles as $key => $botProfile): ?>
           <option

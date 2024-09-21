@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Toast } from '../Components/Toast.js';
 export class RequestHelper {
     static async post(url, data) {
@@ -29,7 +30,6 @@ export class RequestHelper {
             throw new Error('Request failed. Try again later.');
         }
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     static async handleResponse(response) {
         const responseBody = await response.json();
         if (!response.ok && responseBody.message) {

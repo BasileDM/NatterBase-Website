@@ -18,7 +18,10 @@ export class ControlPanel {
             console.log('Selected option value: ' + targetOption.value);
             console.log('Selected option index: ' + targetOption.index);
             console.log('Selected option data index: ' + targetOption.dataset.index);
-            UiUtils.updateInterface();
+            const selectedIndex = targetOption.dataset.index;
+            if (selectedIndex) {
+                UiUtils.updateInterface(parseInt(selectedIndex, 10));
+            }
         });
     }
     ;

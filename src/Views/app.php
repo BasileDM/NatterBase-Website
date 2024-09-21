@@ -5,17 +5,18 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 
 <section id="app-dashboard">
   <h2>Dashboard</h2>
-  <p>"This is the dashboard: data = "<pre><?= var_dump($view_userData) ?></pre>"</p>
+  <p>Welcome, <?= $view_userData["user"]["username"] ?>. Please select a bot.</p>
+  <pre><?= var_dump($view_userData) ?></pre>
 </section>
 
 <section id="app-bot-settings" class="hidden">
   <h2>Bot settings</h2>
-  <p><?= "Please select a profile."; ?></p>
+  <p>Please select a bot.</p>
 </section>
 
 <section id="app-bot-features" class="hidden">
   <h2>Bot Features</h2>
-  <p><?= "Please select a profile."; ?></p>
+  <p>Please select a bot.</p>
 </section>
 
 <section id="app-account" class="hidden">

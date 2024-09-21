@@ -934,6 +934,14 @@ p {
   animation: toastSlideOut 0.5s ease-in-out;
 }
 
+.cursor-auto {
+  cursor: auto;
+}
+
+.cursor-context-menu {
+  cursor: context-menu;
+}
+
 .resize {
   resize: both;
 }
@@ -1162,6 +1170,10 @@ p {
 
 .hover\:cursor-pointer:hover {
   cursor: pointer;
+}
+
+.hover\:cursor-context-menu:hover {
+  cursor: context-menu;
 }
 
 .hover\:bg-gray-600:hover {
