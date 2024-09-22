@@ -19,11 +19,11 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <input class="input" type="text" name="name" id="bot-name">
     </div>
     <div>
-      <label class="block text-sm font-medium for=" bot-platform">Platform</label>
+      <label class="block text-sm font-medium" for="bot-platform">Platform</label>
       <input class="input" type="text" name="platform" id="bot-platform" disabled>
     </div>
     <div>
-      <label class="block text-sm font-medium for=" bot-cooldown">Cooldown</label>
+      <label class="block text-sm font-medium" for="bot-cooldown">Cooldown</label>
       <input class="input" type="number" name="cooldown" id="bot-cooldown">
     </div>
     <div class="flex gap-2">
@@ -50,6 +50,10 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <label class="block text-sm font-medium" for="mail">Mail</label>
       <input class="input" type="text" name="mail" id="account-section-mail"
         value="<?= htmlspecialchars($view_userData["user"]["mail"] ?? '') ?>" disabled>
+    </div>
+    <div>
+      <label class="block text-sm font-medium" for="openAiKey">OpenAI API key</label>
+      <input class="input" type="text" name="openAiKey" id="account-section-openAiKey">
     </div>
     <div>
       <label class="block text-sm font-medium" for="twitchUsername">Twitch username</label>
