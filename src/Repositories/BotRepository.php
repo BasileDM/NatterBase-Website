@@ -45,7 +45,11 @@ final class BotRepository
 
   public function getByName(string $name): Bot|false
   {
-    $query = 'SELECT * FROM Bots WHERE name = :name';
+    $query = 'SELECT Bots.*, Bot_Language_Models.name AS model_name, Bot_Platforms.name AS platform_name
+              FROM Bots
+              LEFT JOIN Bot_Language_models ON Bots.id_model = Bot_Language_Models.id_model
+              LEFT JOIN Bot_Platforms ON Bots.id_platform = Bot_Platforms.id_platform
+              WHERE name = :name';
     $statement = $this->pdo->prepare($query);
     $statement->execute([':name' => $name]);
     $botProfile = $statement->fetchObject(Bot::class);
@@ -54,16 +58,24 @@ final class BotRepository
 
   public function getById(int $id): Bot|false
   {
-    $query = 'SELECT * FROM Bots WHERE id_bot = :id';
+    $query = 'SELECT Bots.*, Bot_Language_Models.name AS model_name, Bot_Platforms.name AS platform_name
+              FROM Bots
+              LEFT JOIN Bot_Language_models ON Bots.id_model = Bot_Language_Models.id_model
+              LEFT JOIN Bot_Platforms ON Bots.id_platform = Bot_Platforms.id_platform
+              WHERE id_bot = :id';
     $statement = $this->pdo->prepare($query);
     $statement->execute([':id' => $id]);
     $botProfile = $statement->fetchObject(Bot::class);
     return $botProfile;
   }
 
-  public function getByUserId(int $userId): array
+  public function getByUserId(int $userId): array|false
   {
-    $query = 'SELECT * FROM Bots WHERE id_user = :userId';
+    $query = 'SELECT Bots.*, Bot_Language_Models.name AS model_name, Bot_Platforms.name AS platform_name
+              FROM Bots
+              LEFT JOIN Bot_Language_models ON Bots.id_model = Bot_Language_Models.id_model
+              LEFT JOIN Bot_Platforms ON Bots.id_platform = Bot_Platforms.id_platform
+              WHERE id_user = :userId';
     $statement = $this->pdo->prepare($query);
     $statement->execute([':userId' => $userId]);
     $botProfiles = $statement->fetchAll(PDO::FETCH_CLASS, Bot::class);

@@ -58,7 +58,7 @@
   }
 
   .input {
-    @apply text-white p-1 rounded-md bg-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500
+    @apply text-white disabled:text-gray-400 p-1 rounded-md bg-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500
   }
 
   .invalid-input {

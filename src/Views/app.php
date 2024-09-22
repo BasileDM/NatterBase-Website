@@ -15,15 +15,15 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
   <form action="" class="space-y-4">
     <p>Creation date: </p>
     <div>
-      <label for="bot-name">Bot profile name</label>
+      <label class="block text-sm font-medium" for="bot-name">Profile name</label>
       <input class="input" type="text" name="name" id="bot-name">
     </div>
     <div>
-      <label for="bot-platform">Bot platform</label>
-      <input class="input" type="text" name="platform" id="bot-platform">
+      <label class="block text-sm font-medium for="bot-platform">Platform</label>
+      <input class="input" type="text" name="platform" id="bot-platform" disabled>
     </div>
     <div>
-      <label for="bot-cooldown">Bot cooldown</label>
+      <label class="block text-sm font-medium for="bot-cooldown">Cooldown</label>
       <input class="input" type="number" name="cooldown" id="bot-cooldown">
     </div>
     <div class="flex gap-2">
