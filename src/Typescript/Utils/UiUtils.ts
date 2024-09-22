@@ -70,7 +70,6 @@ export class UiUtils {
   }
 
   private static updateBotsList(bots: any) {
-    console.log('Updating bots list...', bots);
     const botSelector = document.getElementById('bot-profiles-selector') as HTMLSelectElement;
 
     if (botSelector) {
@@ -83,6 +82,14 @@ export class UiUtils {
       if (currentSelectedIndex != undefined && currentSelectedIndex >= 0) {
         botSelector.selectedIndex = currentSelectedIndex;
       }
+      else {
+        botSelector.selectedIndex = 0;
+        this.resetInterface();
+      }
     }
+  }
+
+  private static resetInterface() {
+    console.log('Resetting interface...');
   }
 }

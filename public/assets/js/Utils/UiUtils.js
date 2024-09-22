@@ -56,7 +56,6 @@ export class UiUtils {
         console.log('Updating account section...', user);
     }
     static updateBotsList(bots) {
-        console.log('Updating bots list...', bots);
         const botSelector = document.getElementById('bot-profiles-selector');
         if (botSelector) {
             const currentSelectedIndex = botSelector.selectedIndex;
@@ -67,6 +66,13 @@ export class UiUtils {
             if (currentSelectedIndex != undefined && currentSelectedIndex >= 0) {
                 botSelector.selectedIndex = currentSelectedIndex;
             }
+            else {
+                botSelector.selectedIndex = 0;
+                this.resetInterface();
+            }
         }
+    }
+    static resetInterface() {
+        console.log('Resetting interface...');
     }
 }

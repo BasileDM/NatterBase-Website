@@ -49,7 +49,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
     <div>
       <label class="block text-sm font-medium" for="mail">Mail</label>
       <input class="input" type="text" name="mail" id="account-section-mail"
-        value="<?= htmlspecialchars($view_userData["user"]["mail"] ?? '') ?>">
+        value="<?= htmlspecialchars($view_userData["user"]["mail"] ?? '') ?>" disabled>
     </div>
     <div>
       <label class="block text-sm font-medium" for="twitchUsername">Twitch username</label>
