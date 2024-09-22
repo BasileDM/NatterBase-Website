@@ -20,10 +20,6 @@ export class UiUtils {
       this.updateBotSettingsSection(currentBot);
       this.updateBotFeaturesSection();
     }
-    else {
-      this.resetBotSettingsSection();
-      this.resetBotFeaturesSection();
-    }
   }
 
   public static updateBotSettingsSection(currentBot: any) {
@@ -62,13 +58,5 @@ export class UiUtils {
 
   public static updateAccountSection() {
     console.log('Updating account section...');
-  }
-
-  public static resetBotFeaturesSection() {
-    console.log('Resetting bot features...');
-  }
-
-  public static resetBotSettingsSection() {
-    console.log('Resetting bot settings...');
   }
 }

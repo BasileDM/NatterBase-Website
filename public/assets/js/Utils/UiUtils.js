@@ -17,10 +17,6 @@ export class UiUtils {
             this.updateBotSettingsSection(currentBot);
             this.updateBotFeaturesSection();
         }
-        else {
-            this.resetBotSettingsSection();
-            this.resetBotFeaturesSection();
-        }
     }
     static updateBotSettingsSection(currentBot) {
         const placeholder = document.getElementById('bot-settings-placeholder');
@@ -50,11 +46,5 @@ export class UiUtils {
     }
     static updateAccountSection() {
         console.log('Updating account section...');
-    }
-    static resetBotFeaturesSection() {
-        console.log('Resetting bot features...');
-    }
-    static resetBotSettingsSection() {
-        console.log('Resetting bot settings...');
     }
 }
