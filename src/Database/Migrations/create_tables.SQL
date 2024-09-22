@@ -86,9 +86,9 @@ VALUES('admin@admin.com', 'admin', '$2y$10$tfBK4jlXBc.HDoBW3cWK2eoH76SJu.rUlTJQa
 INSERT INTO Bot_Features (name, is_admin, is_subscriber, id_bot_feature_category)
 VALUES('Throw dice', true, false, 1);
 
-INSERT INTO Bot_Feature_Categories (name) VALUES('game');
-INSERT INTO Bot_Feature_Categories (name) VALUES('ai');
+INSERT INTO Bot_Feature_Categories (name) VALUES('Game');
+INSERT INTO Bot_Feature_Categories (name) VALUES('AI');
 
 INSERT INTO Bot_Language_Models (name) VALUES('gpt-3.5-turbo');
 
-INSERT INTO Bot_Platforms (name) VALUES('twitch');
+INSERT INTO Bot_Platforms (name) VALUES('Twitch');

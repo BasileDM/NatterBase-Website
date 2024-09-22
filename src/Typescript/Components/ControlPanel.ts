@@ -16,16 +16,8 @@ export class ControlPanel {
 
   private bindEvents() {
     // Bot profile selector
-    this.botProfileSelector.addEventListener('change', (event) => {
-      const target = event.target as HTMLSelectElement;
-      const targetOption = target.options[target.selectedIndex];
-      // console.log('Selected option value: ' + targetOption.value);
-      // console.log('Selected option index: ' + targetOption.index);
-      // console.log('Selected option data index: ' + targetOption.dataset.index);
-      const selectedIndex = targetOption.dataset.index;
-      if (selectedIndex) {
-        UiUtils.updateInterface(parseInt(selectedIndex, 10));
-      }
+    this.botProfileSelector.addEventListener('change', () => {
+      UiUtils.updateInterface();
     });
   };
 }

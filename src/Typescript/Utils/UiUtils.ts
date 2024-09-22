@@ -1,21 +1,24 @@
 import { RequestHelper } from './RequestHelper.js';
 
 export class UiUtils {
-  public static async updateInterface(selectedBotIndex: number|null = null) {
-    console.log('Fetching user data:');
+  public static async updateInterface() {
+    const botSelector = document.getElementById('bot-profiles-selector') as HTMLSelectElement;
+    const selectedBotIndex = Number(botSelector.selectedIndex) - 1;
     let currentBot = null;
+
+    console.log('Fetching user data:');
     const userData = await RequestHelper.getUserData();
     const user = userData.user;
     console.log(user);
 
     console.log('Updating interface...');
-    if (selectedBotIndex !== null) {
+    this.updateAccountSection();
+    if (selectedBotIndex != undefined && selectedBotIndex >= 0) {
       currentBot = userData.botProfiles[selectedBotIndex];
-      console.log(currentBot);
+      console.log('Current bot: ', currentBot);
       this.updateBotFeatures();
       this.updateBotSettings();
     }
-    this.updateAccountSection();
   }
 
   public static updateBotSettings() {
