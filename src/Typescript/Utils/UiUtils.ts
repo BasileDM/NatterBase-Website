@@ -13,21 +13,26 @@ export class UiUtils {
     const user = userData.user;
     console.log('User: ', user);
 
-    this.updateAccountSection();
+    this.updateAccountSection(user);
+    this.updateBotsList(userData.botProfiles);
     if (selectedBotIndex != undefined && selectedBotIndex >= 0) {
       currentBot = userData.botProfiles[selectedBotIndex];
-      console.log('Current bot: ', currentBot);
       this.updateBotSettingsSection(currentBot);
-      this.updateBotFeaturesSection();
+      this.updateBotFeaturesSection(currentBot);
     }
   }
 
-  public static updateBotSettingsSection(currentBot: any) {
+  private static updateBotSettingsSection(currentBot: any) {
+    const botSettingsFormElement = document.getElementById('bot-settings-form') as HTMLFormElement;
     const placeholder = document.getElementById('bot-settings-placeholder') as HTMLElement;
     const creationDate = document.getElementById('bot-settings-creation-date') as HTMLElement;
     const botNameInput = document.getElementById('bot-name') as HTMLInputElement;
     const platformInput = document.getElementById('bot-platform') as HTMLInputElement;
     const cooldownInput = document.getElementById('bot-cooldown') as HTMLInputElement;
+
+    if (botSettingsFormElement) {
+      botSettingsFormElement.classList.remove('hidden');
+    }
 
     if (placeholder) {
       placeholder.classList.add('hidden');
@@ -39,24 +44,40 @@ export class UiUtils {
 
     }
 
-    if (botNameInput && currentBot) {
+    if (botNameInput) {
       botNameInput.value = currentBot.name;
     }
 
-    if (platformInput && currentBot) {
+    if (platformInput) {
       platformInput.value = currentBot.platformName;
     }
 
-    if (cooldownInput && currentBot) {
+    if (cooldownInput) {
       cooldownInput.value = currentBot.cooldownTime;
     }
   }
 
-  public static updateBotFeaturesSection() {
-    console.log('Updating bot features...');
+  private static updateBotFeaturesSection(currentBot: any) {
+    console.log('Updating bot features section...', currentBot);
+    const placeholder = document.getElementById('bot-features-placeholder') as HTMLElement;
+    if (placeholder) {
+      placeholder.classList.add('hidden');
+    }
   }
 
-  public static updateAccountSection() {
-    console.log('Updating account section...');
+  private static updateAccountSection(user: any) {
+    console.log('Updating account section...', user);
+  }
+
+  private static updateBotsList(bots: any) {
+    console.log('Updating bots list...', bots);
+    const botSelector = document.getElementById('bot-profiles-selector') as HTMLSelectElement;
+
+    if (botSelector) {
+      botSelector.options.length = 1;
+      bots.forEach((bot: any) => {
+        botSelector.options.add(new Option(bot.name, bot.id));
+      });
+    }
   }
 }

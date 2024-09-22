@@ -10,20 +10,24 @@ export class UiUtils {
         const userData = await RequestHelper.getUserData();
         const user = userData.user;
         console.log('User: ', user);
-        this.updateAccountSection();
+        this.updateAccountSection(user);
+        this.updateBotsList(userData.botProfiles);
         if (selectedBotIndex != undefined && selectedBotIndex >= 0) {
             currentBot = userData.botProfiles[selectedBotIndex];
-            console.log('Current bot: ', currentBot);
             this.updateBotSettingsSection(currentBot);
-            this.updateBotFeaturesSection();
+            this.updateBotFeaturesSection(currentBot);
         }
     }
     static updateBotSettingsSection(currentBot) {
+        const botSettingsFormElement = document.getElementById('bot-settings-form');
         const placeholder = document.getElementById('bot-settings-placeholder');
         const creationDate = document.getElementById('bot-settings-creation-date');
         const botNameInput = document.getElementById('bot-name');
         const platformInput = document.getElementById('bot-platform');
         const cooldownInput = document.getElementById('bot-cooldown');
+        if (botSettingsFormElement) {
+            botSettingsFormElement.classList.remove('hidden');
+        }
         if (placeholder) {
             placeholder.classList.add('hidden');
         }
@@ -31,20 +35,34 @@ export class UiUtils {
             const localDate = ConversionUtils.UTCtoLocalDate(currentBot.creationDate);
             creationDate.innerText = 'Creation date: ' + localDate;
         }
-        if (botNameInput && currentBot) {
+        if (botNameInput) {
             botNameInput.value = currentBot.name;
         }
-        if (platformInput && currentBot) {
+        if (platformInput) {
             platformInput.value = currentBot.platformName;
         }
-        if (cooldownInput && currentBot) {
+        if (cooldownInput) {
             cooldownInput.value = currentBot.cooldownTime;
         }
     }
-    static updateBotFeaturesSection() {
-        console.log('Updating bot features...');
+    static updateBotFeaturesSection(currentBot) {
+        console.log('Updating bot features section...', currentBot);
+        const placeholder = document.getElementById('bot-features-placeholder');
+        if (placeholder) {
+            placeholder.classList.add('hidden');
+        }
     }
-    static updateAccountSection() {
-        console.log('Updating account section...');
+    static updateAccountSection(user) {
+        console.log('Updating account section...', user);
+    }
+    static updateBotsList(bots) {
+        console.log('Updating bots list...', bots);
+        const botSelector = document.getElementById('bot-profiles-selector');
+        if (botSelector) {
+            botSelector.options.length = 1;
+            bots.forEach((bot) => {
+                botSelector.options.add(new Option(bot.name, bot.id));
+            });
+        }
     }
 }
