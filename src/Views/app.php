@@ -56,9 +56,17 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <input class="input" type="text" name="openAiKey" id="account-section-openAiKey">
     </div>
     <div>
-      <label class="block text-sm font-medium" for="twitchUsername">Twitch username</label>
-      <input class="input" type="text" name="twitchUsername" id="account-section-twitchUsername"
-        value="<?= htmlspecialchars($view_userData["user"]["twitchUsername"] ?? '') ?>">
+      <label class="block text-sm font-medium" for="twitchUsername">Twitch account</label>
+      <?php if (isset($view_userData["user"]["twitchUsername"])) : ?>
+        <input class="input" type="text" name="twitchUsername" id="account-section-twitchUsername"
+          value="<?= htmlspecialchars($view_userData["user"]["twitchUsername"] ?? '') ?>" readonly>
+      <?php else : ?>
+        <a
+          class="btn bg-purple-600 text-white hover:bg-purple-700" id="twitch-login-btn"
+          href="https://id.twitch.tv/oauth2/authorize?client_id=<?= TWITCH_CLIENT_ID ?>&redirect_uri=<?= TWITCH_REDIRECT_URI ?>&response_type=code&scope=user:read:email">
+          Link Twitch
+        </a>
+      <?php endif; ?>
     </div>
     <div class="flex gap-2">
       <span class="btn btn-success">Save</span>
