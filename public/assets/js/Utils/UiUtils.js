@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ConversionUtils } from './ConversionUtils.js';
 import { RequestHelper } from './RequestHelper.js';
 export class UiUtils {
     static async updateInterface() {
@@ -7,23 +9,52 @@ export class UiUtils {
         console.log('Fetching user data:');
         const userData = await RequestHelper.getUserData();
         const user = userData.user;
-        console.log(user);
-        console.log('Updating interface...');
+        console.log('User: ', user);
         this.updateAccountSection();
         if (selectedBotIndex != undefined && selectedBotIndex >= 0) {
             currentBot = userData.botProfiles[selectedBotIndex];
             console.log('Current bot: ', currentBot);
-            this.updateBotFeatures();
-            this.updateBotSettings();
+            this.updateBotSettingsSection(currentBot);
+            this.updateBotFeaturesSection();
+        }
+        else {
+            this.resetBotSettingsSection();
+            this.resetBotFeaturesSection();
         }
     }
-    static updateBotSettings() {
-        console.log('Updating bot settings...');
+    static updateBotSettingsSection(currentBot) {
+        const placeholder = document.getElementById('bot-settings-placeholder');
+        const creationDate = document.getElementById('bot-settings-creation-date');
+        const botNameInput = document.getElementById('bot-name');
+        const platformInput = document.getElementById('bot-platform');
+        const cooldownInput = document.getElementById('bot-cooldown');
+        if (placeholder) {
+            placeholder.classList.add('hidden');
+        }
+        if (creationDate) {
+            const localDate = ConversionUtils.UTCtoLocalDate(currentBot.creationDate);
+            creationDate.innerText = 'Creation date: ' + localDate;
+        }
+        if (botNameInput && currentBot) {
+            botNameInput.value = currentBot.name;
+        }
+        if (platformInput && currentBot) {
+            platformInput.value = currentBot.platformName;
+        }
+        if (cooldownInput && currentBot) {
+            cooldownInput.value = currentBot.cooldownTime;
+        }
     }
-    static updateBotFeatures() {
+    static updateBotFeaturesSection() {
         console.log('Updating bot features...');
     }
     static updateAccountSection() {
         console.log('Updating account section...');
+    }
+    static resetBotFeaturesSection() {
+        console.log('Resetting bot features...');
+    }
+    static resetBotSettingsSection() {
+        console.log('Resetting bot settings...');
     }
 }

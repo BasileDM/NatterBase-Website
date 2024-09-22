@@ -11,9 +11,9 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 
 <section id="app-bot-settings" class="hidden">
   <h2>Bot settings</h2>
-  <p>Please select a bot.</p>
+  <p id="bot-settings-placeholder">Please select a bot.</p>
   <form action="" class="space-y-4">
-    <p>Creation date: </p>
+    <p id="bot-settings-creation-date">Creation date: </p>
     <div>
       <label class="block text-sm font-medium" for="bot-name">Profile name</label>
       <input class="input" type="text" name="name" id="bot-name">
