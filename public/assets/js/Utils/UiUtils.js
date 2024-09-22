@@ -59,10 +59,14 @@ export class UiUtils {
         console.log('Updating bots list...', bots);
         const botSelector = document.getElementById('bot-profiles-selector');
         if (botSelector) {
+            const currentSelectedIndex = botSelector.selectedIndex;
             botSelector.options.length = 1;
             bots.forEach((bot) => {
                 botSelector.options.add(new Option(bot.name, bot.id));
             });
+            if (currentSelectedIndex != undefined && currentSelectedIndex >= 0) {
+                botSelector.selectedIndex = currentSelectedIndex;
+            }
         }
     }
 }
