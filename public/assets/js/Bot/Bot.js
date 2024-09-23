@@ -4,7 +4,7 @@ export class Bot {
         this.isRunning = false;
         this.client = null;
         this.chatDisplay = document.getElementById('chat-display');
-        // This is just to avoid undefined values while waiting for the settings to be loaded
+        // This is just to avoid undefined values while waiting for async getSettings method.
         this.settings = {
             channels: [],
             cooldown: 5,

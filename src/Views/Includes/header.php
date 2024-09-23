@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="<?= HOME_URL ?>assets/css/output.css">
   <script type="module" src="<?= HOME_URL ?>assets/js/main.js" defer></script>
   <?php if (isset($_SESSION['userId']) && $view_section == 'app'): ?>
-    <script src="/assets/js/tmi.min.js"></script>
+    <script src="/assets/js/lib/tmi.min.js"></script>
     <script type="module" src="<?= HOME_URL ?>assets/js/app.js" defer></script>
   <?php endif ?>
   <title>NatterBase</title>
