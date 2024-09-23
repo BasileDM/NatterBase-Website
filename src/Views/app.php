@@ -61,11 +61,11 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
         <input class="input" type="text" name="twitchUsername" id="account-section-twitchUsername"
           value="<?= htmlspecialchars($view_userData["user"]["twitchUsername"] ?? '') ?>" readonly>
       <?php else : ?>
-        <a
+        <!-- <a
           class="btn bg-purple-600 text-white hover:bg-purple-700" id="twitch-login-btn"
           href="https://id.twitch.tv/oauth2/authorize?client_id=<?= TWITCH_CLIENT_ID ?>&redirect_uri=<?= TWITCH_REDIRECT_URI ?>&response_type=code&scope=user:read:email">
           Link Twitch
-        </a>
+        </a> -->
       <?php endif; ?>
     </div>
     <div class="flex gap-2">
