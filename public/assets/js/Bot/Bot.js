@@ -2,6 +2,7 @@ export class Bot {
     constructor() {
         this.client = null;
         this.isRunning = false;
+        this.settings = this.getSettings();
     }
     start() {
         if (this.isRunning && this.client) {
@@ -14,7 +15,7 @@ export class Bot {
                     secure: true,
                     reconnect: true,
                 },
-                channels: ['LIRIK_247'],
+                channels: this.settings.channels,
             });
             this.client.on('connected', (address, port) => {
                 console.log(`Connected to ${address}:${port}`);
@@ -44,5 +45,11 @@ export class Bot {
             this.isRunning = false;
             this.client = null;
         }).catch(console.error);
+    }
+    getSettings() {
+        const settings = {
+            channels: ['LIRIK_247'],
+        };
+        return settings;
     }
 }

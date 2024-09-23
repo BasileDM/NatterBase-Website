@@ -1,16 +1,19 @@
 declare const tmi: typeof import('tmi.js');
 import * as tmiTypes from 'tmi.js';
+import { BotSettings } from '../Bot/Interfaces/BotSettings.js';
 
 export class Bot {
-  private client: tmiTypes.Client | null;
   public isRunning: boolean;
+  private client: tmiTypes.Client | null;
+  private settings: BotSettings;
 
   constructor() {
     this.client = null;
     this.isRunning = false;
+    this.settings = this.getSettings();
   }
 
-  start() {
+  public start() {
     if (this.isRunning && this.client) {
       console.log('Bot is already running.');
       return;
@@ -22,7 +25,7 @@ export class Bot {
           secure: true,
           reconnect: true,
         },
-        channels: ['LIRIK_247'],
+        channels: this.settings.channels,
       });
 
       this.client.on('connected', (address: string, port: number) => {
@@ -41,7 +44,7 @@ export class Bot {
     }).catch(console.error);
   }
 
-  stop() {
+  public stop() {
     if (!this.isRunning || !this.client) {
       console.log('Bot is not running or client is null.');
       return;
@@ -57,5 +60,12 @@ export class Bot {
       this.isRunning = false;
       this.client = null;
     }).catch(console.error);
+  }
+
+  getSettings(): BotSettings {
+    const settings: BotSettings = {
+      channels: ['LIRIK_247'],
+    };
+    return settings;
   }
 }
