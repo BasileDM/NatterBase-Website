@@ -13,7 +13,7 @@
 
 @layer components {
   .btn {
-    @apply rounded py-1 px-4 hover:cursor-pointer h-fit;
+    @apply rounded py-1 px-4 hover:cursor-pointer h-fit w-fit;
   }
 
   .btn-base {

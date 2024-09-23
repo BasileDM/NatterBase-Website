@@ -21,7 +21,9 @@ export class Bot {
       return;
     }
 
-    if (!this.client) {
+    this.settings = this.getSettings();
+
+    if (!this.client || this.settings.channels != this.client.channels) {
       this.client = new tmi.Client({
         connection: {
           secure: true,
@@ -68,14 +70,19 @@ export class Bot {
   getSettings(): BotSettings {
     const cooldownInput = document.getElementById('bot-cooldown') as HTMLInputElement;
     const openAiKeyInput = document.getElementById('account-section-openAiKey') as HTMLInputElement;
+    const channelOverride = document.getElementById('account-section-channelOverride') as HTMLInputElement;
     const settings: BotSettings = {
-      channels: ['Echo_Esports'],
+      channels: ['BasileDM'],
       cooldown: cooldownInput ? parseInt(cooldownInput.value) : 5,
       openAiKey: openAiKeyInput ? openAiKeyInput.value : '',
       maxOpenaiMessageLength: 1000,
       commands: [],
       features: [],
     };
+    if (channelOverride && channelOverride.value !== '') {
+      console.log('Channel override:', channelOverride.value);
+      settings.channels = [channelOverride.value];
+    }
     return settings;
   }
 

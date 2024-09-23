@@ -604,6 +604,8 @@ p {
 .btn {
   height: -moz-fit-content;
   height: fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   border-radius: 0.25rem;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
