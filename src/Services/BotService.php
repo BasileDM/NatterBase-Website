@@ -46,11 +46,14 @@ final class BotService
     return $bots;
   }
 
-  public function getBotById(int $botId): Bot
+  public function getBotById(int $botId): Bot|false
   {
     $bot = $this->botRepository->getById($botId);
-    if ($bot !== null) {
+    if ($bot !== null && $bot !== false) {
       $this->populateBotRelations($bot);
+    }
+    else {
+      return false;
     }
     return $bot;
   }
@@ -71,5 +74,15 @@ final class BotService
     $bots = $this->getBotsByUserId($userId);
     $botsArray = array_map(fn(Bot $bot) => $bot->toArray(), $bots);
     return $botsArray;
+  }
+
+  public function getBotSettings(int $botId): array
+  {
+    $bot = $this->getBotById($botId);
+    if ($bot === false) {
+      return [];
+    }
+    $botSettings = $bot->toArray();
+    return $botSettings;
   }
 }

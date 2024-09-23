@@ -1,6 +1,7 @@
 declare const tmi: typeof import('tmi.js');
 import * as tmiTypes from 'tmi.js';
 import { BotSettings } from '../Bot/Interfaces/BotSettings.js';
+import { RequestHelper } from '../Utils/RequestHelper.js';
 
 export class Bot {
   public isRunning: boolean;
@@ -12,16 +13,24 @@ export class Bot {
     this.isRunning = false;
     this.client = null;
     this.chatDisplay = document.getElementById('chat-display') as HTMLPreElement;
-    this.settings = this.getSettings();
+    // This is just to avoid undefined values while waiting for the settings to be loaded
+    this.settings = {
+      channels: [],
+      cooldown: 5,
+      openAiKey: '',
+      maxOpenaiMessageLength: 1000,
+      commands: [],
+      features: [],
+    };
   }
 
-  public start() {
+  public async start() {
     if (this.isRunning && this.client) {
       console.log('Bot is already running.');
       return;
     }
 
-    this.settings = this.getSettings();
+    this.settings = await this.getSettings();
 
     if (!this.client || this.settings.channels != this.client.channels) {
       this.client = new tmi.Client({
@@ -67,20 +76,24 @@ export class Bot {
     }).catch(console.error);
   }
 
-  getSettings(): BotSettings {
-    const cooldownInput = document.getElementById('bot-cooldown') as HTMLInputElement;
-    const openAiKeyInput = document.getElementById('account-section-openAiKey') as HTMLInputElement;
+  private async getSettings(): Promise<BotSettings> {
     const channelOverride = document.getElementById('account-section-channelOverride') as HTMLInputElement;
+    const botSelector = document.getElementById('bot-profiles-selector') as HTMLSelectElement;
+    const selectedBotIndex = Number(botSelector.selectedIndex) - 1;
+
+    const response = await RequestHelper.get('/api/userData');
+    const result = await RequestHelper.handleResponse(response);
+    const currentProfile = result.botProfiles[selectedBotIndex];
+
     const settings: BotSettings = {
-      channels: ['BasileDM'],
-      cooldown: cooldownInput ? parseInt(cooldownInput.value) : 5,
-      openAiKey: openAiKeyInput ? openAiKeyInput.value : '',
-      maxOpenaiMessageLength: 1000,
-      commands: [],
-      features: [],
+      channels: [''],
+      cooldown: currentProfile.cooldownTime,
+      openAiKey: '',
+      maxOpenaiMessageLength: currentProfile.maxOpenaiMessageLength,
+      commands: currentProfile.commands,
+      features: currentProfile.features,
     };
     if (channelOverride && channelOverride.value !== '') {
-      console.log('Channel override:', channelOverride.value);
       settings.channels = [channelOverride.value];
     }
     return settings;

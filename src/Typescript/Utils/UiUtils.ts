@@ -21,8 +21,16 @@ export class UiUtils {
       currentBot = userData.botProfiles[selectedBotIndex];
       this.updateBotSettingsSection(currentBot);
       this.updateBotFeaturesSection(currentBot);
+      this.updateDashboardSection();
       runBotButton.classList.remove('hidden');
       runBotBtnDisabled.classList.add('hidden');
+    }
+  }
+
+  private static updateDashboardSection() {
+    const placeholder = document.getElementById('dashboard-placeholder') as HTMLElement;
+    if (placeholder) {
+      placeholder.classList.add('hidden');
     }
   }
 

@@ -17,8 +17,12 @@ export class RequestHelper {
             throw new Error('Failed sending request. Try again later.');
         }
     }
-    static async get(url) {
+    static async get(url, param = null) {
         try {
+            if (param !== null) {
+                const requestBody = `?param=${param}`;
+                url = url + requestBody;
+            }
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error(`Error: ${response.status}`);

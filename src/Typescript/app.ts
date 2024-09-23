@@ -1,3 +1,4 @@
+import { Bot } from './Bot/Bot.js';
 import { ControlPanel } from './Components/ControlPanel.js';
 import { Toast } from './Components/Toast.js';
 
@@ -11,3 +12,4 @@ if (toastMessage) {
 
 // Instantiate UI elements
 new ControlPanel();
+new Bot();

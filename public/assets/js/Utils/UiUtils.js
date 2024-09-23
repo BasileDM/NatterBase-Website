@@ -18,8 +18,15 @@ export class UiUtils {
             currentBot = userData.botProfiles[selectedBotIndex];
             this.updateBotSettingsSection(currentBot);
             this.updateBotFeaturesSection(currentBot);
+            this.updateDashboardSection();
             runBotButton.classList.remove('hidden');
             runBotBtnDisabled.classList.add('hidden');
+        }
+    }
+    static updateDashboardSection() {
+        const placeholder = document.getElementById('dashboard-placeholder');
+        if (placeholder) {
+            placeholder.classList.add('hidden');
         }
     }
     static updateBotSettingsSection(currentBot) {
