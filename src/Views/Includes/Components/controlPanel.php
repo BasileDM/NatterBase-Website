@@ -18,7 +18,14 @@ $botProfiles = $view_userData['botProfiles'];
     </div>
   </div>
   <div id="bot-buttons">
-    <div class="btn btn-success items-center justify-center">Run bot</div>
+    <div id="run-bot-btn" class="btn btn-success items-center justify-center hidden">Run bot</div>
+    <div id="run-bot-btn-disabled" class="btn btn-success btn-disabled items-center justify-center">No bot selected</div>
+    <?php if (isset($_SESSION['authLevel']) && $_SESSION['authLevel'] == '2') : ?>
+      <div>
+        <label class="block text-sm font-medium" for="account-section-channelOverride">Channel override (admin)</label>
+        <input class="input" type="text" name="channelOverride" id="account-section-channelOverride">
+      </div>
+    <?php endif; ?>
   </div>
 </div>
 

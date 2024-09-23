@@ -5,8 +5,10 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 
 <section id="app-dashboard">
   <h2>Dashboard</h2>
-  <p>Welcome, <?= $view_userData["user"]["username"] ?>. Please select a bot.</p>
-  <pre><?= var_dump($view_userData) ?></pre>
+  <p>Welcome, <?= $view_userData["user"]["username"] ?>. <span id="dashboard-placeholder">Please select a bot.</span></p>
+  <pre id="chat-display">
+
+  </pre>
 </section>
 
 <section id="app-bot-settings" class="hidden">

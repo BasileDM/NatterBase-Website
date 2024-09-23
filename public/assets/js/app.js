@@ -1,3 +1,4 @@
+import { Bot } from './Bot/Bot.js';
 import { ControlPanel } from './Components/ControlPanel.js';
 import { Toast } from './Components/Toast.js';
 // Display the login success message stored by the Login modal
@@ -8,3 +9,4 @@ if (toastMessage) {
 }
 // Instantiate UI elements
 new ControlPanel();
+new Bot();

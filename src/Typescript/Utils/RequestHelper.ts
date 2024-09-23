@@ -19,8 +19,12 @@ export class RequestHelper {
     }
   }
 
-  static async get(url: string): Promise<Response> {
+  static async get(url: string, param: number|null = null): Promise<Response> {
     try {
+      if (param !== null) {
+        const requestBody = `?param=${param}`;
+        url = url + requestBody;
+      }
       const response = await fetch(url);
 
       if (!response.ok) {
