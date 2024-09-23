@@ -1,45 +1,54 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 declare const tmi: typeof import('tmi.js');
 import * as tmiTypes from 'tmi.js';
 
 export class Bot {
-  private client: tmiTypes.Client | null = null;
-  public isRunning: boolean = false;
+  private client: tmiTypes.Client | null;
+  public isRunning: boolean;
+
+  constructor() {
+    this.client = null;
+    this.isRunning = false;
+  }
 
   start() {
-    if (this.isRunning) {
+    if (this.isRunning && this.client) {
       console.log('Bot is already running.');
       return;
     }
 
-    this.client = new tmi.Client({
-      connection: {
-        secure: true,
-        reconnect: true,
-      },
-      channels: ['BasileDM'],
-    });
+    if (!this.client) {
+      this.client = new tmi.Client({
+        connection: {
+          secure: true,
+          reconnect: true,
+        },
+        channels: ['LIRIK_247'],
+      });
+
+      this.client.on('connected', (address: string, port: number) => {
+        console.log(`Connected to ${address}:${port}`);
+      });
+
+      this.client.on('message', (channel: string, tags: tmiTypes.ChatUserstate, message: string, self: boolean) => {
+        if (self) return;
+        console.log(`${tags['display-name']}: ${message}`);
+      });
+    }
 
     this.client.connect().then(() => {
       console.log('Bot connected to the channel.');
       this.isRunning = true;
     }).catch(console.error);
-
-    // Listen to messages
-    this.client.on('message', (channel: any, tags: { [x: string]: any }, message: any, self: any) => {
-      if (self) return;
-      console.log(`${tags['display-name']}: ${message}`);
-    });
-
-    // Listen for the connected event
-    this.client.on('connected', (address: any, port: any) => {
-      console.log(`Connected to ${address}:${port}`);
-    });
   }
 
   stop() {
     if (!this.isRunning || !this.client) {
-      console.log('Bot is not running.');
+      console.log('Bot is not running or client is null.');
+      return;
+    }
+
+    if (this.client.readyState() !== 'OPEN') {
+      console.log('Client is not connected.');
       return;
     }
 
