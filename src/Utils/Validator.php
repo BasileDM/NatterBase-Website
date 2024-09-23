@@ -4,18 +4,29 @@ namespace src\Utils;
 
 final class Validator
 {
-  public static function validateInputs(array $request): array
+  public static function validateInputs(): array
   {
+    $request = json_decode(file_get_contents('php://input'), true);
     $inputs = [
       'mail' => $request['mail'] ?? null,
       'username' => $request['username'] ?? null,
       'password' => $request['password'] ?? null,
       'confirmPassword' => $request['confirmPassword'] ?? null,
-      'gdpr' => $request['gdpr'] ?? null
+      'gdpr' => $request['gdpr'] ?? null,
+      'name' => $request['name'] ?? null,
     ];
 
     $errors = [];
     $sanitizedInputs = [];
+
+    if (isset($inputs['name'])) {
+      $result = self::validateBotProfileName($inputs['name']);
+      if (isset($result['error'])) {
+        $errors['name'] = $result['error'];
+      } else {
+        $sanitizedInputs['name'] = $result['sanitized'];
+      }
+    }
 
     if (isset($inputs['mail'])) {
       $result = self::validateMail($inputs['mail']);
@@ -60,6 +71,19 @@ final class Validator
       return ['errors' => $errors];
     }
     return ['sanitized' => $sanitizedInputs];
+  }
+
+  private static function validateBotProfileName(string $name): array
+  {
+    $cleanName = self::sanitizeString($name);
+    if ($cleanName !== $name) {
+      return ['error' => 'Name can\'t contain special characters'];
+    }
+    if (strlen($name) < 3 || strlen($name) > 50) {
+      return ['error' => 'Name must be between 3 and 50 characters'];
+    }
+
+    return ['sanitized' => $cleanName];
   }
 
   private static function validateMail(string $email): array

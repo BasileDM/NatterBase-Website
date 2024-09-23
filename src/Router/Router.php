@@ -2,7 +2,9 @@
 
 namespace src\Router;
 
+use src\Controllers\api\ApiUserController;
 use src\Controllers\AuthController;
+use src\Controllers\BotController;
 use src\Controllers\PageController;
 use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
@@ -17,7 +19,9 @@ class Router
   {
     $this->controllers = [
       PageController::class,
-      AuthController::class
+      AuthController::class,
+      BotController::class,
+      ApiUserController::class
     ];
     $this->loadRoutesFromControllers($this->controllers);
   }
@@ -56,7 +60,6 @@ class Router
 
   public function handleRequest(): void
   {
-    $pageController = new PageController();
     $requestMethod = $_SERVER['REQUEST_METHOD'];
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $route = $this->routes[$requestMethod][$path] ?? null;

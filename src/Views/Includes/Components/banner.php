@@ -4,6 +4,10 @@ $message = '';
 $style = '';
 
 switch ($notice) {
+  case 'dbCreated':
+    $message = '✅ Database tables successfully created.';
+    $style = 'banner-success';
+    break;
   case 'registered':
     $message = '⚠️ Pease check your mails to activate your account.';
     $style = 'banner-warning';

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Toast } from '../Components/Toast.js';
 export class RequestHelper {
     static async post(url, data) {
@@ -16,7 +17,19 @@ export class RequestHelper {
             throw new Error('Failed sending request. Try again later.');
         }
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    static async get(url) {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            return response;
+        }
+        catch (error) {
+            console.error('Request failed', error);
+            throw new Error('Request failed. Try again later.');
+        }
+    }
     static async handleResponse(response) {
         const responseBody = await response.json();
         if (!response.ok && responseBody.message) {
@@ -25,16 +38,9 @@ export class RequestHelper {
         }
         return responseBody;
     }
-    static async get(url) {
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
-            }
-            return await response.json();
-        }
-        catch (error) {
-            console.error('Request failed', error);
-        }
+    static async getUserData() {
+        const response = await RequestHelper.get('/api/userData');
+        const jsonResponseBody = await RequestHelper.handleResponse(response);
+        return jsonResponseBody;
     }
 }
