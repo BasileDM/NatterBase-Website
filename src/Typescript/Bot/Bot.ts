@@ -5,11 +5,13 @@ import { BotSettings } from '../Bot/Interfaces/BotSettings.js';
 export class Bot {
   public isRunning: boolean;
   private client: tmiTypes.Client | null;
+  private chatDisplay: HTMLPreElement | null;
   private settings: BotSettings;
 
   constructor() {
-    this.client = null;
     this.isRunning = false;
+    this.client = null;
+    this.chatDisplay = document.getElementById('chat-display') as HTMLPreElement;
     this.settings = this.getSettings();
   }
 
@@ -35,6 +37,7 @@ export class Bot {
       this.client.on('message', (channel: string, tags: tmiTypes.ChatUserstate, message: string, self: boolean) => {
         if (self) return;
         console.log(`${tags['display-name']}: ${message}`);
+        this.displayMessage(`${tags['display-name']}: ${message}`);
       });
     }
 
@@ -66,7 +69,7 @@ export class Bot {
     const cooldownInput = document.getElementById('bot-cooldown') as HTMLInputElement;
     const openAiKeyInput = document.getElementById('account-section-openAiKey') as HTMLInputElement;
     const settings: BotSettings = {
-      channels: ['LIRIK_247'],
+      channels: ['Echo_Esports'],
       cooldown: cooldownInput ? parseInt(cooldownInput.value) : 5,
       openAiKey: openAiKeyInput ? openAiKeyInput.value : '',
       maxOpenaiMessageLength: 1000,
@@ -74,5 +77,13 @@ export class Bot {
       features: [],
     };
     return settings;
+  }
+
+  displayMessage(message: string) {
+    if (this.chatDisplay) {
+      const newText = document.createElement('p');
+      newText.innerText = message;
+      this.chatDisplay.appendChild(newText);
+    }
   }
 }

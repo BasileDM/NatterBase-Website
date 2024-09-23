@@ -1,7 +1,8 @@
 export class Bot {
     constructor() {
-        this.client = null;
         this.isRunning = false;
+        this.client = null;
+        this.chatDisplay = document.getElementById('chat-display');
         this.settings = this.getSettings();
     }
     start() {
@@ -24,6 +25,7 @@ export class Bot {
                 if (self)
                     return;
                 console.log(`${tags['display-name']}: ${message}`);
+                this.displayMessage(`${tags['display-name']}: ${message}`);
             });
         }
         this.client.connect().then(() => {
@@ -50,7 +52,7 @@ export class Bot {
         const cooldownInput = document.getElementById('bot-cooldown');
         const openAiKeyInput = document.getElementById('account-section-openAiKey');
         const settings = {
-            channels: ['LIRIK_247'],
+            channels: ['Echo_Esports'],
             cooldown: cooldownInput ? parseInt(cooldownInput.value) : 5,
             openAiKey: openAiKeyInput ? openAiKeyInput.value : '',
             maxOpenaiMessageLength: 1000,
@@ -58,5 +60,12 @@ export class Bot {
             features: [],
         };
         return settings;
+    }
+    displayMessage(message) {
+        if (this.chatDisplay) {
+            const newText = document.createElement('p');
+            newText.innerText = message;
+            this.chatDisplay.appendChild(newText);
+        }
     }
 }
