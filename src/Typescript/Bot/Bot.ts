@@ -63,8 +63,15 @@ export class Bot {
   }
 
   getSettings(): BotSettings {
+    const cooldownInput = document.getElementById('bot-cooldown') as HTMLInputElement;
+    const openAiKeyInput = document.getElementById('account-section-openAiKey') as HTMLInputElement;
     const settings: BotSettings = {
       channels: ['LIRIK_247'],
+      cooldown: cooldownInput ? parseInt(cooldownInput.value) : 5,
+      openAiKey: openAiKeyInput ? openAiKeyInput.value : '',
+      maxOpenaiMessageLength: 1000,
+      commands: [],
+      features: [],
     };
     return settings;
   }

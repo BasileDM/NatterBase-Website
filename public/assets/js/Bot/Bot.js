@@ -47,8 +47,15 @@ export class Bot {
         }).catch(console.error);
     }
     getSettings() {
+        const cooldownInput = document.getElementById('bot-cooldown');
+        const openAiKeyInput = document.getElementById('account-section-openAiKey');
         const settings = {
             channels: ['LIRIK_247'],
+            cooldown: cooldownInput ? parseInt(cooldownInput.value) : 5,
+            openAiKey: openAiKeyInput ? openAiKeyInput.value : '',
+            maxOpenaiMessageLength: 1000,
+            commands: [],
+            features: [],
         };
         return settings;
     }

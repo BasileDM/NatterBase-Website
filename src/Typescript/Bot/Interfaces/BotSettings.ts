@@ -1,5 +1,8 @@
 export interface BotSettings {
   channels: string[];
-  commands?: string[];
-  features?: string[];
+  cooldown: number;
+  openAiKey: string;
+  maxOpenaiMessageLength: number;
+  commands: string[];
+  features: string[];
 }

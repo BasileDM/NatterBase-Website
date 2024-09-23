@@ -24,6 +24,10 @@
     @apply bg-green-700 text-white hover:bg-green-800;
   }
 
+  .btn-disabled {
+    @apply bg-gray-500 text-white hover:bg-gray-600 hover:cursor-not-allowed;
+  }
+
   .btn-alert {
     @apply bg-red-600 text-white hover:bg-red-700;
   }

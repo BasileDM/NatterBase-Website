@@ -18,7 +18,8 @@ $botProfiles = $view_userData['botProfiles'];
     </div>
   </div>
   <div id="bot-buttons">
-    <div id="run-bot-btn" class="btn btn-success items-center justify-center">Run bot</div>
+    <div id="run-bot-btn" class="btn btn-success items-center justify-center hidden">Run bot</div>
+    <div id="run-bot-btn-disabled" class="btn btn-success btn-disabled items-center justify-center">No bot selected</div>
   </div>
 </div>
 

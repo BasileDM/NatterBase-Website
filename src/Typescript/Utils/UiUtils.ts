@@ -7,6 +7,8 @@ export class UiUtils {
     const botSelector = document.getElementById('bot-profiles-selector') as HTMLSelectElement;
     const selectedBotIndex = Number(botSelector.selectedIndex) - 1;
     let currentBot = null;
+    const runBotButton = document.getElementById('run-bot-btn') as HTMLElement;
+    const runBotBtnDisabled = document.getElementById('run-bot-btn-disabled') as HTMLElement;
 
     console.log('Fetching user data:');
     const userData = await RequestHelper.getUserData();
@@ -19,6 +21,8 @@ export class UiUtils {
       currentBot = userData.botProfiles[selectedBotIndex];
       this.updateBotSettingsSection(currentBot);
       this.updateBotFeaturesSection(currentBot);
+      runBotButton.classList.remove('hidden');
+      runBotBtnDisabled.classList.add('hidden');
     }
   }
 
