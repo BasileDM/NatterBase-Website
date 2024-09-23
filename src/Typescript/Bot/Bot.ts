@@ -1,23 +1,52 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// / <reference types="tmi.js" />
 declare const tmi: typeof import('tmi.js');
-
+import * as tmiTypes from 'tmi.js';
 
 export class Bot {
+  private client: tmiTypes.Client | null = null;
+  public isRunning: boolean = false;
 
-  constructor() {
-    this.init();
-  }
+  start() {
+    if (this.isRunning) {
+      console.log('Bot is already running.');
+      return;
+    }
 
-  init() {
-    const client = new tmi.Client({
-      channels: [ 'LIRIK_247' ],
+    this.client = new tmi.Client({
+      connection: {
+        secure: true,
+        reconnect: true,
+      },
+      channels: ['BasileDM'],
     });
 
-    client.connect();
+    this.client.connect().then(() => {
+      console.log('Bot connected to the channel.');
+      this.isRunning = true;
+    }).catch(console.error);
 
-    client.on('message', (channel: any, tags: { [x: string]: any; }, message: any, self: any) => {
+    // Listen to messages
+    this.client.on('message', (channel: any, tags: { [x: string]: any }, message: any, self: any) => {
+      if (self) return;
       console.log(`${tags['display-name']}: ${message}`);
     });
+
+    // Listen for the connected event
+    this.client.on('connected', (address: any, port: any) => {
+      console.log(`Connected to ${address}:${port}`);
+    });
+  }
+
+  stop() {
+    if (!this.isRunning || !this.client) {
+      console.log('Bot is not running.');
+      return;
+    }
+
+    this.client.disconnect().then(() => {
+      console.log('Bot disconnected from the channel.');
+      this.isRunning = false;
+      this.client = null;
+    }).catch(console.error);
   }
 }
