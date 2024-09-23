@@ -32,6 +32,7 @@ export class Bot {
 
     this.settings = await this.getSettings();
 
+    // Create new client if it doesn't exist or if channels have changed
     if (!this.client || this.settings.channels != this.client.channels) {
       this.client = new tmi.Client({
         connection: {
@@ -41,6 +42,7 @@ export class Bot {
         channels: this.settings.channels,
       });
 
+      // Client events
       this.client.on('connected', (address: string, port: number) => {
         console.log(`Connected to ${address}:${port}`);
       });
