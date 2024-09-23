@@ -2,6 +2,7 @@
 
 namespace src\Router;
 
+use src\Controllers\api\ApiUserController;
 use src\Controllers\AuthController;
 use src\Controllers\BotController;
 use src\Controllers\PageController;
@@ -20,6 +21,7 @@ class Router
       PageController::class,
       AuthController::class,
       BotController::class,
+      ApiUserController::class
     ];
     $this->loadRoutesFromControllers($this->controllers);
   }

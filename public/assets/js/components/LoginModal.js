@@ -53,7 +53,8 @@ export class LoginModal {
                     password: document.getElementById('password').value,
                 };
                 try {
-                    const response = await RequestHelper.post('/login', formData)
+                    const response = await RequestHelper
+                        .post('/login', formData)
                         .then(RequestHelper.handleResponse);
                     if (!response) {
                         return;

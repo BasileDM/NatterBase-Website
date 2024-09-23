@@ -35,7 +35,7 @@ final class BotService
     }
   }
 
-  public function getBotByUserId(int $userId): array
+  public function getBotsByUserId(int $userId): array
   {
     $bots = $this->botRepository->getByUserId($userId);
 
@@ -68,7 +68,7 @@ final class BotService
 
   public function getUserBotsArray(int $userId): array
   {
-    $bots = $this->getBotByUserId($userId);
+    $bots = $this->getBotsByUserId($userId);
     $botsArray = array_map(fn(Bot $bot) => $bot->toArray(), $bots);
     return $botsArray;
   }

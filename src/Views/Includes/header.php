@@ -48,5 +48,5 @@
     <div class="flex-1 p-4 overflow-y-auto">
       <?php
       include __DIR__ . '/Components/toast.html';
-      include __DIR__ . '/Components/loginModal.html';
+      include __DIR__ . '/Components/Modals/loginModal.html';
       ?>

@@ -72,7 +72,8 @@ export class LoginModal {
         };
 
         try {
-          const response = await RequestHelper.post('/login', formData)
+          const response = await RequestHelper
+            .post('/login', formData)
             .then(RequestHelper.handleResponse);
 
           if (!response) {

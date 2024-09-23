@@ -16,12 +16,11 @@ trait Response
     include_once __DIR__ . '/../Views/' . $view . ".php";
   }
 
-  private function jsonResponse(int $code, string $message = '', string $redirect = ''): void
+  private function jsonResponse(int $code, array $data = [], string $redirect = ''): void
   {
     http_response_code($code);
-    echo json_encode([
-      'message' => $message
-    ]);
+    header('Content-Type: application/json');
+    echo json_encode($data);
     if (!empty($redirect)) header('Location: ' . $redirect);
     exit;
   }

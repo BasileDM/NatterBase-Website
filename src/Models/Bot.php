@@ -12,6 +12,8 @@ final class Bot
   private int $cooldownTime = 0;
   private string $maxOpenaiMessageLength = '120';
   private int $idModel = 1;
+  private string $modelName;
+  private string $platformName;
   private int $idPlatform = 1;
   private int $idUser;
   /** @var BotCommand[] */
@@ -30,7 +32,9 @@ final class Bot
       'cooldownTime' => $this->getCooldownTime(),
       'maxOpenaiMessageLength' => $this->getMaxOpenaiMessageLength(),
       'idModel' => $this->getIdModel(),
+      'modelName' => $this->getModelName(),
       'idPlatform' => $this->getIdPlatform(),
+      'platformName' => $this->getPlatformName(),
       'idUser' => $this->getIdUser(),
       'botCommands' => $this->getBotCommands(),
       'botFeatures' => $this->getBotFeatures(),
@@ -225,5 +229,43 @@ final class Bot
     public function setBotFeatures(array $botFeatures)
     {
         $this->botFeatures = $botFeatures;
+    }
+
+  /**
+   * Get the value of platformName
+   */
+  public function getPlatformName(): string
+  {
+    return $this->platformName;
+  }
+
+    /**
+     * Set the value of platformName
+     *
+     * @param   string  $platformName  
+     * 
+     */
+    public function setPlatformName(string $platformName)
+    {
+        $this->platformName = $platformName;
+    }
+
+  /**
+   * Get the value of modelName
+   */
+  public function getModelName(): string
+  {
+    return $this->modelName;
+  }
+
+    /**
+     * Set the value of modelName
+     *
+     * @param   string  $modelName  
+     * 
+     */
+    public function setModelName(string $modelName)
+    {
+        $this->modelName = $modelName;
     }
 }

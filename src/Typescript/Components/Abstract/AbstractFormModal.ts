@@ -1,5 +1,6 @@
 import { FormValidator } from '../../Utils/FormValidator.js';
 import { RequestHelper } from '../../Utils/RequestHelper.js';
+import { UiUtils } from '../../Utils/UiUtils.js';
 import { Toast } from '../Toast.js';
 
 export class AbstractFormModal {
@@ -7,7 +8,7 @@ export class AbstractFormModal {
   private form: HTMLFormElement;
   private submitRoute: string;
   private closeButton: HTMLElement;
-  private submitButton: HTMLElement;
+  public submitButton: HTMLElement;
 
   constructor(modalId: string, triggerButtonIds: string[], private formId: string) {
     this.modalElement = document.getElementById(modalId) as HTMLDialogElement;
@@ -69,6 +70,7 @@ export class AbstractFormModal {
 
       this.close();
       new Toast('success', response.message);
+      UiUtils.updateInterface();
     }
     catch (error) {
       console.error('Unexpected error: ', error);

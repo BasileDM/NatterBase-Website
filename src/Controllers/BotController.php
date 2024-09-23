@@ -32,10 +32,10 @@ final class BotController
       $result = $this->botService->create($validation['sanitized']);
 
       if (!$result) {
-        $this->jsonResponse(400, 'Could not create bot profile');
+        $this->jsonResponse(400, ['message' => 'Could not create bot profile']);
       }
 
-      $this->jsonResponse(200, 'Bot profile created successfully');
+      $this->jsonResponse(200, ['message' => 'Bot profile created successfully']);
     }
   }
 }
