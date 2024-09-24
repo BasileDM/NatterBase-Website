@@ -13,8 +13,8 @@ final class Bot
   private string $maxOpenaiMessageLength = '120';
   private int $idModel = 1;
   private string $modelName;
-  private string $openAiPrePrompt;
-  private string $twitchJoinChannel;
+  private string|null $openAiPrePrompt;
+  private string|null $twitchJoinChannel;
   private string $platformName;
   private int $idPlatform = 1;
   private int $idUser;
@@ -35,6 +35,8 @@ final class Bot
       'maxOpenaiMessageLength' => $this->getMaxOpenaiMessageLength(),
       'idModel' => $this->getIdModel(),
       'modelName' => $this->getModelName(),
+      'openAiPrePrompt' => $this->getOpenAiPrePrompt(),
+      'twitchJoinChannel' => $this->getTwitchJoinChannel(),
       'idPlatform' => $this->getIdPlatform(),
       'platformName' => $this->getPlatformName(),
       'idUser' => $this->getIdUser(),
@@ -274,7 +276,7 @@ final class Bot
   /**
    * Get the value of openAiPrePrompt
    */
-  public function getOpenAiPrePrompt(): string
+  public function getOpenAiPrePrompt(): string|null
   {
     return $this->openAiPrePrompt;
   }
@@ -285,7 +287,7 @@ final class Bot
      * @param   string  $openAiPrePrompt  
      * 
      */
-    public function setOpenAiPrePrompt(string $openAiPrePrompt)
+    public function setOpenAiPrePrompt(string|null $openAiPrePrompt)
     {
         $this->openAiPrePrompt = $openAiPrePrompt;
     }
@@ -293,7 +295,7 @@ final class Bot
   /**
    * Get the value of twitchJoinChannel
    */
-  public function getTwitchJoinChannel(): string
+  public function getTwitchJoinChannel(): string|null
   {
     return $this->twitchJoinChannel;
   }
@@ -304,7 +306,7 @@ final class Bot
      * @param   string  $twitchJoinChannel  
      * 
      */
-    public function setTwitchJoinChannel(string $twitchJoinChannel)
+    public function setTwitchJoinChannel(string|null $twitchJoinChannel)
     {
         $this->twitchJoinChannel = $twitchJoinChannel;
     }

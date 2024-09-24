@@ -85,4 +85,14 @@ final class BotService
     $botSettings = $bot->toArray();
     return $botSettings;
   }
+
+  public function update(array $inputs): bool
+  {
+    $bot = $this->getBotById($inputs['idBot']);
+    if ($bot === false) {
+      return false;
+    }
+    $bot->hydrateFromInputs($inputs);
+    return $this->botRepository->update($bot);
+  }
 }
