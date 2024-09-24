@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ConversionUtils } from './ConversionUtils.js';
+import { FormValidator } from './FormValidator.js';
 import { RequestHelper } from './RequestHelper.js';
 
 export class UiUtils {
@@ -10,7 +11,7 @@ export class UiUtils {
     const runBotButton = document.getElementById('run-bot-btn') as HTMLElement;
     const runBotBtnDisabled = document.getElementById('run-bot-btn-disabled') as HTMLElement;
 
-    console.log('Fetching user data:');
+    console.log('Updating interface. Fetching user data...');
     const userData = await RequestHelper.getUserData();
     console.log('UserData: ', userData);
     const user = userData.user;
@@ -107,12 +108,41 @@ export class UiUtils {
       }
       else {
         botSelector.selectedIndex = 0;
-        this.resetInterface();
+        this.resetPlaceholders();
       }
     }
   }
 
-  private static resetInterface() {
-    console.log('Resetting interface...');
+  public static displayAccountPassInputs() {
+    const changePassInputsDiv = document.getElementById('account-settings-password-inputs') as HTMLElement;
+    const changePassBtn = document.getElementById('account-settings-password-btn') as HTMLElement;
+    if (changePassInputsDiv !== null) {
+      changePassBtn.classList.add('hidden');
+      changePassInputsDiv.classList.remove('hidden');
+      const changePassInputs = changePassInputsDiv.querySelectorAll('input');
+      if (changePassInputs !== null) {
+        changePassInputs.forEach(input => input.disabled = false);
+      }
+    }
+  }
+
+  public static resetAllSections() {
+    this.resetAccountSection();
+  }
+
+  public static resetAccountSection() {
+    const passwordInputs = document.getElementById('account-settings-password-inputs') as HTMLElement;
+    if (passwordInputs) {
+      passwordInputs.classList.add('hidden');
+    }
+    const changePassBtn = document.getElementById('account-settings-password-btn') as HTMLElement;
+    if (changePassBtn) {
+      changePassBtn.classList.remove('hidden');
+    }
+    FormValidator.removeFormErrors('account-settings-form');
+  }
+
+  private static resetPlaceholders() {
+    console.log('Resetting placeholders...');
   }
 }

@@ -1,3 +1,5 @@
+import { UiUtils } from '../Utils/UiUtils.js';
+
 export class Sidebar {
   private isOpen: boolean = false;
   private sidebarElement: HTMLElement;
@@ -44,6 +46,7 @@ export class Sidebar {
           const sectionElement = document.getElementById(sectionId);
           sectionElement?.classList.remove('hidden');
         }
+        UiUtils.resetAllSections();
       });
     }
 

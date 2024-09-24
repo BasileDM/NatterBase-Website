@@ -1,3 +1,4 @@
+import { UiUtils } from '../Utils/UiUtils.js';
 export class Sidebar {
     constructor() {
         this.isOpen = false;
@@ -33,6 +34,7 @@ export class Sidebar {
                     const sectionElement = document.getElementById(sectionId);
                     sectionElement?.classList.remove('hidden');
                 }
+                UiUtils.resetAllSections();
             });
         }
         // Handle window resizing

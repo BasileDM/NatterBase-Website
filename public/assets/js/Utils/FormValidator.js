@@ -25,4 +25,15 @@ export class FormValidator {
             }
         }
     }
+    static removeFormErrors(formId) {
+        const form = document.getElementById(formId);
+        const inputFields = form.querySelectorAll('input');
+        inputFields.forEach((input) => {
+            input.classList.remove('invalid-input');
+        });
+        const errorMessages = form.querySelectorAll('.text-red-500');
+        errorMessages.forEach((message) => {
+            message.textContent = '';
+        });
+    }
 }

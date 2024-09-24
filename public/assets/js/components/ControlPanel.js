@@ -59,15 +59,7 @@ export class ControlPanel {
         });
         // Change password button
         this.changePasswordButton.addEventListener('click', async () => {
-            const changePassInputsDiv = document.getElementById('account-settings-password-inputs');
-            if (changePassInputsDiv !== null) {
-                this.changePasswordButton.classList.add('hidden');
-                changePassInputsDiv.classList.remove('hidden');
-                const changePassInputs = changePassInputsDiv.querySelectorAll('input');
-                if (changePassInputs !== null) {
-                    changePassInputs.forEach(input => input.disabled = false);
-                }
-            }
+            UiUtils.displayAccountPassInputs();
         });
     }
     async submitBotSetting() {
