@@ -14,6 +14,7 @@ export class Sidebar {
         }
         // eslint-disable-next-line no-undef
         this.appNavButtons = this.sidebarElement.querySelectorAll('li[id*="app-nav-button"]');
+        this.logoutBtn = document.getElementById('sidebar-logout-button');
         this.openAnimationClass = 'animate-slideIn';
         this.closeAnimationClass = 'animate-slideOut';
         this.bindEvents();
@@ -64,6 +65,12 @@ export class Sidebar {
                 this.close();
             }
         });
+        // Logout session storage clearing
+        if (this.logoutBtn) {
+            this.logoutBtn.addEventListener('click', () => {
+                sessionStorage.clear();
+            });
+        }
     }
     open() {
         this.isOpen = true;

@@ -37,8 +37,6 @@ export class Bot {
     if (!this.client || this.settings.channels != this.client.channels) {
       this.client = new tmi.Client({
         options: {
-          debug: true,
-          clientId: '',
           skipUpdatingEmotesets: true,
         },
         connection: {

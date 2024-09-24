@@ -7,7 +7,11 @@ export class ControlPanel {
         this.botProfileSelector = document.getElementById('bot-profiles-selector');
         this.runBotButton = document.getElementById('run-bot-btn');
         this.bot = null;
+        this.twitchTokenInput = document.getElementById('account-section-twitchToken');
+        this.openAiKeyInput = document.getElementById('account-section-openAiKey');
         this.bindEvents();
+        this.twitchTokenInput.value = sessionStorage.getItem('natterbaseTwitchToken') || '';
+        this.openAiKeyInput.value = sessionStorage.getItem('natterbaseOpenAiKey') || '';
     }
     bindEvents() {
         // Bot profile selector
@@ -29,6 +33,14 @@ export class ControlPanel {
                 this.bot.start();
                 this.runBotButton.innerText = 'Stop bot';
             }
+        });
+        this.twitchTokenInput.addEventListener('change', () => {
+            sessionStorage.setItem('natterbaseTwitchToken', this.twitchTokenInput.value);
+            console.log('Twitch token changed:', this.twitchTokenInput.value);
+        });
+        this.openAiKeyInput.addEventListener('change', () => {
+            sessionStorage.setItem('natterbaseOpenAiKey', this.openAiKeyInput.value);
+            console.log('OpenAI key changed:', this.openAiKeyInput.value);
         });
     }
 }
