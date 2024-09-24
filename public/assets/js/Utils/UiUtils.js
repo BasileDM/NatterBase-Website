@@ -14,6 +14,7 @@ export class UiUtils {
         console.log('User: ', user);
         this.updateAccountSection(user);
         this.updateBotsList(userData.botProfiles);
+        console.log(userData);
         if (selectedBotIndex != undefined && selectedBotIndex >= 0) {
             currentBot = userData.botProfiles[selectedBotIndex];
             this.updateBotSettingsSection(currentBot);
@@ -72,7 +73,7 @@ export class UiUtils {
             const currentSelectedIndex = botSelector.selectedIndex;
             botSelector.options.length = 1;
             bots.forEach((bot) => {
-                botSelector.options.add(new Option(bot.name, bot.id));
+                botSelector.options.add(new Option(bot.name, bot.idBot));
             });
             if (currentSelectedIndex != undefined && currentSelectedIndex >= 0) {
                 botSelector.selectedIndex = currentSelectedIndex;
