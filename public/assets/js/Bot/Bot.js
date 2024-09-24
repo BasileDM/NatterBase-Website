@@ -6,6 +6,7 @@ export class Bot {
         this.chatDisplay = document.getElementById('chat-display');
         // This is just to avoid undefined values while waiting for async getSettings method.
         this.settings = {
+            twitchToken: '',
             channels: [],
             cooldown: 5,
             openAiKey: '',
@@ -27,6 +28,10 @@ export class Bot {
                     secure: true,
                     reconnect: true,
                 },
+                identity: {
+                    username: 'my_bot_name',
+                    password: `oauth:${this.settings.twitchToken}`,
+                },
                 channels: this.settings.channels,
             });
             // Client events
@@ -34,10 +39,13 @@ export class Bot {
                 console.log(`Connected to ${address}:${port}`);
             });
             this.client.on('message', (channel, tags, message, self) => {
-                if (self)
-                    return;
                 console.log(`${tags['display-name']}: ${message}`);
                 this.displayMessage(`${tags['display-name']}: ${message}`);
+                if (self)
+                    return;
+                if (message.toLowerCase() === '!hello') {
+                    this.client.say(channel, `@${tags.username}, heya!`);
+                }
             });
         }
         this.client.connect().then(() => {
@@ -64,13 +72,16 @@ export class Bot {
         const channelOverride = document.getElementById('account-section-channelOverride');
         const botSelector = document.getElementById('bot-profiles-selector');
         const selectedBotIndex = Number(botSelector.selectedIndex) - 1;
+        const twitchToken = document.getElementById('account-section-twitchToken');
+        const openAiKey = document.getElementById('account-section-openAiKey');
         const response = await RequestHelper.get('/api/userData');
         const result = await RequestHelper.handleResponse(response);
         const currentProfile = result.botProfiles[selectedBotIndex];
         const settings = {
+            twitchToken: twitchToken.value,
+            openAiKey: openAiKey.value,
             channels: [''],
             cooldown: currentProfile.cooldownTime,
-            openAiKey: '',
             maxOpenaiMessageLength: currentProfile.maxOpenaiMessageLength,
             commands: currentProfile.commands,
             features: currentProfile.features,

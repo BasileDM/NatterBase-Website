@@ -15,6 +15,7 @@ export class Bot {
     this.chatDisplay = document.getElementById('chat-display') as HTMLPreElement;
     // This is just to avoid undefined values while waiting for async getSettings method.
     this.settings = {
+      twitchToken: '',
       channels: [],
       cooldown: 5,
       openAiKey: '',
@@ -39,6 +40,10 @@ export class Bot {
           secure: true,
           reconnect: true,
         },
+        identity: {
+          username: 'my_bot_name',
+          password: `oauth:${this.settings.twitchToken}`,
+        },
         channels: this.settings.channels,
       });
 
@@ -48,9 +53,13 @@ export class Bot {
       });
 
       this.client.on('message', (channel: string, tags: tmiTypes.ChatUserstate, message: string, self: boolean) => {
-        if (self) return;
         console.log(`${tags['display-name']}: ${message}`);
         this.displayMessage(`${tags['display-name']}: ${message}`);
+        if (self) return;
+
+        if (message.toLowerCase() === '!hello') {
+          this.client.say(channel, `@${tags.username}, heya!`);
+        }
       });
     }
 
@@ -82,15 +91,18 @@ export class Bot {
     const channelOverride = document.getElementById('account-section-channelOverride') as HTMLInputElement;
     const botSelector = document.getElementById('bot-profiles-selector') as HTMLSelectElement;
     const selectedBotIndex = Number(botSelector.selectedIndex) - 1;
+    const twitchToken = document.getElementById('account-section-twitchToken') as HTMLInputElement;
+    const openAiKey = document.getElementById('account-section-openAiKey') as HTMLInputElement;
 
     const response = await RequestHelper.get('/api/userData');
     const result = await RequestHelper.handleResponse(response);
     const currentProfile = result.botProfiles[selectedBotIndex];
 
     const settings: BotSettings = {
+      twitchToken: twitchToken.value,
+      openAiKey: openAiKey.value,
       channels: [''],
       cooldown: currentProfile.cooldownTime,
-      openAiKey: '',
       maxOpenaiMessageLength: currentProfile.maxOpenaiMessageLength,
       commands: currentProfile.commands,
       features: currentProfile.features,

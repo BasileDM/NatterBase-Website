@@ -1,7 +1,8 @@
 export interface BotSettings {
+  twitchToken: string;
+  openAiKey: string;
   channels: string[];
   cooldown: number;
-  openAiKey: string;
   maxOpenaiMessageLength: number;
   commands: string[];
   features: string[];
