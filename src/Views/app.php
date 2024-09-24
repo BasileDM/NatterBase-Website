@@ -50,7 +50,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 
 <section id="app-account" class="hidden">
   <h2>Account settings</h2>
-  <form action="" class="space-y-4">
+  <form action="" class="space-y-4" id="account-settings-form">
     <div>
       <label class="block text-sm font-medium" for="username">Username</label>
       <input class="input" type="text" name="username" id="account-section-username"
@@ -60,6 +60,15 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <label class="block text-sm font-medium" for="mail">Mail</label>
       <input class="input" type="text" name="mail" id="account-section-mail"
         value="<?= htmlspecialchars($view_userData["user"]["mail"] ?? '') ?>" disabled>
+    </div>
+    <div>
+      <span id="account-settings-password-btn" class="btn btn-alert">Change password</span> 
+    </div>
+    <div id="account-settings-password-inputs" class="hidden">
+      <label class="block text-sm font-medium" for="account-section-password">New password</label>
+      <input class="input" type="password" name="password" id="account-section-password" disabled>
+      <label class="block text-sm font-medium" for="account-section-password-confirm">Confirm password</label>
+      <input class="input" type="password" name="confirmPassword" id="account-section-password-confirm" disabled>
     </div>
     <!-- <div>
       <label class="block text-sm font-medium" for="twitchUsername">Twitch account</label>
@@ -75,7 +84,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <?php endif; ?>
     </div> -->
     <div class="flex gap-2">
-      <span class="btn btn-success">Save</span>
+      <span id="account-settings-save-btn" class="btn btn-success">Save</span>
       <span class="btn btn-alert">Delete account</span>
     </div>
   </form>

@@ -49,4 +49,12 @@ final class UserService
 
     return $userData;
   }
+
+  public function updateUserData(array $inputs)
+  {
+    $userId = $_SESSION['userId'];
+    $user = $this->userRepository->getUserById($userId);
+    $user->hydrateFromInputs($inputs);
+    return $this->userRepository->update($user);
+  }
 }

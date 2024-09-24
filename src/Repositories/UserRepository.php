@@ -66,4 +66,19 @@ final class UserRepository
     $statement->execute([':roleName' => $roleName]);
     return $statement->fetchColumn();
   }
+
+  public function update(User $user): bool
+  {
+    $query = 'UPDATE Users
+              SET username = :username,
+                  password_hash = :passwordHash
+              WHERE id_user = :id';
+    $statement = $this->pdo->prepare($query);
+    $statement->execute([
+      ':username' => $user->getUsername(),
+      ':passwordHash' => $user->getPasswordHash(),
+      ':id' => $user->getIdUser()
+    ]);
+    return $statement->rowCount() > 0;
+  }
 }
