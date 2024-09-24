@@ -84,7 +84,6 @@ export class Bot {
         }).catch(console.error);
     }
     async getSettings() {
-        const twitchChannel = document.getElementById('account-section-twitch-channel');
         const botSelector = document.getElementById('bot-profiles-selector');
         const selectedBotIndex = Number(botSelector.selectedIndex) - 1;
         const twitchToken = document.getElementById('account-section-twitchToken');
@@ -102,9 +101,6 @@ export class Bot {
             commands: currentProfile.commands,
             features: currentProfile.features,
         };
-        if (twitchChannel && twitchChannel.value !== '') {
-            settings.channels = [twitchChannel.value];
-        }
         return settings;
     }
     displayMessage(message) {
