@@ -10,11 +10,10 @@ export class UiUtils {
         const runBotBtnDisabled = document.getElementById('run-bot-btn-disabled');
         console.log('Fetching user data:');
         const userData = await RequestHelper.getUserData();
+        console.log('UserData: ', userData);
         const user = userData.user;
-        console.log('User: ', user);
         this.updateAccountSection(user);
         this.updateBotsList(userData.botProfiles);
-        console.log(userData);
         if (selectedBotIndex != undefined && selectedBotIndex >= 0) {
             currentBot = userData.botProfiles[selectedBotIndex];
             this.updateBotSettingsSection(currentBot);
@@ -31,12 +30,15 @@ export class UiUtils {
         }
     }
     static updateBotSettingsSection(currentBot) {
+        console.log('Updating bot settings section...', currentBot);
         const botSettingsFormElement = document.getElementById('bot-settings-form');
         const placeholder = document.getElementById('bot-settings-placeholder');
         const creationDate = document.getElementById('bot-settings-creation-date');
         const botNameInput = document.getElementById('bot-name');
         const platformInput = document.getElementById('bot-platform');
         const cooldownInput = document.getElementById('bot-cooldown');
+        const twitchJoinChannelInput = document.getElementById('account-section-twitch-channel');
+        const OpenAiPrePromptInput = document.getElementById('account-section-openai-pre-prompt');
         if (botSettingsFormElement) {
             botSettingsFormElement.classList.remove('hidden');
         }
@@ -55,6 +57,12 @@ export class UiUtils {
         }
         if (cooldownInput) {
             cooldownInput.value = currentBot.cooldownTime;
+        }
+        if (twitchJoinChannelInput) {
+            twitchJoinChannelInput.value = currentBot.twitchJoinChannel;
+        }
+        if (OpenAiPrePromptInput) {
+            OpenAiPrePromptInput.value = currentBot.openAiPrePrompt;
         }
     }
     static updateBotFeaturesSection(currentBot) {
