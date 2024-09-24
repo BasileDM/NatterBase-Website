@@ -10,6 +10,7 @@ export class Bot {
             channels: [],
             cooldown: 5,
             openAiKey: '',
+            openAiPrePrompt: '',
             maxOpenaiMessageLength: 1000,
             commands: [],
             features: [],
@@ -49,7 +50,7 @@ export class Bot {
                 // Check for the !ask command and call OpenAI
                 if (message.startsWith('!ask ')) {
                     const prompt = message.replace('!ask ', '');
-                    this.getOpenAIResponse(prompt).then((response) => {
+                    this.getOpenAIResponse(prompt, this.settings.openAiPrePrompt).then((response) => {
                         this.client?.say(channel, `@${tags.username}, ${response}`);
                     }).catch(error => {
                         console.error('Error getting OpenAI response:', error);
@@ -94,8 +95,9 @@ export class Bot {
         const settings = {
             twitchToken: twitchToken.value,
             openAiKey: openAiKey.value,
-            channels: [''],
+            channels: currentProfile.twitchJoinChannel,
             cooldown: currentProfile.cooldownTime,
+            openAiPrePrompt: currentProfile.openAiPrePrompt,
             maxOpenaiMessageLength: currentProfile.maxOpenaiMessageLength,
             commands: currentProfile.commands,
             features: currentProfile.features,
@@ -113,12 +115,12 @@ export class Bot {
         }
     }
     // Method to send a request to OpenAI and get a response
-    async getOpenAIResponse(prompt) {
+    async getOpenAIResponse(prompt, prePrompt) {
         const url = 'https://api.openai.com/v1/chat/completions';
         const data = {
             model: 'gpt-3.5-turbo',
             messages: [
-                { role: 'system', content: 'You are a helpful assistant.' },
+                { role: 'system', content: prePrompt || 'You are a helpful assistant.' },
                 { role: 'user', content: prompt },
             ],
             max_tokens: 100,

@@ -3,6 +3,7 @@ export interface BotSettings {
   openAiKey: string;
   channels: string[];
   cooldown: number;
+  openAiPrePrompt: string;
   maxOpenaiMessageLength: number;
   commands: string[];
   features: string[];
