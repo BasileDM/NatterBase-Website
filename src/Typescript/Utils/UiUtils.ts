@@ -12,8 +12,8 @@ export class UiUtils {
 
     console.log('Fetching user data:');
     const userData = await RequestHelper.getUserData();
+    console.log('UserData: ', userData);
     const user = userData.user;
-    console.log('User: ', user);
 
     this.updateAccountSection(user);
     this.updateBotsList(userData.botProfiles);
@@ -35,12 +35,15 @@ export class UiUtils {
   }
 
   private static updateBotSettingsSection(currentBot: any) {
+    console.log('Updating bot settings section...', currentBot);
     const botSettingsFormElement = document.getElementById('bot-settings-form') as HTMLFormElement;
     const placeholder = document.getElementById('bot-settings-placeholder') as HTMLElement;
     const creationDate = document.getElementById('bot-settings-creation-date') as HTMLElement;
     const botNameInput = document.getElementById('bot-name') as HTMLInputElement;
     const platformInput = document.getElementById('bot-platform') as HTMLInputElement;
     const cooldownInput = document.getElementById('bot-cooldown') as HTMLInputElement;
+    const twitchJoinChannelInput = document.getElementById('account-section-twitch-channel') as HTMLInputElement;
+    const OpenAiPrePromptInput = document.getElementById('account-section-openai-pre-prompt') as HTMLInputElement;
 
     if (botSettingsFormElement) {
       botSettingsFormElement.classList.remove('hidden');
@@ -67,6 +70,14 @@ export class UiUtils {
     if (cooldownInput) {
       cooldownInput.value = currentBot.cooldownTime;
     }
+
+    if (twitchJoinChannelInput) {
+      twitchJoinChannelInput.value = currentBot.twitchJoinChannel;
+    }
+
+    if (OpenAiPrePromptInput) {
+      OpenAiPrePromptInput.value = currentBot.openAiPrePrompt;
+    }
   }
 
   private static updateBotFeaturesSection(currentBot: any) {
@@ -88,7 +99,7 @@ export class UiUtils {
       const currentSelectedIndex = botSelector.selectedIndex;
       botSelector.options.length = 1;
       bots.forEach((bot: any) => {
-        botSelector.options.add(new Option(bot.name, bot.id));
+        botSelector.options.add(new Option(bot.name, bot.idBot));
       });
 
       if (currentSelectedIndex != undefined && currentSelectedIndex >= 0) {

@@ -5,6 +5,7 @@ export class Sidebar {
   private websiteNavElement: HTMLElement;
   // eslint-disable-next-line no-undef
   private appNavButtons: NodeListOf<HTMLElement>;
+  private logoutBtn: HTMLElement;
   private openAnimationClass: string;
   private closeAnimationClass: string;
   private animationDuration: number = 450;
@@ -22,6 +23,7 @@ export class Sidebar {
     }
     // eslint-disable-next-line no-undef
     this.appNavButtons = this.sidebarElement.querySelectorAll('li[id*="app-nav-button"]') as NodeListOf<HTMLElement>;
+    this.logoutBtn = document.getElementById('sidebar-logout-button') as HTMLElement;
     this.openAnimationClass = 'animate-slideIn';
     this.closeAnimationClass = 'animate-slideOut';
     this.bindEvents();
@@ -76,6 +78,13 @@ export class Sidebar {
         this.close();
       }
     });
+
+    // Logout session storage clearing
+    if (this.logoutBtn) {
+      this.logoutBtn.addEventListener('click', () => {
+        sessionStorage.clear();
+      });
+    }
   }
 
   private open(): void {

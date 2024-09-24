@@ -81,4 +81,32 @@ final class BotRepository
     $botProfiles = $statement->fetchAll(PDO::FETCH_CLASS, Bot::class);
     return $botProfiles;
   }
+
+  public function update(Bot $botProfile): bool
+  {
+    $query = 'UPDATE Bots 
+              SET name = :name, 
+                  creation_date = :creationDate, 
+                  cooldown_time = :cooldownTime, 
+                  max_openai_message_length = :maxOpenaiMessageLength, 
+                  id_model = :idModel, 
+                  open_ai_pre_prompt = :openAiPrePrompt,
+                  twitch_join_channel = :twitchJoinChannel,
+                  id_platform = :idPlatform 
+              WHERE id_bot = :idBot';
+
+    $statement = $this->pdo->prepare($query);
+    $statement->execute([
+      ':name' => $botProfile->getName(),
+      ':creationDate' => $botProfile->getCreationDate(),
+      ':cooldownTime' => $botProfile->getCooldownTime(),
+      ':maxOpenaiMessageLength' => $botProfile->getMaxOpenaiMessageLength(),
+      ':idModel' => $botProfile->getIdModel(),
+      ':openAiPrePrompt' => $botProfile->getOpenAiPrePrompt(),
+      ':twitchJoinChannel' => $botProfile->getTwitchJoinChannel(),
+      ':idPlatform' => $botProfile->getIdPlatform(),
+      ':idBot' => $botProfile->getIdBot()
+    ]);
+    return $statement->rowCount() > 0;
+  }
 }

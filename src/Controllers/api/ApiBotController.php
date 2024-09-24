@@ -16,7 +16,7 @@ final class ApiBotController
   {
     $this->botService = new BotService();
   }
-  
+
   use Response;
 
   #[Route('POST', '/createBotProfile')]
@@ -55,5 +55,28 @@ final class ApiBotController
     }
 
     $this->jsonResponse(200, $botSettings);
+  }
+
+  #[Route('POST', '/updateBotProfile')]
+  #[Authorization(1)]
+  public function updateBotProfile(): void
+  {
+    $validation = Validator::validateInputs();
+    if (isset($validation['errors'])) {
+      $this->formErrorsResponse(400, $validation['errors']);
+      exit;
+    }
+
+    if (!isset($_GET['idBot'])) {
+      $this->jsonResponse(400, ['message' => 'Invalid Id']);
+      exit;
+    }
+
+    $result = $this->botService->update($validation['sanitized'], $_GET['idBot']);
+    if (!$result) {
+      $this->jsonResponse(400, ['message' => 'Could not update bot profile']);
+    }
+
+    $this->jsonResponse(200, ['message' => 'Bot profile updated successfully']);
   }
 }

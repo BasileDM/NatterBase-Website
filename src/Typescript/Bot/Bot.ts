@@ -15,9 +15,11 @@ export class Bot {
     this.chatDisplay = document.getElementById('chat-display') as HTMLPreElement;
     // This is just to avoid undefined values while waiting for async getSettings method.
     this.settings = {
+      twitchToken: '',
       channels: [],
       cooldown: 5,
       openAiKey: '',
+      openAiPrePrompt: '',
       maxOpenaiMessageLength: 1000,
       commands: [],
       features: [],
@@ -35,9 +37,16 @@ export class Bot {
     // Create new client if it doesn't exist or if channels have changed
     if (!this.client || this.settings.channels != this.client.channels) {
       this.client = new tmi.Client({
+        options: {
+          skipUpdatingEmotesets: true,
+        },
         connection: {
           secure: true,
           reconnect: true,
+        },
+        identity: {
+          username: 'my_bot_name',
+          password: `oauth:${this.settings.twitchToken}`,
         },
         channels: this.settings.channels,
       });
@@ -48,9 +57,25 @@ export class Bot {
       });
 
       this.client.on('message', (channel: string, tags: tmiTypes.ChatUserstate, message: string, self: boolean) => {
-        if (self) return;
         console.log(`${tags['display-name']}: ${message}`);
         this.displayMessage(`${tags['display-name']}: ${message}`);
+        if (self) return;
+
+        // Check for the !ask command and call OpenAI
+        if (message.startsWith('!ask ')) {
+          const prompt = message.replace('!ask ', '');
+          this.getOpenAIResponse(prompt, this.settings.openAiPrePrompt).then((response) => {
+            this.client?.say(channel, `@${tags.username}, ${response}`);
+          }).catch(error => {
+            console.error('Error getting OpenAI response:', error);
+            this.client?.say(channel, `@${tags.username}, I couldn't get an answer right now.`);
+          });
+        }
+
+        // Simple hello test command
+        if (message.toLowerCase() === '!hello') {
+          this.client.say(channel, `@${tags.username}, heya!`);
+        }
       });
     }
 
@@ -79,25 +104,25 @@ export class Bot {
   }
 
   private async getSettings(): Promise<BotSettings> {
-    const channelOverride = document.getElementById('account-section-channelOverride') as HTMLInputElement;
     const botSelector = document.getElementById('bot-profiles-selector') as HTMLSelectElement;
     const selectedBotIndex = Number(botSelector.selectedIndex) - 1;
+    const twitchToken = document.getElementById('account-section-twitchToken') as HTMLInputElement;
+    const openAiKey = document.getElementById('account-section-openAiKey') as HTMLInputElement;
 
     const response = await RequestHelper.get('/api/userData');
     const result = await RequestHelper.handleResponse(response);
     const currentProfile = result.botProfiles[selectedBotIndex];
 
     const settings: BotSettings = {
-      channels: [''],
+      twitchToken: twitchToken.value,
+      openAiKey: openAiKey.value,
+      channels: [currentProfile.twitchJoinChannel],
       cooldown: currentProfile.cooldownTime,
-      openAiKey: '',
+      openAiPrePrompt: currentProfile.openAiPrePrompt,
       maxOpenaiMessageLength: currentProfile.maxOpenaiMessageLength,
       commands: currentProfile.commands,
       features: currentProfile.features,
     };
-    if (channelOverride && channelOverride.value !== '') {
-      settings.channels = [channelOverride.value];
-    }
     return settings;
   }
 
@@ -106,6 +131,44 @@ export class Bot {
       const newText = document.createElement('p');
       newText.innerText = message;
       this.chatDisplay.appendChild(newText);
+    }
+  }
+
+  // Method to send a request to OpenAI and get a response
+  private async getOpenAIResponse(prompt: string, prePrompt?: string): Promise<string> {
+    const url = 'https://api.openai.com/v1/chat/completions';
+    const data = {
+      model: 'gpt-3.5-turbo',
+      messages: [
+        { role: 'system', content: prePrompt || 'You are a helpful assistant.' },
+        { role: 'user', content: prompt },
+      ],
+      max_tokens: 100,
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.settings.openAiKey}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`OpenAI request failed: ${response.status} - ${response.statusText}`);
+        console.error(`Response body: ${errorText}`);
+        throw new Error(`OpenAI request failed: ${response.status} - ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      return result.choices[0].message.content.trim();
+    }
+    catch (error) {
+      console.error('Error in OpenAI request:', error);
+      throw error;
     }
   }
 }
