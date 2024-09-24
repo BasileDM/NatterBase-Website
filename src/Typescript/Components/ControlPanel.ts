@@ -75,7 +75,7 @@ export class ControlPanel {
     const formData = new FormData(document.getElementById('bot-settings-form') as HTMLFormElement);
     const formObject = Object.fromEntries(formData.entries());
     try {
-      const response = await RequestHelper.post('/updateBotProfile', formObject);
+      const response = await RequestHelper.post('/updateBotProfile?idBot=' + this.botProfileSelector.value, formObject);
       const jsonResponseBody = await RequestHelper.handleResponse(response);
       if (!jsonResponseBody) {
         return;

@@ -26,15 +26,15 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
     </div>
     <div>
       <label class="block text-sm font-medium" for="account-section-twitch-channel">Join channel:</label>
-      <input class="input" type="text" name="twitch-channel" id="account-section-twitch-channel">
+      <input class="input" type="text" name="twitchJoinChannel" id="account-section-twitch-channel">
     </div>
     <div>
       <label class="block text-sm font-medium" for="account-section-twitch-channel">OpenAI pre-prompt:</label>
-      <textarea class="input" name="openai-pre-prompt" id="account-section-openai-pre-prompt"></textarea>
+      <textarea class="input" name="openaiPrePrompt" id="account-section-openai-pre-prompt"></textarea>
     </div>
     <div>
       <label class="block text-sm font-medium" for="bot-cooldown">Cooldown</label>
-      <input class="input" type="number" name="cooldown" id="bot-cooldown">
+      <input class="input" type="number" name="cooldownTime" id="bot-cooldown">
     </div>
     <div class="flex gap-2">
       <span id="bot-settings-save-btn" class="btn btn-success">Save</span>

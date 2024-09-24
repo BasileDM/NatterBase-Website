@@ -14,6 +14,10 @@ final class Validator
       'confirmPassword' => $request['confirmPassword'] ?? null,
       'gdpr' => $request['gdpr'] ?? null,
       'name' => $request['name'] ?? null,
+      'twitchJoinChannel' => $request['twitchJoinChannel'] ?? null,
+      'openaiPrePrompt' => $request['openaiPrePrompt'] ?? null,
+      'cooldownTime' => $request['cooldown'] ?? null,
+      'idBot' => $request['idBot'] ?? null,
     ];
 
     $errors = [];
@@ -67,11 +71,53 @@ final class Validator
       }
     }
 
+    if (isset($inputs['twitchJoinChannel'])) {
+      $result = self::validateUsername($inputs['twitchJoinChannel']);
+      if (isset($result['error'])) {
+        $errors['twitchJoinChannel'] = $result['error'];
+      } else {
+        $sanitizedInputs['twitchJoinChannel'] = $result['sanitized'];
+      }
+    }
+
+    if (isset($inputs['openaiPrePrompt'])) {
+      $result = self::validateOpenAiPrePrompt($inputs['openaiPrePrompt']);
+      if (isset($result['error'])) {
+        $errors['openaiPrePrompt'] = $result['error'];
+      } else {
+        $sanitizedInputs['openaiPrePrompt'] = $result['sanitized'];
+      }
+    }
+
+    if (isset($inputs['cooldownTime'])) {
+      $result = self::validateInt($inputs['cooldownTime'], 'cooldown');
+      if (isset($result['error'])) {
+        $errors['cooldownTime'] = $result['error'];
+      } else {
+        $sanitizedInputs['cooldownTime'] = $result['sanitized'];
+      }
+    }
+
+    if (isset($inputs['idBot'])) {
+      $result = self::validateInt($inputs['idBot'], 'bot ID');
+      if (isset($result['error'])) {
+        $errors['idBot'] = $result['error'];
+      } else {
+        $sanitizedInputs['idBot'] = $result['sanitized'];
+      }
+    }
+
     if (!empty($errors)) {
       return ['errors' => $errors];
     }
     return ['sanitized' => $sanitizedInputs];
   }
+
+  /**
+   *  =================================================================
+   *  Independent validation methods =================================
+   *  =================================================================
+   */
 
   private static function validateBotProfileName(string $name): array
   {
@@ -132,5 +178,27 @@ final class Validator
     $string = strip_tags($string);
     $string = htmlspecialchars($string);
     return $string;
+  }
+
+  private static function validateInt(string $int, string $key): array
+  {
+    $sanitizedInt = filter_var($int, FILTER_SANITIZE_NUMBER_INT);
+    if ($sanitizedInt === '' || $int != $sanitizedInt) {
+      return ['error' => 'Invalid ' . $key];
+    }
+    return ['sanitized' => (int) $sanitizedInt];
+  }
+
+  private static function validateOpenAiPrePrompt(string $prompt): array
+  {
+    $cleanPrompt = self::sanitizeString($prompt);
+    if ($cleanPrompt !== $prompt) {
+      return ['error' => 'Invalid prompt'];
+    }
+
+    if (strlen($prompt) < 0 || strlen($prompt) > 255) {
+      return ['error' => 'Prompt must be between 0 and 1000 characters'];
+    }
+    return ['sanitized' => $cleanPrompt];
   }
 }

@@ -85,8 +85,16 @@ final class BotRepository
   public function update(Bot $botProfile): bool
   {
     $query = 'UPDATE Bots 
-              SET name = :name, creation_date = :creationDate, cooldown_time = :cooldownTime, max_openai_message_length = :maxOpenaiMessageLength, id_model = :idModel, id_platform = :idPlatform, id_user = :idUser
+              SET name = :name, 
+                  creation_date = :creationDate, 
+                  cooldown_time = :cooldownTime, 
+                  max_openai_message_length = :maxOpenaiMessageLength, 
+                  id_model = :idModel, 
+                  open_ai_pre_prompt = :openAiPrePrompt,
+                  twitch_join_channel = :twitchJoinChannel,
+                  id_platform = :idPlatform 
               WHERE id_bot = :idBot';
+
     $statement = $this->pdo->prepare($query);
     $statement->execute([
       ':name' => $botProfile->getName(),
@@ -94,8 +102,9 @@ final class BotRepository
       ':cooldownTime' => $botProfile->getCooldownTime(),
       ':maxOpenaiMessageLength' => $botProfile->getMaxOpenaiMessageLength(),
       ':idModel' => $botProfile->getIdModel(),
+      ':openAiPrePrompt' => $botProfile->getOpenAiPrePrompt(),
+      ':twitchJoinChannel' => $botProfile->getTwitchJoinChannel(),
       ':idPlatform' => $botProfile->getIdPlatform(),
-      ':idUser' => $botProfile->getIdUser(),
       ':idBot' => $botProfile->getIdBot()
     ]);
     return $statement->rowCount() > 0;

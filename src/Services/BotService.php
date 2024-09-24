@@ -86,9 +86,9 @@ final class BotService
     return $botSettings;
   }
 
-  public function update(array $inputs): bool
+  public function update(array $inputs, int $botId): bool
   {
-    $bot = $this->getBotById($inputs['idBot']);
+    $bot = $this->getBotById($botId);
     if ($bot === false) {
       return false;
     }
