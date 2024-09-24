@@ -36,6 +36,11 @@ export class Bot {
     // Create new client if it doesn't exist or if channels have changed
     if (!this.client || this.settings.channels != this.client.channels) {
       this.client = new tmi.Client({
+        options: {
+          debug: true,
+          clientId: '',
+          skipUpdatingEmotesets: true,
+        },
         connection: {
           secure: true,
           reconnect: true,
