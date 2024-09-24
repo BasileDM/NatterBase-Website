@@ -57,6 +57,18 @@ export class Bot {
         this.displayMessage(`${tags['display-name']}: ${message}`);
         if (self) return;
 
+        // Check for the !ask command and call OpenAI
+        if (message.startsWith('!ask ')) {
+          const prompt = message.replace('!ask ', '');
+          this.getOpenAIResponse(prompt).then((response) => {
+            this.client?.say(channel, `@${tags.username}, ${response}`);
+          }).catch(error => {
+            console.error('Error getting OpenAI response:', error);
+            this.client?.say(channel, `@${tags.username}, I couldn't get an answer right now.`);
+          });
+        }
+
+        // Simple hello test command
         if (message.toLowerCase() === '!hello') {
           this.client.say(channel, `@${tags.username}, heya!`);
         }
@@ -118,6 +130,44 @@ export class Bot {
       const newText = document.createElement('p');
       newText.innerText = message;
       this.chatDisplay.appendChild(newText);
+    }
+  }
+
+  // Method to send a request to OpenAI and get a response
+  private async getOpenAIResponse(prompt: string): Promise<string> {
+    const url = 'https://api.openai.com/v1/chat/completions';
+    const data = {
+      model: 'gpt-3.5-turbo',
+      messages: [
+        { role: 'system', content: 'You are a helpful assistant.' },
+        { role: 'user', content: prompt },
+      ],
+      max_tokens: 100,
+    };
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.settings.openAiKey}`,
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`OpenAI request failed: ${response.status} - ${response.statusText}`);
+        console.error(`Response body: ${errorText}`);
+        throw new Error(`OpenAI request failed: ${response.status} - ${response.statusText}`);
+      }
+
+      const result = await response.json();
+      return result.choices[0].message.content.trim();
+    }
+    catch (error) {
+      console.error('Error in OpenAI request:', error);
+      throw error;
     }
   }
 }
