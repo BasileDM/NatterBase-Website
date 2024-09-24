@@ -104,6 +104,7 @@ export class Bot {
   }
 
   private async getSettings(): Promise<BotSettings> {
+    const twitchChannel = document.getElementById('account-section-twitch-channel') as HTMLInputElement;
     const botSelector = document.getElementById('bot-profiles-selector') as HTMLSelectElement;
     const selectedBotIndex = Number(botSelector.selectedIndex) - 1;
     const twitchToken = document.getElementById('account-section-twitchToken') as HTMLInputElement;
@@ -116,7 +117,7 @@ export class Bot {
     const settings: BotSettings = {
       twitchToken: twitchToken.value,
       openAiKey: openAiKey.value,
-      channels: currentProfile.twitchJoinChannel,
+      channels: [currentProfile.twitchJoinChannel],
       cooldown: currentProfile.cooldownTime,
       openAiPrePrompt: currentProfile.openAiPrePrompt,
       maxOpenaiMessageLength: currentProfile.maxOpenaiMessageLength,
