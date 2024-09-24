@@ -13,6 +13,8 @@ final class Bot
   private string $maxOpenaiMessageLength = '120';
   private int $idModel = 1;
   private string $modelName;
+  private string $openAiPrePrompt;
+  private string $twitchJoinChannel;
   private string $platformName;
   private int $idPlatform = 1;
   private int $idUser;
@@ -267,5 +269,43 @@ final class Bot
     public function setModelName(string $modelName)
     {
         $this->modelName = $modelName;
+    }
+
+  /**
+   * Get the value of openAiPrePrompt
+   */
+  public function getOpenAiPrePrompt(): string
+  {
+    return $this->openAiPrePrompt;
+  }
+
+    /**
+     * Set the value of openAiPrePrompt
+     *
+     * @param   string  $openAiPrePrompt  
+     * 
+     */
+    public function setOpenAiPrePrompt(string $openAiPrePrompt)
+    {
+        $this->openAiPrePrompt = $openAiPrePrompt;
+    }
+
+  /**
+   * Get the value of twitchJoinChannel
+   */
+  public function getTwitchJoinChannel(): string
+  {
+    return $this->twitchJoinChannel;
+  }
+
+    /**
+     * Set the value of twitchJoinChannel
+     *
+     * @param   string  $twitchJoinChannel  
+     * 
+     */
+    public function setTwitchJoinChannel(string $twitchJoinChannel)
+    {
+        $this->twitchJoinChannel = $twitchJoinChannel;
     }
 }

@@ -25,6 +25,10 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <input class="input" type="text" name="platform" id="bot-platform" disabled>
     </div>
     <div>
+      <label class="block text-sm font-medium" for="account-section-twitch-channel">Join channel:</label>
+      <input class="input" type="text" name="twitch-channel" id="account-section-twitch-channel">
+    </div>
+    <div>
       <label class="block text-sm font-medium" for="bot-cooldown">Cooldown</label>
       <input class="input" type="number" name="cooldown" id="bot-cooldown">
     </div>
@@ -71,15 +75,18 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <span class="btn btn-alert">Delete account</span>
     </div>
   </form>
+</section>
+
+<section id="app-keys" class="hidden">
   <div class="mt-4 space-y-4">
     <h2>Local keys</h2>
     <div>
       <label class="block text-sm font-medium" for="twitchToken">Twitch token</label>
-      <input class="input" type="text" name="twitchToken" id="account-section-twitchToken">
+      <input class="input" type="password" name="twitchToken" id="account-section-twitchToken">
     </div>
     <div>
       <label class="block text-sm font-medium" for="openAiKey">OpenAI API key</label>
-      <input class="input" type="text" name="openAiKey" id="account-section-openAiKey">
+      <input class="input" type="password" name="openAiKey" id="account-section-openAiKey">
     </div>
   </div>
 </section>

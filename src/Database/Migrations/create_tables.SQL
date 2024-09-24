@@ -42,6 +42,8 @@ CREATE TABLE Bots(
   cooldown_time INT,
   max_openai_message_length VARCHAR(50),
   id_model INT NOT NULL,
+  open_ai_pre_prompt VARCHAR(255),
+  twitch_join_channel VARCHAR(255),
   id_platform INT NOT NULL,
   id_user INT NOT NULL,
   PRIMARY KEY(id_bot),

@@ -103,7 +103,7 @@ export class Bot {
   }
 
   private async getSettings(): Promise<BotSettings> {
-    const channelOverride = document.getElementById('account-section-channelOverride') as HTMLInputElement;
+    const twitchChannel = document.getElementById('account-section-twitch-channel') as HTMLInputElement;
     const botSelector = document.getElementById('bot-profiles-selector') as HTMLSelectElement;
     const selectedBotIndex = Number(botSelector.selectedIndex) - 1;
     const twitchToken = document.getElementById('account-section-twitchToken') as HTMLInputElement;
@@ -122,8 +122,8 @@ export class Bot {
       commands: currentProfile.commands,
       features: currentProfile.features,
     };
-    if (channelOverride && channelOverride.value !== '') {
-      settings.channels = [channelOverride.value];
+    if (twitchChannel && twitchChannel.value !== '') {
+      settings.channels = [twitchChannel.value];
     }
     return settings;
   }
