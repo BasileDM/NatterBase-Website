@@ -53,11 +53,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <input class="input" type="text" name="mail" id="account-section-mail"
         value="<?= htmlspecialchars($view_userData["user"]["mail"] ?? '') ?>" disabled>
     </div>
-    <div>
-      <label class="block text-sm font-medium" for="openAiKey">OpenAI API key</label>
-      <input class="input" type="text" name="openAiKey" id="account-section-openAiKey">
-    </div>
-    <div>
+    <!-- <div>
       <label class="block text-sm font-medium" for="twitchUsername">Twitch account</label>
       <?php if (isset($view_userData["user"]["twitchUsername"])) : ?>
         <input class="input" type="text" name="twitchUsername" id="account-section-twitchUsername"
@@ -69,12 +65,23 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
           Link Twitch
         </a>
       <?php endif; ?>
-    </div>
+    </div> -->
     <div class="flex gap-2">
       <span class="btn btn-success">Save</span>
       <span class="btn btn-alert">Delete account</span>
     </div>
   </form>
+  <div class="mt-4 space-y-4">
+    <h2>Local keys</h2>
+    <div>
+      <label class="block text-sm font-medium" for="twitchToken">Twitch token</label>
+      <input class="input" type="text" name="twitchToken" id="account-section-twitchToken">
+    </div>
+    <div>
+      <label class="block text-sm font-medium" for="openAiKey">OpenAI API key</label>
+      <input class="input" type="text" name="openAiKey" id="account-section-openAiKey">
+    </div>
+  </div>
 </section>
 
 <?php
