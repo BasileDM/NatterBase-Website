@@ -7,10 +7,10 @@ export class UiUtils {
     static async updateInterface() {
         const selectedBotIndex = Number(UiElements.botProfileSelector.selectedIndex) - 1;
         let currentBot = null;
-        console.log('Updating interface. Fetching user data...');
         const userData = await RequestHelper.getUserData();
-        console.log('UserData: ', userData);
+        console.log('Fetched UserData: ', userData);
         const user = userData.user;
+        // const featuresData = userData.features;
         this.updateAccountSection(user);
         this.updateBotsList(userData.botProfiles);
         if (selectedBotIndex != undefined && selectedBotIndex >= 0) {
