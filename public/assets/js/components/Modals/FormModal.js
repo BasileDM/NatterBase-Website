@@ -1,14 +1,14 @@
+import { AbstractModal } from './Abstract/AbstractModal.js';
 import { FormValidator } from '../../Utils/FormValidator.js';
 import { RequestHelper } from '../../Utils/RequestHelper.js';
 import { UiUtils } from '../../Utils/UiUtils.js';
 import { Toast } from '../Toast.js';
-export class AbstractFormModal {
+export class FormModal extends AbstractModal {
     constructor(modalId, triggerButtonIds, formId) {
+        super(modalId, triggerButtonIds);
         this.formId = formId;
-        this.modalElement = document.getElementById(modalId);
         this.form = document.getElementById(formId);
         this.submitRoute = this.form.dataset.route;
-        this.closeButton = this.modalElement.querySelector('button[id*="close"]');
         this.submitButton = this.form.querySelector('button[id*="submit"]');
         this.bindEvents(triggerButtonIds);
     }
@@ -18,16 +18,6 @@ export class AbstractFormModal {
             const button = document.getElementById(buttonId);
             if (button) {
                 button.addEventListener('click', () => this.open());
-            }
-        });
-        // Close button
-        if (this.closeButton) {
-            this.closeButton.addEventListener('click', () => this.close());
-        }
-        // Close modal when clicking outside
-        this.modalElement.addEventListener('click', (event) => {
-            if (event.target === this.modalElement) {
-                this.close();
             }
         });
         // Submit form button
@@ -60,11 +50,5 @@ export class AbstractFormModal {
             console.error('Unexpected error: ', error);
             new Toast('error', 'Failed sending request. Try again later.');
         }
-    }
-    open() {
-        this.modalElement.showModal();
-    }
-    close() {
-        this.modalElement.close();
     }
 }

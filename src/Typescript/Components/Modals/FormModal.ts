@@ -1,20 +1,18 @@
+import { AbstractModal } from './Abstract/AbstractModal.js';
 import { FormValidator } from '../../Utils/FormValidator.js';
 import { RequestHelper } from '../../Utils/RequestHelper.js';
 import { UiUtils } from '../../Utils/UiUtils.js';
 import { Toast } from '../Toast.js';
 
-export class AbstractFormModal {
-  private modalElement: HTMLDialogElement;
+export class FormModal extends AbstractModal {
   private form: HTMLFormElement;
   private submitRoute: string;
-  private closeButton: HTMLElement;
   public submitButton: HTMLElement;
 
   constructor(modalId: string, triggerButtonIds: string[], private formId: string) {
-    this.modalElement = document.getElementById(modalId) as HTMLDialogElement;
+    super(modalId, triggerButtonIds);
     this.form = document.getElementById(formId) as HTMLFormElement;
     this.submitRoute = this.form.dataset.route as string;
-    this.closeButton = this.modalElement.querySelector('button[id*="close"]') as HTMLElement;
     this.submitButton = this.form.querySelector('button[id*="submit"]') as HTMLElement;
 
     this.bindEvents(triggerButtonIds);
@@ -26,18 +24,6 @@ export class AbstractFormModal {
       const button = document.getElementById(buttonId);
       if (button) {
         button.addEventListener('click', () => this.open());
-      }
-    });
-
-    // Close button
-    if (this.closeButton) {
-      this.closeButton.addEventListener('click', () => this.close());
-    }
-
-    // Close modal when clicking outside
-    this.modalElement.addEventListener('click', (event) => {
-      if (event.target === this.modalElement) {
-        this.close();
       }
     });
 
@@ -76,13 +62,5 @@ export class AbstractFormModal {
       console.error('Unexpected error: ', error);
       new Toast('error', 'Failed sending request. Try again later.');
     }
-  }
-
-  private open(): void {
-    this.modalElement.showModal();
-  }
-
-  private close(): void {
-    this.modalElement.close();
   }
 }

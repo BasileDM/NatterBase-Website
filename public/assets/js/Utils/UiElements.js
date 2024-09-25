@@ -30,6 +30,7 @@ UiElements.saveBotSettingsButton = document.getElementById('bot-settings-save-bt
 UiElements.deleteBotProfileButton = document.getElementById('bot-settings-delete-btn');
 // Bot features section
 UiElements.botFeaturesPlaceholder = document.getElementById('bot-features-placeholder');
+UiElements.botFeaturesDisplay = document.getElementById('bot-features-display');
 // Sidebar
 UiElements.sidebar = document.getElementById('sidebar');
 UiElements.toggleButton = document.getElementById('burger-btn');

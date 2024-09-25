@@ -9,13 +9,14 @@ export class UiUtils {
     const selectedBotIndex = Number(UiElements.botProfileSelector.selectedIndex) - 1;
     let currentBot = null;
 
-    console.log('Updating interface. Fetching user data...');
     const userData = await RequestHelper.getUserData();
-    console.log('UserData: ', userData);
+    console.log('Fetched UserData: ', userData);
     const user = userData.user;
+    // const featuresData = userData.features;
 
     this.updateAccountSection(user);
     this.updateBotsList(userData.botProfiles);
+
     if (selectedBotIndex != undefined && selectedBotIndex >= 0) {
       currentBot = userData.botProfiles[selectedBotIndex];
       this.updateBotSettingsSection(currentBot);
@@ -24,7 +25,15 @@ export class UiUtils {
       UiElements.runBotButton.classList.remove('hidden');
       UiElements.runBotBtnDisabled.classList.add('hidden');
     }
+    else {
+      this.updateBotSettingsSection(null);
+      this.updateBotFeaturesSection(null);
+      this.resetPlaceholders();
+      UiElements.runBotButton.classList.add('hidden');
+      UiElements.runBotBtnDisabled.classList.remove('hidden');
+    }
   }
+
 
   private static updateDashboardSection() {
     if (UiElements.dashboardPlaceholder) {
@@ -33,7 +42,16 @@ export class UiUtils {
   }
 
   private static updateBotSettingsSection(currentBot: any) {
-    console.log('Updating bot settings section...', currentBot);
+    if (currentBot == undefined || currentBot == null) {
+      if (UiElements.botSettingsForm) {
+        UiElements.botSettingsForm.classList.add('hidden');
+      }
+
+      if (UiElements.botSettingsPlaceholder) {
+        UiElements.botSettingsPlaceholder.classList.remove('hidden');
+      }
+      return;
+    }
 
     if (UiElements.botSettingsForm) {
       UiElements.botSettingsForm.classList.remove('hidden');
@@ -43,10 +61,10 @@ export class UiUtils {
       UiElements.botSettingsPlaceholder.classList.add('hidden');
     }
 
+    // Update the fields...
     if (UiElements.creationDate) {
       const localDate = ConversionUtils.UTCtoLocalDate(currentBot.creationDate);
       UiElements.creationDate.innerText = 'Creation date: ' + localDate;
-
     }
 
     if (UiElements.botNameInput) {
@@ -71,7 +89,19 @@ export class UiUtils {
   }
 
   private static updateBotFeaturesSection(currentBot: any) {
-    console.log('Updating bot features section...', currentBot);
+    if (currentBot == undefined || currentBot == null) {
+      if (UiElements.botFeaturesDisplay) {
+        UiElements.botFeaturesDisplay.classList.add('hidden');
+      }
+      if (UiElements.botFeaturesPlaceholder) {
+        UiElements.botFeaturesPlaceholder.classList.remove('hidden');
+      }
+      return;
+    }
+
+    if (UiElements.botFeaturesDisplay) {
+      UiElements.botFeaturesDisplay.classList.remove('hidden');
+    }
     if (UiElements.botFeaturesPlaceholder) {
       UiElements.botFeaturesPlaceholder.classList.add('hidden');
     }
@@ -125,7 +155,19 @@ export class UiUtils {
     FormValidator.removeFormErrors('account-settings-form');
   }
 
-  private static resetPlaceholders() {
-    console.log('Resetting placeholders...');
+  public static hideAllSectionsContent() {
+    // UiElements.botSettingsForm.classList.add('hidden');
+  }
+
+  public static resetPlaceholders() {
+    if (UiElements.dashboardPlaceholder) {
+      UiElements.dashboardPlaceholder.classList.remove('hidden');
+    }
+    if (UiElements.botSettingsPlaceholder) {
+      UiElements.botSettingsPlaceholder.classList.remove('hidden');
+    }
+    if (UiElements.botFeaturesPlaceholder) {
+      UiElements.botFeaturesPlaceholder.classList.remove('hidden');
+    }
   }
 }
