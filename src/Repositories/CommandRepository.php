@@ -6,7 +6,7 @@ use PDO;
 use src\Database\Database;
 use src\Models\BotCommand;
 
-final class BotCommandRepository
+final class CommandRepository
 {
   private PDO $pdo;
 

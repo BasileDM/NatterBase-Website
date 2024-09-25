@@ -5,24 +5,24 @@ namespace src\Services;
 use DateTime;
 use Exception;
 use src\Models\Bot;
-use src\Repositories\BotCommandRepository;
-use src\Repositories\BotFeatureRepository;
 use src\Repositories\BotRepository;
+use src\Repositories\CommandRepository;
+use src\Repositories\FeatureRepository;
 use src\Repositories\UserRepository;
 
 final class BotService
 {
   private UserRepository $userRepository;
   private BotRepository $botRepository;
-  private BotCommandRepository $botCommandRepository;
-  private BotFeatureRepository $botFeatureRepository;
+  private CommandRepository $commandRepository;
+  private FeatureRepository $featureRepository;
 
   public function __construct()
   {
     $this->userRepository = new UserRepository();
     $this->botRepository = new BotRepository();
-    $this->botCommandRepository = new BotCommandRepository();
-    $this->botFeatureRepository = new BotFeatureRepository();
+    $this->commandRepository = new CommandRepository();
+    $this->featureRepository = new FeatureRepository();
   }
 
   public function create(array $inputs): Bot|false
@@ -65,8 +65,8 @@ final class BotService
   {
     $botId = $bot->getIdBot();
 
-    $commands = $this->botCommandRepository->getByBotId($botId);
-    $features = $this->botFeatureRepository->getByBotId($botId);
+    $commands = $this->commandRepository->getByBotId($botId);
+    $features = $this->featureRepository->getByBotId($botId);
 
     $bot->setBotCommands($commands);
     $bot->setBotFeatures($features);

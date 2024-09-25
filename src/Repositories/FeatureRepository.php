@@ -6,7 +6,7 @@ use PDO;
 use src\Database\Database;
 use src\Models\BotFeature;
 
-final class BotFeatureRepository
+final class FeatureRepository
 {
   private PDO $pdo;
 

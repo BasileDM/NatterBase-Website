@@ -5,7 +5,7 @@ namespace src\Repositories;
 use PDO;
 use src\Database\Database;
 
-final class FeatureCategoriesRepository
+final class CategoryRepository
 {
   private PDO $pdo;
 
