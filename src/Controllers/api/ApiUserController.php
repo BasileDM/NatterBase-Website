@@ -65,7 +65,7 @@ final class ApiUserController
       }
       $this->jsonResponse(200, ['message' => 'User deleted successfully']);
     } catch (Exception $e) {
-      $this->jsonResponse(500, ['message' => "Backend error" + $e->getMessage()]);
+      $this->jsonResponse(500, ['message' => "Backend error"]);
     }
   }
 }

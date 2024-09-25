@@ -87,11 +87,12 @@ INSERT INTO User_Roles (name) VALUES('admin');
 INSERT INTO Users (mail, username, password_hash, is_activated, gdpr, twitch_id, twitch_username, id_role)
 VALUES('admin@admin.com', 'admin', '$2y$10$tfBK4jlXBc.HDoBW3cWK2eoH76SJu.rUlTJQa0/JzIaAeE/yfNmLW', true, CURRENT_DATE, NULL, NULL, 2);
 
+INSERT INTO Bot_Feature_Categories (name) VALUES('Game');
+INSERT INTO Bot_Feature_Categories (name) VALUES('AI');
+
 INSERT INTO Bot_Features (name, is_admin, is_subscriber, id_bot_feature_category)
 VALUES('Throw dice', true, false, 1);
 
-INSERT INTO Bot_Feature_Categories (name) VALUES('Game');
-INSERT INTO Bot_Feature_Categories (name) VALUES('AI');
 
 INSERT INTO Bot_Language_Models (name) VALUES('gpt-3.5-turbo');
 
