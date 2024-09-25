@@ -10,20 +10,20 @@ export class UiUtils {
         const userData = await RequestHelper.getUserData();
         console.log('Fetched UserData: ', userData);
         const user = userData.user;
-        // const featuresData = userData.features;
+        const featuresData = userData.allFeatures;
         this.updateAccountSection(user);
         this.updateBotsList(userData.botProfiles);
         if (selectedBotIndex != undefined && selectedBotIndex >= 0) {
             currentBot = userData.botProfiles[selectedBotIndex];
             this.updateBotSettingsSection(currentBot);
-            this.updateBotFeaturesSection(currentBot);
+            this.updateBotFeaturesSection(currentBot, featuresData);
             this.updateDashboardSection();
             UiElements.runBotButton.classList.remove('hidden');
             UiElements.runBotBtnDisabled.classList.add('hidden');
         }
         else {
             this.updateBotSettingsSection(null);
-            this.updateBotFeaturesSection(null);
+            this.updateBotFeaturesSection(null, null);
             this.resetPlaceholders();
             UiElements.runBotButton.classList.add('hidden');
             UiElements.runBotBtnDisabled.classList.remove('hidden');
@@ -71,22 +71,40 @@ export class UiUtils {
             UiElements.openAiPrePromptInput.value = currentBot.openAiPrePrompt;
         }
     }
-    static updateBotFeaturesSection(currentBot) {
-        if (currentBot == undefined || currentBot == null) {
-            if (UiElements.botFeaturesDisplay) {
-                UiElements.botFeaturesDisplay.classList.add('hidden');
-            }
-            if (UiElements.botFeaturesPlaceholder) {
-                UiElements.botFeaturesPlaceholder.classList.remove('hidden');
-            }
+    static updateBotFeaturesSection(currentBot, featuresData) {
+        if (!currentBot || !featuresData) {
+            UiElements.botFeaturesDisplay.classList.add('hidden');
+            UiElements.botFeaturesPlaceholder.classList.remove('hidden');
             return;
         }
-        if (UiElements.botFeaturesDisplay) {
-            UiElements.botFeaturesDisplay.classList.remove('hidden');
-        }
-        if (UiElements.botFeaturesPlaceholder) {
-            UiElements.botFeaturesPlaceholder.classList.add('hidden');
-        }
+        UiElements.botFeaturesDisplay.classList.remove('hidden');
+        UiElements.botFeaturesPlaceholder.classList.add('hidden');
+        // Clear existing features
+        UiElements.botFeaturesDisplay.innerHTML = '';
+        // Get the IDs of features enabled for the current bot
+        const enabledFeatureIds = currentBot.botFeatures.map((feature) => feature.idFeature);
+        // Render features grouped by category
+        featuresData.forEach((category) => {
+            const categoryDiv = document.createElement('div');
+            const categoryTitle = document.createElement('h3');
+            categoryTitle.textContent = category.categoryName;
+            categoryDiv.appendChild(categoryTitle);
+            category.features.forEach((feature) => {
+                const label = document.createElement('label');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.name = 'features';
+                checkbox.value = feature.idFeature.toString();
+                if (enabledFeatureIds.includes(feature.idFeature)) {
+                    checkbox.checked = true;
+                }
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(` ${feature.name}`));
+                categoryDiv.appendChild(label);
+                categoryDiv.appendChild(document.createElement('br'));
+            });
+            UiElements.botFeaturesDisplay.appendChild(categoryDiv);
+        });
     }
     static updateAccountSection(user) {
         console.log('Updating account section...', user);
