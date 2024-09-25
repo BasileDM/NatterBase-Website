@@ -2,12 +2,12 @@ import { Bot } from '../Bot/Bot.js';
 import { FormValidator } from '../Utils/FormValidator.js';
 import { RequestHelper } from '../Utils/RequestHelper.js';
 import { UiUtils } from '../Utils/UiUtils.js';
-import { AbstractFormModal } from './Abstract/AbstractFormModal.js';
+import { FormModal } from './Modals/FormModal.js';
 import { Toast } from './Toast.js';
 import { UiElements } from '../Utils/UiElements.js';
 export class ControlPanel {
     constructor() {
-        new AbstractFormModal('create-bot-profile-modal', ['create-bot-profile-btn'], 'create-bot-profile-form');
+        new FormModal('create-bot-profile-modal', ['create-bot-profile-btn'], 'create-bot-profile-form');
         this.bot = null;
         this.bindEvents();
         UiElements.twitchTokenInput.value = sessionStorage.getItem('natterbaseTwitchToken') || '';
