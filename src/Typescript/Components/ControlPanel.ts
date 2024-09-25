@@ -156,7 +156,8 @@ export class ControlPanel {
       }
 
       new Toast('success', jsonResponseBody.message);
-      UiUtils.updateInterface();
+      sessionStorage.clear();
+      window.location.href = '/logout';
     }
     catch (error) {
       console.error('Unexpected error: ', error);

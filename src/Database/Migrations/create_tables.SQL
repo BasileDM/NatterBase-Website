@@ -1,3 +1,5 @@
+SET default_storage_engine = InnoDB;
+
 CREATE TABLE Bot_Feature_Categories(
   id_bot_feature_category INT AUTO_INCREMENT,
   name VARCHAR(50) NOT NULL,
