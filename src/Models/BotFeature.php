@@ -10,13 +10,15 @@ final class BotFeature
   private string $name;
   private bool $isAdmin;
   private bool $isSubscriber;
-  private string $idBotFeatureCategory;
+  private int $idBotFeatureCategory;
+  private string $categoryName;
 
   use Hydration;
 
   public function toArray(): array
   {
-    return get_object_vars($this);
+    $array = get_object_vars($this);
+    return $array;
   }
 
   /**

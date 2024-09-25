@@ -18,7 +18,10 @@ final class FeatureRepository
 
   public function getAll(): array
   {
-    $query = 'SELECT * FROM Bot_Features';
+    $query = 'SELECT Bot_Features.*, Bot_Feature_Categories.name AS categoryName 
+              FROM Bot_Features
+              LEFT JOIN Bot_Feature_Categories
+              ON Bot_Features.id_bot_feature_category = Bot_Feature_Categories.id_bot_feature_category';
     $statement = $this->pdo->prepare($query);
     $statement->execute();
     $features = $statement->fetchAll(PDO::FETCH_CLASS, BotFeature::class);
