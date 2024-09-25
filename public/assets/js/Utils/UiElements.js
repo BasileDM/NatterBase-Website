@@ -26,6 +26,7 @@ UiElements.cooldownInput = document.getElementById('bot-cooldown');
 UiElements.twitchJoinChannelInput = document.getElementById('account-section-twitch-channel');
 UiElements.openAiPrePromptInput = document.getElementById('account-section-openai-pre-prompt');
 UiElements.saveBotSettingsButton = document.getElementById('bot-settings-save-btn');
+UiElements.deleteBotProfileButton = document.getElementById('bot-settings-delete-btn');
 // Bot features section
 UiElements.botFeaturesPlaceholder = document.getElementById('bot-features-placeholder');
 // Sidebar

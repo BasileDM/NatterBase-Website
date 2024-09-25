@@ -38,6 +38,10 @@ export class ControlPanel {
         UiElements.saveBotSettingsButton.addEventListener('click', async () => {
             this.submitBotSetting();
         });
+        // Delete bot profile button
+        UiElements.deleteBotProfileButton.addEventListener('click', async () => {
+            this.deleteBotProfile();
+        });
         // Local keys
         UiElements.twitchTokenInput.addEventListener('change', () => {
             sessionStorage.setItem('natterbaseTwitchToken', UiElements.twitchTokenInput.value);
@@ -72,6 +76,21 @@ export class ControlPanel {
             new Toast('success', jsonResponseBody.message);
             UiElements.changePassInputsDiv.classList.add('hidden');
             UiElements.changePassBtn.classList.remove('hidden');
+            UiUtils.updateInterface();
+        }
+        catch (error) {
+            console.error('Unexpected error: ', error);
+            new Toast('error', 'Failed sending request. Try again later.');
+        }
+    }
+    async deleteBotProfile() {
+        try {
+            const response = await RequestHelper.delete('/deleteBotProfile?idBot=' + UiElements.botProfileSelector.value);
+            const jsonResponseBody = await RequestHelper.handleResponse(response);
+            if (!jsonResponseBody) {
+                return;
+            }
+            new Toast('success', jsonResponseBody.message);
             UiUtils.updateInterface();
         }
         catch (error) {

@@ -26,6 +26,7 @@ export class UiElements {
   public static twitchJoinChannelInput = document.getElementById('account-section-twitch-channel') as HTMLInputElement;
   public static openAiPrePromptInput = document.getElementById('account-section-openai-pre-prompt') as HTMLInputElement;
   public static saveBotSettingsButton = document.getElementById('bot-settings-save-btn') as HTMLElement;
+  public static deleteBotProfileButton = document.getElementById('bot-settings-delete-btn') as HTMLElement;
 
   // Bot features section
   public static botFeaturesPlaceholder = document.getElementById('bot-features-placeholder') as HTMLElement;
