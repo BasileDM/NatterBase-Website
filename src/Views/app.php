@@ -51,6 +51,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 <section id="app-bot-features" class="hidden">
   <h2>Bot Features</h2>
   <p id="bot-features-placeholder">Please select a bot.</p>
+  <div id="bot-features-display"></div>
 </section>
 
 <!-- Account settings -->
