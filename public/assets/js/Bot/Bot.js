@@ -1,9 +1,9 @@
 import { RequestHelper } from '../Utils/RequestHelper.js';
+import { UiElements } from '../Utils/UiElements.js';
 export class Bot {
     constructor() {
         this.isRunning = false;
         this.client = null;
-        this.chatDisplay = document.getElementById('chat-display');
         // This is just to avoid undefined values while waiting for async getSettings method.
         this.settings = {
             twitchToken: '',
@@ -84,16 +84,13 @@ export class Bot {
         }).catch(console.error);
     }
     async getSettings() {
-        const botSelector = document.getElementById('bot-profiles-selector');
-        const selectedBotIndex = Number(botSelector.selectedIndex) - 1;
-        const twitchToken = document.getElementById('account-section-twitchToken');
-        const openAiKey = document.getElementById('account-section-openAiKey');
+        const selectedBotIndex = Number(UiElements.botProfileSelector.selectedIndex) - 1;
         const response = await RequestHelper.get('/api/userData');
         const result = await RequestHelper.handleResponse(response);
         const currentProfile = result.botProfiles[selectedBotIndex];
         const settings = {
-            twitchToken: twitchToken.value,
-            openAiKey: openAiKey.value,
+            twitchToken: UiElements.twitchTokenInput.value,
+            openAiKey: UiElements.openAiKeyInput.value,
             channels: [currentProfile.twitchJoinChannel],
             cooldown: currentProfile.cooldownTime,
             openAiPrePrompt: currentProfile.openAiPrePrompt,
@@ -104,10 +101,10 @@ export class Bot {
         return settings;
     }
     displayMessage(message) {
-        if (this.chatDisplay) {
+        if (UiElements.chatDisplay) {
             const newText = document.createElement('p');
             newText.innerText = message;
-            this.chatDisplay.appendChild(newText);
+            UiElements.chatDisplay.appendChild(newText);
         }
     }
     // Method to send a request to OpenAI and get a response

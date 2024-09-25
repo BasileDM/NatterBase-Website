@@ -52,16 +52,15 @@ final class Validator
 
     if (isset($inputs['password'])) {
       $result = self::validatePassword($inputs['password']);
+      if (!isset($inputs['confirmPassword'])) {
+        $errors['password'] = 'Please confirm your password';
+      } elseif (!isset($inputs['password']) || $inputs['confirmPassword'] !== $inputs['password']) {
+        $errors['password'] = 'Passwords do not match';
+      }
       if (isset($result['error'])) {
         $errors['password'] = $result['error'];
       } else {
         $sanitizedInputs['passwordHash'] = $result['sanitized'];
-      }
-    }
-
-    if (isset($inputs['confirmPassword'])) {
-      if (!isset($inputs['password']) || $inputs['confirmPassword'] !== $inputs['password']) {
-        $errors['password'] = 'Passwords do not match';
       }
     }
 

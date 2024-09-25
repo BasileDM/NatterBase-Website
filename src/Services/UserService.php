@@ -39,7 +39,7 @@ final class UserService
     return $user->toSafeInfoArray();
   }
 
-  public function getAllCurrentUserData()
+  public function getAllCurrentUserData(): array
   {
     $userId = $_SESSION['userId'];
     $userData = [
@@ -48,5 +48,21 @@ final class UserService
     ];
 
     return $userData;
+  }
+
+  public function updateUserData(array $inputs): bool
+  {
+    $userId = $_SESSION['userId'];
+    $user = $this->userRepository->getUserById($userId);
+    $user->hydrateFromInputs($inputs);
+    return $this->userRepository->update($user);
+  }
+
+  public function deleteUser(): bool
+  {
+    if (!isset($_SESSION['userId'])) {
+      return false;
+    }
+    return $this->userRepository->delete($_SESSION['userId']);
   }
 }

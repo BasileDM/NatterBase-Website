@@ -3,19 +3,23 @@
 namespace src\Services;
 
 use DateTime;
+use Exception;
 use src\Models\Bot;
 use src\Repositories\BotCommandRepository;
 use src\Repositories\BotFeatureRepository;
 use src\Repositories\BotRepository;
+use src\Repositories\UserRepository;
 
 final class BotService
 {
+  private UserRepository $userRepository;
   private BotRepository $botRepository;
   private BotCommandRepository $botCommandRepository;
   private BotFeatureRepository $botFeatureRepository;
 
   public function __construct()
   {
+    $this->userRepository = new UserRepository();
     $this->botRepository = new BotRepository();
     $this->botCommandRepository = new BotCommandRepository();
     $this->botFeatureRepository = new BotFeatureRepository();
@@ -51,8 +55,7 @@ final class BotService
     $bot = $this->botRepository->getById($botId);
     if ($bot !== null && $bot !== false) {
       $this->populateBotRelations($bot);
-    }
-    else {
+    } else {
       return false;
     }
     return $bot;
@@ -94,5 +97,18 @@ final class BotService
     }
     $bot->hydrateFromInputs($inputs);
     return $this->botRepository->update($bot);
+  }
+
+  public function delete(int $botId): bool
+  {
+    try {
+      $user = $this->userRepository->getUserById($_SESSION['userId']);
+      if ($user === false) {
+        throw new Exception('User not found');
+      }
+      return $this->botRepository->delete($botId, $user->getIdUser());
+    } catch (Exception $e) {
+      throw new Exception($e->getMessage());
+    }
   }
 }

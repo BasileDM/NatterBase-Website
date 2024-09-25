@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Toast } from '../Components/Toast.js';
 export class RequestHelper {
+    /**
+     *
+     * Main requests methods (POST, GET, DELETE)
+     *
+     */
+    // POST
     static async post(url, data) {
         try {
             const response = await fetch(url, {
@@ -17,12 +23,9 @@ export class RequestHelper {
             throw new Error('Failed sending request. Try again later.');
         }
     }
-    static async get(url, param = null) {
+    // GET
+    static async get(url) {
         try {
-            if (param !== null) {
-                const requestBody = `?param=${param}`;
-                url = url + requestBody;
-            }
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error(`Error: ${response.status}`);
@@ -34,6 +37,24 @@ export class RequestHelper {
             throw new Error('Request failed. Try again later.');
         }
     }
+    // DELETE
+    static async delete(url) {
+        try {
+            const response = await fetch(url, {
+                method: 'DELETE',
+            });
+            return response;
+        }
+        catch (error) {
+            console.error('Unexpected error: ', error);
+            throw new Error('Failed sending request. Try again later.');
+        }
+    }
+    /**
+     *
+     * Helper methods
+     *
+     */
     static async handleResponse(response) {
         const responseBody = await response.json();
         if (!response.ok && responseBody.message) {

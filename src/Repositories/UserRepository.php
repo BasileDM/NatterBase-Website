@@ -2,6 +2,7 @@
 
 namespace src\Repositories;
 
+use Exception;
 use PDO;
 use src\Database\Database;
 use src\Models\User;
@@ -65,5 +66,36 @@ final class UserRepository
     $statement = $this->pdo->prepare($query);
     $statement->execute([':roleName' => $roleName]);
     return $statement->fetchColumn();
+  }
+
+  public function update(User $user): bool
+  {
+    try {
+      $query = 'UPDATE Users
+                SET username = :username,
+                    password_hash = :passwordHash
+                WHERE id_user = :id';
+      $statement = $this->pdo->prepare($query);
+      $statement->execute([
+        ':username' => $user->getUsername(),
+        ':passwordHash' => $user->getPasswordHash(),
+        ':id' => $user->getIdUser()
+      ]);
+      return $statement->rowCount() > 0;
+    } catch (Exception $e) {
+      throw new Exception($e->getMessage());
+    }
+  }
+
+  public function delete(int $userId): bool
+  {
+    try {
+      $query = 'DELETE FROM Users WHERE id_user = :id';
+      $statement = $this->pdo->prepare($query);
+      $statement->execute([':id' => $userId]);
+      return $statement->rowCount() > 0;
+    } catch (Exception $e) {
+      throw new Exception($e->getMessage());
+    }
   }
 }

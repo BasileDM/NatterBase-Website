@@ -2,17 +2,16 @@ declare const tmi: typeof import('tmi.js');
 import * as tmiTypes from 'tmi.js';
 import { BotSettings } from '../Bot/Interfaces/BotSettings.js';
 import { RequestHelper } from '../Utils/RequestHelper.js';
+import { UiElements } from '../Utils/UiElements.js';
 
 export class Bot {
   public isRunning: boolean;
   private client: tmiTypes.Client | null;
-  private chatDisplay: HTMLPreElement | null;
   private settings: BotSettings;
 
   constructor() {
     this.isRunning = false;
     this.client = null;
-    this.chatDisplay = document.getElementById('chat-display') as HTMLPreElement;
     // This is just to avoid undefined values while waiting for async getSettings method.
     this.settings = {
       twitchToken: '',
@@ -104,18 +103,15 @@ export class Bot {
   }
 
   private async getSettings(): Promise<BotSettings> {
-    const botSelector = document.getElementById('bot-profiles-selector') as HTMLSelectElement;
-    const selectedBotIndex = Number(botSelector.selectedIndex) - 1;
-    const twitchToken = document.getElementById('account-section-twitchToken') as HTMLInputElement;
-    const openAiKey = document.getElementById('account-section-openAiKey') as HTMLInputElement;
+    const selectedBotIndex = Number(UiElements.botProfileSelector.selectedIndex) - 1;
 
     const response = await RequestHelper.get('/api/userData');
     const result = await RequestHelper.handleResponse(response);
     const currentProfile = result.botProfiles[selectedBotIndex];
 
     const settings: BotSettings = {
-      twitchToken: twitchToken.value,
-      openAiKey: openAiKey.value,
+      twitchToken: UiElements.twitchTokenInput.value,
+      openAiKey: UiElements.openAiKeyInput.value,
       channels: [currentProfile.twitchJoinChannel],
       cooldown: currentProfile.cooldownTime,
       openAiPrePrompt: currentProfile.openAiPrePrompt,
@@ -127,10 +123,10 @@ export class Bot {
   }
 
   displayMessage(message: string) {
-    if (this.chatDisplay) {
+    if (UiElements.chatDisplay) {
       const newText = document.createElement('p');
       newText.innerText = message;
-      this.chatDisplay.appendChild(newText);
+      UiElements.chatDisplay.appendChild(newText);
     }
   }
 

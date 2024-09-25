@@ -1,3 +1,5 @@
+SET default_storage_engine = InnoDB;
+
 CREATE TABLE Bot_Feature_Categories(
   id_bot_feature_category INT AUTO_INCREMENT,
   name VARCHAR(50) NOT NULL,
@@ -49,7 +51,7 @@ CREATE TABLE Bots(
   PRIMARY KEY(id_bot),
   FOREIGN KEY(id_model) REFERENCES Bot_Language_Models(id_model),
   FOREIGN KEY(id_platform) REFERENCES Bot_Platforms(id_platform),
-  FOREIGN KEY(id_user) REFERENCES Users(id_user)
+  FOREIGN KEY(id_user) REFERENCES Users(id_user) ON DELETE CASCADE
 );
 CREATE TABLE Bot_Features(
   id_bot_feature INT AUTO_INCREMENT,
@@ -67,7 +69,7 @@ CREATE TABLE Bot_Commands(
   text VARCHAR(255) NOT NULL,
   id_bot INT NOT NULL,
   PRIMARY KEY(id_bot_command),
-  FOREIGN KEY(id_bot) REFERENCES Bots(id_bot)
+  FOREIGN KEY(id_bot) REFERENCES Bots(id_bot) ON DELETE CASCADE
 );
 CREATE TABLE Relation_Bots_Features(
   id_bot INT,
@@ -75,7 +77,7 @@ CREATE TABLE Relation_Bots_Features(
   is_admin_override BOOLEAN,
   is_subscriber_override BOOLEAN,
   PRIMARY KEY(id_bot, id_bot_feature),
-  FOREIGN KEY(id_bot) REFERENCES Bots(id_bot),
+  FOREIGN KEY(id_bot) REFERENCES Bots(id_bot) ON DELETE CASCADE,
   FOREIGN KEY(id_bot_feature) REFERENCES Bot_Features(id_bot_feature)
 );
 
@@ -85,11 +87,12 @@ INSERT INTO User_Roles (name) VALUES('admin');
 INSERT INTO Users (mail, username, password_hash, is_activated, gdpr, twitch_id, twitch_username, id_role)
 VALUES('admin@admin.com', 'admin', '$2y$10$tfBK4jlXBc.HDoBW3cWK2eoH76SJu.rUlTJQa0/JzIaAeE/yfNmLW', true, CURRENT_DATE, NULL, NULL, 2);
 
+INSERT INTO Bot_Feature_Categories (name) VALUES('Game');
+INSERT INTO Bot_Feature_Categories (name) VALUES('AI');
+
 INSERT INTO Bot_Features (name, is_admin, is_subscriber, id_bot_feature_category)
 VALUES('Throw dice', true, false, 1);
 
-INSERT INTO Bot_Feature_Categories (name) VALUES('Game');
-INSERT INTO Bot_Feature_Categories (name) VALUES('AI');
 
 INSERT INTO Bot_Language_Models (name) VALUES('gpt-3.5-turbo');
 
