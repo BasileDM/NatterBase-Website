@@ -10,7 +10,7 @@ export class FormModal extends AbstractModal {
   public submitButton: HTMLElement;
 
   constructor(modalId: string, triggerButtonIds: string[], private formId: string) {
-    super(modalId);
+    super(modalId, triggerButtonIds);
     this.form = document.getElementById(formId) as HTMLFormElement;
     this.submitRoute = this.form.dataset.route as string;
     this.submitButton = this.form.querySelector('button[id*="submit"]') as HTMLElement;

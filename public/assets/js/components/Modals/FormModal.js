@@ -5,7 +5,7 @@ import { UiUtils } from '../../Utils/UiUtils.js';
 import { Toast } from '../Toast.js';
 export class FormModal extends AbstractModal {
     constructor(modalId, triggerButtonIds, formId) {
-        super(modalId);
+        super(modalId, triggerButtonIds);
         this.formId = formId;
         this.form = document.getElementById(formId);
         this.submitRoute = this.form.dataset.route;

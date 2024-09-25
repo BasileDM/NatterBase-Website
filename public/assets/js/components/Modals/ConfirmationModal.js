@@ -16,14 +16,17 @@ export class ConfirmationModal extends AbstractModal {
         }
     }
     open(message, onConfirm) {
+        if (!message || !onConfirm) {
+            throw new Error('message and onConfirm are required');
+        }
         this.messageElement.textContent = message;
-        this.onConfirmCallback = onConfirm;
+        this.onConfirm = onConfirm;
         super.open();
     }
     handleConfirm() {
         this.close();
-        if (this.onConfirmCallback) {
-            this.onConfirmCallback();
+        if (this.onConfirm) {
+            this.onConfirm();
         }
     }
 }
