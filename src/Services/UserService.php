@@ -3,18 +3,22 @@
 namespace src\Services;
 
 use ArrayAccess;
+use src\Models\BotFeature;
 use src\Models\User;
+use src\Repositories\BotFeatureRepository;
 use src\Repositories\UserRepository;
 
 final class UserService
 {
   private UserRepository $userRepository;
   private BotService $botService;
+  private BotFeatureRepository $botFeatureRepository;
 
   public function __construct()
   {
     $this->userRepository = new UserRepository();
     $this->botService = new BotService();
+    $this->botFeatureRepository = new BotFeatureRepository();
   }
 
   public function create(array $inputs): User|false
@@ -42,11 +46,13 @@ final class UserService
   public function getAllCurrentUserData(): array
   {
     $userId = $_SESSION['userId'];
+    $features = $this->botFeatureRepository->getAll();
+    $featuresArray = array_map(fn(BotFeature $feature) => $feature->toArray(), $features);
     $userData = [
       "user" => $this->getSafeArray($userId),
       "botProfiles" => $this->botService->getUserBotsArray($userId),
+      "allFeatures" => $featuresArray,
     ];
-
     return $userData;
   }
 

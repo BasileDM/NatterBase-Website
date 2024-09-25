@@ -16,6 +16,15 @@ final class BotFeatureRepository
     $this->pdo = $db->getDb();
   }
 
+  public function getAll(): array
+  {
+    $query = 'SELECT * FROM Bot_Features';
+    $statement = $this->pdo->prepare($query);
+    $statement->execute();
+    $features = $statement->fetchAll(PDO::FETCH_CLASS, BotFeature::class);
+    return $features;
+  }
+
   public function getByBotId(int $botId): array
   {
     $query = 'SELECT * 

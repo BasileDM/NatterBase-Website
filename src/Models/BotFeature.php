@@ -2,21 +2,21 @@
 
 namespace src\Models;
 
+use src\Services\Hydration;
+
 final class BotFeature
 {
   private int $idBotFeature;
   private string $name;
   private bool $isAdmin;
   private bool $isSubscriber;
-  private string $category;
+  private string $idBotFeatureCategory;
 
-  public function __construct(int $idBotFeature, string $name, bool $isAdmin, bool $isSubscriber, string $category)
+  use Hydration;
+
+  public function toArray(): array
   {
-    $this->idBotFeature = $idBotFeature;
-    $this->name = $name;
-    $this->isAdmin = $isAdmin;
-    $this->isSubscriber = $isSubscriber;
-    $this->category = $category;
+    return get_object_vars($this);
   }
 
   /**
@@ -100,7 +100,7 @@ final class BotFeature
    */
   public function getCategory(): string
   {
-    return $this->category;
+    return $this->idBotFeatureCategory;
   }
 
     /**
@@ -111,6 +111,6 @@ final class BotFeature
      */
     public function setCategory(string $category)
     {
-        $this->category = $category;
+        $this->idBotFeatureCategory = $category;
     }
 }
