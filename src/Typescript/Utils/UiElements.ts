@@ -6,6 +6,7 @@ export class UiElements {
 
   // Dashboard section
   public static dashboardPlaceholder = document.getElementById('dashboard-placeholder') as HTMLElement;
+  public static chatDisplay = document.getElementById('chat-display') as HTMLPreElement;
 
   // Account settings section
   public static changePassBtn = document.getElementById('account-settings-password-btn') as HTMLElement;
@@ -29,5 +30,11 @@ export class UiElements {
   // Bot features section
   public static botFeaturesPlaceholder = document.getElementById('bot-features-placeholder') as HTMLElement;
 
-
+  // Sidebar
+  public static sidebar = document.getElementById('sidebar') as HTMLElement;
+  public static toggleButton = document.getElementById('burger-btn') as HTMLElement;
+  public static websiteNavElement = document.getElementById('website-mobile-nav') as HTMLElement;
+  // eslint-disable-next-line no-undef
+  public static appNavButtons = this.sidebar.querySelectorAll('li[id*="app-nav-button"]') as NodeListOf<HTMLElement>;
+  public static logoutBtn = document.getElementById('sidebar-logout-button') as HTMLElement;
 }

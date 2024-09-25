@@ -1,11 +1,14 @@
+var _a;
 export class UiElements {
 }
+_a = UiElements;
 // Control panel
 UiElements.botProfileSelector = document.getElementById('bot-profiles-selector');
 UiElements.runBotButton = document.getElementById('run-bot-btn');
 UiElements.runBotBtnDisabled = document.getElementById('run-bot-btn-disabled');
 // Dashboard section
 UiElements.dashboardPlaceholder = document.getElementById('dashboard-placeholder');
+UiElements.chatDisplay = document.getElementById('chat-display');
 // Account settings section
 UiElements.changePassBtn = document.getElementById('account-settings-password-btn');
 UiElements.changePassInputsDiv = document.getElementById('account-settings-password-inputs');
@@ -25,3 +28,10 @@ UiElements.openAiPrePromptInput = document.getElementById('account-section-opena
 UiElements.saveBotSettingsButton = document.getElementById('bot-settings-save-btn');
 // Bot features section
 UiElements.botFeaturesPlaceholder = document.getElementById('bot-features-placeholder');
+// Sidebar
+UiElements.sidebar = document.getElementById('sidebar');
+UiElements.toggleButton = document.getElementById('burger-btn');
+UiElements.websiteNavElement = document.getElementById('website-mobile-nav');
+// eslint-disable-next-line no-undef
+UiElements.appNavButtons = _a.sidebar.querySelectorAll('li[id*="app-nav-button"]');
+UiElements.logoutBtn = document.getElementById('sidebar-logout-button');

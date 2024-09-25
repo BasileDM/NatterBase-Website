@@ -7,13 +7,11 @@ import { UiElements } from '../Utils/UiElements.js';
 export class Bot {
   public isRunning: boolean;
   private client: tmiTypes.Client | null;
-  private chatDisplay: HTMLPreElement | null;
   private settings: BotSettings;
 
   constructor() {
     this.isRunning = false;
     this.client = null;
-    this.chatDisplay = document.getElementById('chat-display') as HTMLPreElement;
     // This is just to avoid undefined values while waiting for async getSettings method.
     this.settings = {
       twitchToken: '',
@@ -125,10 +123,10 @@ export class Bot {
   }
 
   displayMessage(message: string) {
-    if (this.chatDisplay) {
+    if (UiElements.chatDisplay) {
       const newText = document.createElement('p');
       newText.innerText = message;
-      this.chatDisplay.appendChild(newText);
+      UiElements.chatDisplay.appendChild(newText);
     }
   }
 

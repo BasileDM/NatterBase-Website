@@ -4,7 +4,6 @@ export class Bot {
     constructor() {
         this.isRunning = false;
         this.client = null;
-        this.chatDisplay = document.getElementById('chat-display');
         // This is just to avoid undefined values while waiting for async getSettings method.
         this.settings = {
             twitchToken: '',
@@ -102,10 +101,10 @@ export class Bot {
         return settings;
     }
     displayMessage(message) {
-        if (this.chatDisplay) {
+        if (UiElements.chatDisplay) {
             const newText = document.createElement('p');
             newText.innerText = message;
-            this.chatDisplay.appendChild(newText);
+            UiElements.chatDisplay.appendChild(newText);
         }
     }
     // Method to send a request to OpenAI and get a response
