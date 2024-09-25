@@ -20,7 +20,7 @@ final class CategoryRepository
     $query = 'SELECT * FROM Bot_Feature_Categories';
     $statement = $this->pdo->prepare($query);
     $statement->execute();
-    $featureCategories = $statement->fetchAll(PDO::FETCH_CLASS, 'src\Models\BotFeatureCategory');
+    $featureCategories = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $featureCategories;
   }
 }
