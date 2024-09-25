@@ -10,13 +10,12 @@ export class UiUtils {
         const userData = await RequestHelper.getUserData();
         console.log('Fetched UserData: ', userData);
         const user = userData.user;
-        const featuresData = userData.allFeatures;
         this.updateAccountSection(user);
         this.updateBotsList(userData.botProfiles);
         if (selectedBotIndex != undefined && selectedBotIndex >= 0) {
             currentBot = userData.botProfiles[selectedBotIndex];
             this.updateBotSettingsSection(currentBot);
-            this.updateBotFeaturesSection(currentBot, featuresData);
+            this.updateBotFeaturesSection(currentBot, userData);
             this.updateDashboardSection();
             UiElements.runBotButton.classList.remove('hidden');
             UiElements.runBotBtnDisabled.classList.add('hidden');
@@ -71,8 +70,8 @@ export class UiUtils {
             UiElements.openAiPrePromptInput.value = currentBot.openAiPrePrompt;
         }
     }
-    static updateBotFeaturesSection(currentBot, featuresData) {
-        if (!currentBot || !featuresData) {
+    static updateBotFeaturesSection(currentBot, userData) {
+        if (!currentBot || !userData) {
             UiElements.botFeaturesDisplay.classList.add('hidden');
             UiElements.botFeaturesPlaceholder.classList.remove('hidden');
             return;
@@ -82,20 +81,24 @@ export class UiUtils {
         // Clear existing features
         UiElements.botFeaturesDisplay.innerHTML = '';
         // Get the IDs of features enabled for the current bot
-        const enabledFeatureIds = currentBot.botFeatures.map((feature) => feature.idFeature);
+        console.log('Current bot', currentBot);
+        const enabledFeatureIds = currentBot.botFeatures.map((feature) => feature.idBotFeature);
         // Render features grouped by category
-        featuresData.forEach((category) => {
+        userData.allCategories.forEach((category) => {
             const categoryDiv = document.createElement('div');
             const categoryTitle = document.createElement('h3');
-            categoryTitle.textContent = category.categoryName;
+            categoryTitle.textContent = category.name;
             categoryDiv.appendChild(categoryTitle);
-            category.features.forEach((feature) => {
+            userData.allFeatures.forEach((feature) => {
+                if (feature.idBotFeatureCategory != category.id_bot_feature_category) {
+                    return;
+                }
                 const label = document.createElement('label');
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
                 checkbox.name = 'features';
-                checkbox.value = feature.idFeature.toString();
-                if (enabledFeatureIds.includes(feature.idFeature)) {
+                checkbox.value = feature.idBotFeature.toString();
+                if (enabledFeatureIds.includes(feature.idBotFeature)) {
                     checkbox.checked = true;
                 }
                 label.appendChild(checkbox);

@@ -29,16 +29,16 @@ final class BotFeature
     return $this->idBotFeature;
   }
 
-    /**
-     * Set the value of idBotFeature
-     *
-     * @param   int  $idBotFeature  
-     * 
-     */
-    public function setIdBotFeature(int $idBotFeature)
-    {
-        $this->idBotFeature = $idBotFeature;
-    }
+  /**
+   * Set the value of idBotFeature
+   *
+   * @param   int  $idBotFeature  
+   * 
+   */
+  public function setIdBotFeature(int $idBotFeature)
+  {
+    $this->idBotFeature = $idBotFeature;
+  }
 
   /**
    * Get the value of name
@@ -48,16 +48,16 @@ final class BotFeature
     return $this->name;
   }
 
-    /**
-     * Set the value of name
-     *
-     * @param   string  $name  
-     * 
-     */
-    public function setName(string $name)
-    {
-        $this->name = $name;
-    }
+  /**
+   * Set the value of name
+   *
+   * @param   string  $name  
+   * 
+   */
+  public function setName(string $name)
+  {
+    $this->name = $name;
+  }
 
   /**
    * Get the value of isAdmin
@@ -67,16 +67,16 @@ final class BotFeature
     return $this->isAdmin;
   }
 
-    /**
-     * Set the value of isAdmin
-     *
-     * @param   bool  $isAdmin  
-     * 
-     */
-    public function setIsAdmin(bool $isAdmin)
-    {
-        $this->isAdmin = $isAdmin;
-    }
+  /**
+   * Set the value of isAdmin
+   *
+   * @param   bool  $isAdmin  
+   * 
+   */
+  public function setIsAdmin(bool $isAdmin)
+  {
+    $this->isAdmin = $isAdmin;
+  }
 
   /**
    * Get the value of isSubscriber
@@ -86,33 +86,52 @@ final class BotFeature
     return $this->isSubscriber;
   }
 
-    /**
-     * Set the value of isSubscriber
-     *
-     * @param   bool  $isSubscriber  
-     * 
-     */
-    public function setIsSubscriber(bool $isSubscriber)
-    {
-        $this->isSubscriber = $isSubscriber;
-    }
+  /**
+   * Set the value of isSubscriber
+   *
+   * @param   bool  $isSubscriber  
+   * 
+   */
+  public function setIsSubscriber(bool $isSubscriber)
+  {
+    $this->isSubscriber = $isSubscriber;
+  }
 
   /**
-   * Get the value of category
+   * Get the value of idBotFeatureCategory
    */
-  public function getCategory(): string
+  public function getIdBotFeatureCategory(): int
   {
     return $this->idBotFeatureCategory;
   }
 
-    /**
-     * Set the value of category
-     *
-     * @param   string  $category  
-     * 
-     */
-    public function setCategory(string $category)
-    {
-        $this->idBotFeatureCategory = $category;
-    }
+  /**
+   * Set the value of idBotFeatureCategory
+   *
+   * @param   int  $idBotFeatureCategory  
+   * 
+   */
+  public function setIdBotFeatureCategory(int $idBotFeatureCategory)
+  {
+    $this->idBotFeatureCategory = $idBotFeatureCategory;
+  }
+
+  /**
+   * Get the value of categoryName
+   */
+  public function getCategoryName(): string
+  {
+    return $this->categoryName;
+  }
+
+  /**
+   * Set the value of categoryName
+   *
+   * @param   string  $categoryName  
+   * 
+   */
+  public function setCategoryName(string $categoryName)
+  {
+    $this->categoryName = $categoryName;
+  }
 }
