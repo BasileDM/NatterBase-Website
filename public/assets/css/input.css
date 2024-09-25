@@ -68,4 +68,24 @@
   .invalid-input {
     @apply border-red-500 border-[1px];
   }
+
+  /* Modal classes */
+  .modal {
+    @apply max-h-[80vh] overflow-y-auto border-[1px] border-gray-700 rounded-lg p-6 max-w-lg mx-auto bg-gray-800 text-white shadow-lg
+  }
+  .modal-content {
+    @apply flex flex-col items-center justify-center;
+  }
+  .modal-message {
+    @apply text-lg text-center mb-6;
+  }
+  .modal-buttons {
+    @apply flex space-x-4;
+  }
+  .confirm-button {
+    @apply bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition duration-200;
+  }
+  .cancel-button {
+    @apply bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded transition duration-200;
+  }
 }

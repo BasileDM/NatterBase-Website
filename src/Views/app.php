@@ -112,5 +112,6 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 </section>
 
 <?php
+include __DIR__ . '/Includes/Components/Modals/confirmationModal.html';
 include __DIR__ . '/Includes/footer.html';
 ?>

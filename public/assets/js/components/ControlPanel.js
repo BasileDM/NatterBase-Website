@@ -5,6 +5,7 @@ import { UiUtils } from '../Utils/UiUtils.js';
 import { FormModal } from './Modals/FormModal.js';
 import { Toast } from './Toast.js';
 import { UiElements } from '../Utils/UiElements.js';
+import { ConfirmationModal } from './Modals/ConfirmationModal.js';
 export class ControlPanel {
     constructor() {
         new FormModal('create-bot-profile-modal', ['create-bot-profile-btn'], 'create-bot-profile-form');
@@ -12,6 +13,7 @@ export class ControlPanel {
         this.bindEvents();
         UiElements.twitchTokenInput.value = sessionStorage.getItem('natterbaseTwitchToken') || '';
         UiElements.openAiKeyInput.value = sessionStorage.getItem('natterbaseOpenAiKey') || '';
+        this.confirmationModal = new ConfirmationModal('confirmation-modal');
     }
     bindEvents() {
         // Bot profile selector
@@ -68,7 +70,8 @@ export class ControlPanel {
         const formData = new FormData(UiElements.botSettingsForm);
         const formObject = Object.fromEntries(formData.entries());
         try {
-            const response = await RequestHelper.post('/updateBotProfile?idBot=' + UiElements.botProfileSelector.value, formObject);
+            const botId = UiElements.botProfileSelector.value;
+            const response = await RequestHelper.post(`/updateBotProfile?idBot=${botId}`, formObject);
             const jsonResponseBody = await RequestHelper.handleResponse(response);
             if (!jsonResponseBody) {
                 return;
@@ -88,19 +91,22 @@ export class ControlPanel {
         }
     }
     async deleteBotProfile() {
-        try {
-            const response = await RequestHelper.delete('/deleteBotProfile?idBot=' + UiElements.botProfileSelector.value);
-            const jsonResponseBody = await RequestHelper.handleResponse(response);
-            if (!jsonResponseBody) {
-                return;
+        this.confirmationModal.open('Are you sure you want to delete this bot profile?', async () => {
+            try {
+                const botId = UiElements.botProfileSelector.value;
+                const response = await RequestHelper.delete(`/deleteBotProfile?idBot=${botId}`);
+                const jsonResponseBody = await RequestHelper.handleResponse(response);
+                if (!jsonResponseBody) {
+                    return;
+                }
+                new Toast('success', jsonResponseBody.message);
+                UiUtils.updateInterface();
             }
-            new Toast('success', jsonResponseBody.message);
-            UiUtils.updateInterface();
-        }
-        catch (error) {
-            console.error('Unexpected error: ', error);
-            new Toast('error', 'Failed sending request. Try again later.');
-        }
+            catch (error) {
+                console.error('Unexpected error: ', error);
+                new Toast('error', 'Failed sending request. Try again later.');
+            }
+        });
     }
     async submitAccountSettings() {
         const formData = new FormData(UiElements.accountSettingsForm);
@@ -124,19 +130,21 @@ export class ControlPanel {
         }
     }
     async deleteAccount() {
-        try {
-            const response = await RequestHelper.delete('/api/deleteUser');
-            const jsonResponseBody = await RequestHelper.handleResponse(response);
-            if (!jsonResponseBody) {
-                return;
+        this.confirmationModal.open('This is permanent! Are you sure you want to delete your account?', async () => {
+            try {
+                const response = await RequestHelper.delete('/api/deleteUser');
+                const jsonResponseBody = await RequestHelper.handleResponse(response);
+                if (!jsonResponseBody) {
+                    return;
+                }
+                new Toast('success', jsonResponseBody.message);
+                sessionStorage.clear();
+                window.location.href = '/logout';
             }
-            new Toast('success', jsonResponseBody.message);
-            sessionStorage.clear();
-            window.location.href = '/logout';
-        }
-        catch (error) {
-            console.error('Unexpected error: ', error);
-            new Toast('error', 'Failed sending request. Try again later.');
-        }
+            catch (error) {
+                console.error('Unexpected error: ', error);
+                new Toast('error', 'Failed sending request. Try again later.');
+            }
+        });
     }
 }
