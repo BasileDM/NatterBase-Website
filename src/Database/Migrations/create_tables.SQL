@@ -51,7 +51,7 @@ CREATE TABLE Bots(
   PRIMARY KEY(id_bot),
   FOREIGN KEY(id_model) REFERENCES Bot_Language_Models(id_model),
   FOREIGN KEY(id_platform) REFERENCES Bot_Platforms(id_platform),
-  FOREIGN KEY(id_user) REFERENCES Users(id_user)
+  FOREIGN KEY(id_user) REFERENCES Users(id_user) ON DELETE CASCADE
 );
 CREATE TABLE Bot_Features(
   id_bot_feature INT AUTO_INCREMENT,
@@ -69,7 +69,7 @@ CREATE TABLE Bot_Commands(
   text VARCHAR(255) NOT NULL,
   id_bot INT NOT NULL,
   PRIMARY KEY(id_bot_command),
-  FOREIGN KEY(id_bot) REFERENCES Bots(id_bot)
+  FOREIGN KEY(id_bot) REFERENCES Bots(id_bot) ON DELETE CASCADE
 );
 CREATE TABLE Relation_Bots_Features(
   id_bot INT,
@@ -77,7 +77,7 @@ CREATE TABLE Relation_Bots_Features(
   is_admin_override BOOLEAN,
   is_subscriber_override BOOLEAN,
   PRIMARY KEY(id_bot, id_bot_feature),
-  FOREIGN KEY(id_bot) REFERENCES Bots(id_bot),
+  FOREIGN KEY(id_bot) REFERENCES Bots(id_bot) ON DELETE CASCADE,
   FOREIGN KEY(id_bot_feature) REFERENCES Bot_Features(id_bot_feature)
 );
 

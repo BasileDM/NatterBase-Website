@@ -19,9 +19,6 @@ final class BotRepository
 
   public function insert(Bot $botProfile): Bot
   {
-    echo '<pre>';
-    print_r($botProfile);
-    echo '</pre>';
     try {
       $query = 'INSERT INTO Bots (name, creation_date, cooldown_time, max_openai_message_length, id_model, id_platform, id_user) 
               VALUES (:name, :creationDate, :cooldownTime, :maxOpenaiMessageLength, :idModel, :idPlatform, :idUser)';

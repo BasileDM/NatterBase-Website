@@ -40,7 +40,6 @@ final class ApiBotController
         $this->jsonResponse(200, ['message' => 'Bot profile created successfully']);
       }
     } catch (Exception $e) {
-      echo $e->getMessage();
       $this->jsonResponse(500, ['message' => "Backend error"]);
     }
   }
