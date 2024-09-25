@@ -15,6 +15,7 @@ export class UiElements {
   public static twitchTokenInput = document.getElementById('account-section-twitchToken') as HTMLInputElement;
   public static openAiKeyInput = document.getElementById('account-section-openAiKey') as HTMLInputElement;
   public static saveAccountSettingsButton = document.getElementById('account-settings-save-btn') as HTMLElement;
+  public static deleteAccountButton = document.getElementById('account-settings-delete-btn') as HTMLElement;
 
   // Bot settings section
   public static botSettingsForm = document.getElementById('bot-settings-form') as HTMLFormElement;

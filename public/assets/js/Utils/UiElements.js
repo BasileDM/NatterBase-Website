@@ -16,6 +16,7 @@ UiElements.accountSettingsForm = document.getElementById('account-settings-form'
 UiElements.twitchTokenInput = document.getElementById('account-section-twitchToken');
 UiElements.openAiKeyInput = document.getElementById('account-section-openAiKey');
 UiElements.saveAccountSettingsButton = document.getElementById('account-settings-save-btn');
+UiElements.deleteAccountButton = document.getElementById('account-settings-delete-btn');
 // Bot settings section
 UiElements.botSettingsForm = document.getElementById('bot-settings-form');
 UiElements.botSettingsPlaceholder = document.getElementById('bot-settings-placeholder');

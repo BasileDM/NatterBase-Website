@@ -92,7 +92,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
     </div> -->
     <div class="flex gap-2">
       <span id="account-settings-save-btn" class="btn btn-success">Save</span>
-      <span class="btn btn-alert">Delete account</span>
+      <span id="account-settings-delete-btn" class="btn btn-alert">Delete account</span>
     </div>
   </form>
 </section>

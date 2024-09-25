@@ -36,7 +36,7 @@ export class ControlPanel {
         });
         // Save bot settings button
         UiElements.saveBotSettingsButton.addEventListener('click', async () => {
-            this.submitBotSetting();
+            this.submitBotSettings();
         });
         // Delete bot profile button
         UiElements.deleteBotProfileButton.addEventListener('click', async () => {
@@ -53,14 +53,18 @@ export class ControlPanel {
         });
         // Save account settings button
         UiElements.saveAccountSettingsButton.addEventListener('click', async () => {
-            this.submitAccountSetting();
+            this.submitAccountSettings();
+        });
+        // Delete account button
+        UiElements.deleteAccountButton.addEventListener('click', async () => {
+            this.deleteAccount();
         });
         // Change password button
         UiElements.changePassBtn.addEventListener('click', async () => {
             UiUtils.displayAccountPassInputs();
         });
     }
-    async submitBotSetting() {
+    async submitBotSettings() {
         const formData = new FormData(UiElements.botSettingsForm);
         const formObject = Object.fromEntries(formData.entries());
         try {
@@ -98,7 +102,7 @@ export class ControlPanel {
             new Toast('error', 'Failed sending request. Try again later.');
         }
     }
-    async submitAccountSetting() {
+    async submitAccountSettings() {
         const formData = new FormData(UiElements.accountSettingsForm);
         const formObject = Object.fromEntries(formData.entries());
         try {
@@ -112,6 +116,21 @@ export class ControlPanel {
                 return;
             }
             new Toast('success', 'Account settings updated!');
+            UiUtils.updateInterface();
+        }
+        catch (error) {
+            console.error('Unexpected error: ', error);
+            new Toast('error', 'Failed sending request. Try again later.');
+        }
+    }
+    async deleteAccount() {
+        try {
+            const response = await RequestHelper.delete('/api/deleteUser');
+            const jsonResponseBody = await RequestHelper.handleResponse(response);
+            if (!jsonResponseBody) {
+                return;
+            }
+            new Toast('success', jsonResponseBody.message);
             UiUtils.updateInterface();
         }
         catch (error) {
