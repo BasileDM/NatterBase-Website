@@ -27,8 +27,15 @@ export class AbstractModal {
     }
     open() {
         this.modalElement.showModal();
+        this.modalElement.classList.remove('closing');
     }
     close() {
-        this.modalElement.close();
+        this.modalElement.classList.add('closing');
+        const handleAnimationEnd = () => {
+            this.modalElement.close();
+            this.modalElement.classList.remove('closing');
+            this.modalElement.removeEventListener('animationend', handleAnimationEnd);
+        };
+        this.modalElement.addEventListener('animationend', handleAnimationEnd);
     }
 }

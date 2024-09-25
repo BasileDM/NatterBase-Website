@@ -797,6 +797,38 @@ p {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+@keyframes modal-open {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal[open] {
+  animation: modal-open 0.3s ease-out forwards;
+}
+
+@keyframes modal-close {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+}
+
+.modal.closing {
+  animation: modal-close 0.3s ease-in forwards;
+}
+
 .modal-content {
   display: flex;
   flex-direction: column;
@@ -867,6 +899,11 @@ p {
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
 }
 
+.modal::backdrop {
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.5;
+}
+
 .static {
   position: static;
 }
@@ -932,10 +969,6 @@ p {
   height: 100vh;
 }
 
-.h-12 {
-  height: 3rem;
-}
-
 .max-h-\[80vh\] {
   max-height: 80vh;
 }
@@ -958,10 +991,6 @@ p {
 
 .w-full {
   width: 100%;
-}
-
-.w-12 {
-  width: 3rem;
 }
 
 .max-w-40 {
@@ -1235,11 +1264,6 @@ p {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-.text-red-600 {
-  --tw-text-opacity: 1;
-  color: rgb(220 38 38 / var(--tw-text-opacity));
 }
 
 .shadow {
