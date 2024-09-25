@@ -125,7 +125,14 @@ export class UiUtils {
     FormValidator.removeFormErrors('account-settings-form');
   }
 
-  private static resetPlaceholders() {
+  public static hideSections() {
+    console.log('Hide sections...');
+  }
+
+  public static resetPlaceholders() {
     console.log('Resetting placeholders...');
+    UiElements.dashboardPlaceholder.classList.remove('hidden');
+    UiElements.botSettingsPlaceholder.classList.remove('hidden');
+    UiElements.botFeaturesPlaceholder.classList.remove('hidden');
   }
 }

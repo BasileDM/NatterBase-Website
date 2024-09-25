@@ -3,14 +3,14 @@ include __DIR__ . '/Includes/header.php';
 include __DIR__ . '/Includes/Components/controlPanel.php';
 ?>
 
+<!-- Chat / Dashboard -->
 <section id="app-dashboard">
   <h2>Dashboard</h2>
   <p>Welcome, <?= $view_userData["user"]["username"] ?>. <span id="dashboard-placeholder">Please select a bot.</span></p>
-  <pre id="chat-display">
-
-  </pre>
+  <pre id="chat-display"></pre>
 </section>
 
+<!-- Bot settings -->
 <section id="app-bot-settings" class="hidden">
   <h2>Bot settings</h2>
   <p id="bot-settings-placeholder">Please select a bot.</p>
@@ -47,11 +47,13 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
   </form>
 </section>
 
+<!-- Bot features -->
 <section id="app-bot-features" class="hidden">
   <h2>Bot Features</h2>
   <p id="bot-features-placeholder">Please select a bot.</p>
 </section>
 
+<!-- Account settings -->
 <section id="app-account" class="hidden">
   <h2>Account settings</h2>
   <form action="" class="space-y-4" id="account-settings-form">
@@ -67,7 +69,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
         value="<?= htmlspecialchars($view_userData["user"]["mail"] ?? '') ?>" disabled>
     </div>
     <div>
-      <span id="account-settings-password-btn" class="btn btn-alert">Change password</span> 
+      <span id="account-settings-password-btn" class="btn btn-alert">Change password</span>
     </div>
     <div id="account-settings-password-inputs" class="hidden">
       <label class="block text-sm font-medium" for="account-section-password">New password</label>
@@ -77,19 +79,6 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <input class="input" type="password" name="confirmPassword" id="account-section-password-confirm" disabled>
       <div id="account-section-password-confirm-error-display" class="text-red-500"></div>
     </div>
-    <!-- <div>
-      <label class="block text-sm font-medium" for="twitchUsername">Twitch account</label>
-      <?php if (isset($view_userData["user"]["twitchUsername"])) : ?>
-        <input class="input" type="text" name="twitchUsername" id="account-section-twitchUsername"
-          value="<?= htmlspecialchars($view_userData["user"]["twitchUsername"] ?? '') ?>" readonly>
-      <?php else : ?>
-        <a
-          class="btn bg-purple-600 text-white hover:bg-purple-700" id="twitch-login-btn"
-          href="/api/twitchAuth">
-          Link Twitch
-        </a>
-      <?php endif; ?>
-    </div> -->
     <div class="flex gap-2">
       <span id="account-settings-save-btn" class="btn btn-success">Save</span>
       <span id="account-settings-delete-btn" class="btn btn-alert">Delete account</span>
@@ -97,6 +86,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
   </form>
 </section>
 
+<!-- Local keys -->
 <section id="app-keys" class="hidden">
   <div class="mt-4 space-y-4">
     <h2>Local keys</h2>

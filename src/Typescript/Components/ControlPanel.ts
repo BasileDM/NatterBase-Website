@@ -120,6 +120,15 @@ export class ControlPanel {
         }
 
         new Toast('success', jsonResponseBody.message);
+
+        console.log(UiElements.botProfileSelector.options.length);
+        const newOptionLength = UiElements.botProfileSelector.options.length - 1;
+        if (newOptionLength <= 1) {
+          UiElements.botProfileSelector.selectedIndex = 1;
+          console.log('No bot profiles found. Selecting first option.');
+          UiUtils.resetPlaceholders();
+          UiElements.botProfileSelector.dispatchEvent(new Event('change'));
+        }
         UiUtils.updateInterface();
       }
       catch (error) {
