@@ -9,8 +9,6 @@ export class ControlPanel {
     constructor() {
         new AbstractFormModal('create-bot-profile-modal', ['create-bot-profile-btn'], 'create-bot-profile-form');
         this.bot = null;
-        this.saveBotSettingsButton = document.getElementById('bot-settings-save-btn');
-        this.saveAccountSettingsButton = document.getElementById('account-settings-save-btn');
         this.bindEvents();
         UiElements.twitchTokenInput.value = sessionStorage.getItem('natterbaseTwitchToken') || '';
         UiElements.openAiKeyInput.value = sessionStorage.getItem('natterbaseOpenAiKey') || '';
@@ -37,7 +35,7 @@ export class ControlPanel {
             }
         });
         // Save bot settings button
-        this.saveBotSettingsButton.addEventListener('click', async () => {
+        UiElements.saveBotSettingsButton.addEventListener('click', async () => {
             this.submitBotSetting();
         });
         // Local keys
@@ -50,7 +48,7 @@ export class ControlPanel {
             console.log('OpenAI key changed:', UiElements.openAiKeyInput.value);
         });
         // Save account settings button
-        this.saveAccountSettingsButton.addEventListener('click', async () => {
+        UiElements.saveAccountSettingsButton.addEventListener('click', async () => {
             this.submitAccountSetting();
         });
         // Change password button

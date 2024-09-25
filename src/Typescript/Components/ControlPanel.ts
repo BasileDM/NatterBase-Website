@@ -8,8 +8,6 @@ import { UiElements } from '../Utils/UiElements.js';
 
 export class ControlPanel {
   private bot: Bot | null;
-  private saveBotSettingsButton: HTMLElement;
-  private saveAccountSettingsButton: HTMLElement;
 
   constructor() {
     new AbstractFormModal(
@@ -18,8 +16,6 @@ export class ControlPanel {
       'create-bot-profile-form',
     );
     this.bot = null;
-    this.saveBotSettingsButton = document.getElementById('bot-settings-save-btn') as HTMLElement;
-    this.saveAccountSettingsButton = document.getElementById('account-settings-save-btn') as HTMLElement;
     this.bindEvents();
 
     UiElements.twitchTokenInput.value = sessionStorage.getItem('natterbaseTwitchToken') || '';
@@ -50,7 +46,7 @@ export class ControlPanel {
     });
 
     // Save bot settings button
-    this.saveBotSettingsButton.addEventListener('click', async () => {
+    UiElements.saveBotSettingsButton.addEventListener('click', async () => {
       this.submitBotSetting();
     });
 
@@ -65,7 +61,7 @@ export class ControlPanel {
     });
 
     // Save account settings button
-    this.saveAccountSettingsButton.addEventListener('click', async () => {
+    UiElements.saveAccountSettingsButton.addEventListener('click', async () => {
       this.submitAccountSetting();
     });
 
