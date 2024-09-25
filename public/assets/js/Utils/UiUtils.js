@@ -89,7 +89,7 @@ export class UiUtils {
         }
     }
     static updateAccountSection(user) {
-        // console.log('Updating account section...', user);
+        console.log('Updating account section...', user);
     }
     static updateBotsList(bots) {
         if (UiElements.botProfileSelector) {

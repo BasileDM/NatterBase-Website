@@ -108,7 +108,7 @@ export class UiUtils {
   }
 
   private static updateAccountSection(user: any) {
-    // console.log('Updating account section...', user);
+    console.log('Updating account section...', user);
   }
 
   private static updateBotsList(bots: any) {
