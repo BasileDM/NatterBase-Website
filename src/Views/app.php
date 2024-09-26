@@ -52,7 +52,18 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
   <h2>Bot Features</h2>
   <p id="bot-features-placeholder">Please select a bot.</p>
   <div id="bot-features-display"></div>
+
+  <!-- Feature Card Template -->
+  <template id="feature-card-template">
+    <div class="feature-card">
+      <input type="text" name="trigger" placeholder="Enter trigger" />
+      <select name="feature-select"></select>
+      <div class="feature-fields"></div>
+    </div>
+  </template>
 </section>
+
+
 
 <!-- Account settings -->
 <section id="app-account" class="hidden">

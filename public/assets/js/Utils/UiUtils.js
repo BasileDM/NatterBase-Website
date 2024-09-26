@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ConversionUtils } from './ConversionUtils.js';
 import { FormValidator } from './FormValidator.js';
@@ -8,6 +9,7 @@ export class UiUtils {
         const selectedBotIndex = Number(UiElements.botProfileSelector.selectedIndex) - 1;
         let currentBot = null;
         const userData = await RequestHelper.getUserData();
+        UiUtils.userData = userData;
         console.log('Fetched UserData: ', userData);
         const user = userData.user;
         this.updateAccountSection(user);
@@ -80,34 +82,22 @@ export class UiUtils {
         UiElements.botFeaturesPlaceholder.classList.add('hidden');
         // Clear existing features
         UiElements.botFeaturesDisplay.innerHTML = '';
-        // Get the IDs of features enabled for the current bot
-        console.log('Current bot', currentBot);
-        const enabledFeatureIds = currentBot.botFeatures.map((feature) => feature.idBotFeature);
-        // Render features grouped by category
-        userData.allCategories.forEach((category) => {
-            const categoryDiv = document.createElement('div');
-            const categoryTitle = document.createElement('h3');
-            categoryTitle.textContent = category.name;
-            categoryDiv.appendChild(categoryTitle);
-            userData.allFeatures.forEach((feature) => {
-                if (feature.idBotFeatureCategory != category.id_bot_feature_category) {
-                    return;
-                }
-                const label = document.createElement('label');
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.name = 'features';
-                checkbox.value = feature.idBotFeature.toString();
-                if (enabledFeatureIds.includes(feature.idBotFeature)) {
-                    checkbox.checked = true;
-                }
-                label.appendChild(checkbox);
-                label.appendChild(document.createTextNode(` ${feature.name}`));
-                categoryDiv.appendChild(label);
-                categoryDiv.appendChild(document.createElement('br'));
+        // If there are existing features for the current bot, create feature cards for them
+        if (currentBot.botFeatures && currentBot.botFeatures.length > 0) {
+            currentBot.botFeatures.forEach((botFeature) => {
+                UiUtils.createFeatureCard(botFeature);
             });
-            UiElements.botFeaturesDisplay.appendChild(categoryDiv);
-        });
+        }
+        // Add the 'Add New Feature' button if it doesn't already exist
+        if (!document.getElementById('add-feature-button')) {
+            const addFeatureButton = document.createElement('button');
+            addFeatureButton.id = 'add-feature-button';
+            addFeatureButton.textContent = 'Add New Feature';
+            addFeatureButton.addEventListener('click', () => {
+                UiUtils.addNewFeatureCard();
+            });
+            UiElements.botFeaturesDisplay.appendChild(addFeatureButton);
+        }
     }
     static updateAccountSection(user) {
         console.log('Updating account section...', user);
@@ -163,5 +153,112 @@ export class UiUtils {
         if (UiElements.botFeaturesPlaceholder) {
             UiElements.botFeaturesPlaceholder.classList.remove('hidden');
         }
+    }
+    /**
+     *
+     * Bot features methods
+     *
+     */
+    static createFeatureCard(botFeature) {
+        const template = document.getElementById('feature-card-template');
+        const clone = document.importNode(template.content, true);
+        const featureCard = clone.querySelector('.feature-card');
+        // Set the 'trigger' input value
+        const triggerInput = featureCard.querySelector('input[name="trigger"]');
+        triggerInput.value = botFeature.trigger;
+        // Populate the 'feature-select' dropdown
+        const selectElement = featureCard.querySelector('select[name="feature-select"]');
+        UiUtils.populateFeatureSelect(selectElement);
+        // Set the selected value
+        selectElement.value = botFeature.idBotFeature.toString();
+        // Add event listener for feature selection
+        selectElement.addEventListener('change', (event) => {
+            const selectedFeatureId = event.target.value;
+            UiUtils.updateFeatureFields(featureCard, selectedFeatureId);
+        });
+        // Populate the feature-specific fields
+        UiUtils.updateFeatureFields(featureCard, botFeature.idBotFeature.toString());
+        // Set the values of the feature-specific fields
+        const featureFieldsContainer = featureCard.querySelector('.feature-fields');
+        const inputs = featureFieldsContainer.querySelectorAll('input, select, textarea');
+        inputs.forEach((input) => {
+            const fieldName = input.name;
+            input.value = botFeature[fieldName] || '';
+        });
+        // Append the feature card to 'bot-features-display'
+        UiElements.botFeaturesDisplay.appendChild(featureCard);
+    }
+    static addNewFeatureCard() {
+        const template = document.getElementById('feature-card-template');
+        const clone = document.importNode(template.content, true);
+        const featureCard = clone.querySelector('.feature-card');
+        // Populate the feature selection dropdown
+        const selectElement = featureCard.querySelector('select[name="feature-select"]');
+        UiUtils.populateFeatureSelect(selectElement);
+        // Add event listener for feature selection
+        selectElement.addEventListener('change', (event) => {
+            const selectedFeatureId = event.target.value;
+            UiUtils.updateFeatureFields(featureCard, selectedFeatureId);
+        });
+        // Append the feature card to 'bot-features-display'
+        const display = document.getElementById('bot-features-display');
+        display.appendChild(featureCard);
+    }
+    static populateFeatureSelect(selectElement) {
+        // Clear existing options
+        selectElement.innerHTML = '';
+        // Create options and options groups for each feature
+        UiUtils.userData.allCategories.forEach((category) => {
+            const optgroup = document.createElement('optgroup');
+            optgroup.label = category.name;
+            UiUtils.userData.allFeatures
+                .filter((feature) => feature.idBotFeatureCategory === category.id_bot_feature_category)
+                .forEach((feature) => {
+                const option = document.createElement('option');
+                option.value = feature.idBotFeature.toString();
+                option.textContent = feature.name;
+                optgroup.appendChild(option);
+            });
+            selectElement.appendChild(optgroup);
+        });
+    }
+    static updateFeatureFields(featureCard, featureId) {
+        const featureFieldsContainer = featureCard.querySelector('.feature-fields');
+        // Clear existing fields
+        featureFieldsContainer.innerHTML = '';
+        // Get the relevant fields for the selected feature
+        const featureFields = UiUtils.getFeatureFields(featureId);
+        // For each field, create an input element
+        featureFields.forEach((field) => {
+            const label = document.createElement('label');
+            label.textContent = field.label;
+            let input;
+            if (field.type === 'select') {
+                input = document.createElement('select');
+                field.options.forEach((optionValue) => {
+                    const option = document.createElement('option');
+                    option.value = optionValue;
+                    option.textContent = optionValue;
+                    input.appendChild(option);
+                });
+            }
+            else {
+                input = document.createElement('input');
+                input.type = field.type || 'text';
+            }
+            input.setAttribute('name', field.name);
+            label.appendChild(input);
+            featureFieldsContainer.appendChild(label);
+            featureFieldsContainer.appendChild(document.createElement('br'));
+        });
+    }
+    static getFeatureFields(featureId) {
+        // Define the fields relevant to each feature ID
+        const featureFieldsMapping = {
+            '1': [
+                { name: 'dice_sides_number', label: 'Number of sides on the dice', type: 'number' },
+            ],
+        };
+        return featureFieldsMapping[featureId] || [];
     }
 }
