@@ -116,6 +116,7 @@ export class UiUtils {
       const addFeatureButton = document.createElement('button');
       addFeatureButton.id = 'add-feature-button';
       addFeatureButton.textContent = 'Add New Feature';
+      addFeatureButton.type = 'button';
       addFeatureButton.addEventListener('click', () => {
         UiUtils.addNewFeatureCard();
       });
@@ -214,10 +215,16 @@ export class UiUtils {
       selectElement.value = botFeature.idBotFeature.toString();
     }
 
-    // Add event listener for feature selection
+    // Event listener for feature selection
     selectElement.addEventListener('change', (event) => {
       const selectedFeatureId = (event.target as HTMLSelectElement).value;
       UiUtils.updateFeatureFields(featureCard, selectedFeatureId);
+    });
+
+    // Event listener for the 'remove feature' button
+    const removeFeatureButton = featureCard.querySelector('.remove-feature-button') as HTMLButtonElement;
+    removeFeatureButton.addEventListener('click', () => {
+      featureCard.remove();
     });
 
     // Populate the feature-specific fields

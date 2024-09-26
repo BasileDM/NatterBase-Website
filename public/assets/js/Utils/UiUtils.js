@@ -92,6 +92,7 @@ export class UiUtils {
             const addFeatureButton = document.createElement('button');
             addFeatureButton.id = 'add-feature-button';
             addFeatureButton.textContent = 'Add New Feature';
+            addFeatureButton.type = 'button';
             addFeatureButton.addEventListener('click', () => {
                 UiUtils.addNewFeatureCard();
             });
@@ -175,10 +176,15 @@ export class UiUtils {
         if (botFeature) {
             selectElement.value = botFeature.idBotFeature.toString();
         }
-        // Add event listener for feature selection
+        // Event listener for feature selection
         selectElement.addEventListener('change', (event) => {
             const selectedFeatureId = event.target.value;
             UiUtils.updateFeatureFields(featureCard, selectedFeatureId);
+        });
+        // Event listener for the 'remove feature' button
+        const removeFeatureButton = featureCard.querySelector('.remove-feature-button');
+        removeFeatureButton.addEventListener('click', () => {
+            featureCard.remove();
         });
         // Populate the feature-specific fields
         UiUtils.updateFeatureFields(featureCard, selectElement.value);
