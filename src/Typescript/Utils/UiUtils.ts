@@ -1,9 +1,9 @@
-/* eslint-disable no-undef */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ConversionUtils } from './ConversionUtils.js';
 import { FormValidator } from './FormValidator.js';
 import { RequestHelper } from './RequestHelper.js';
 import { UiElements } from './UiElements.js';
+import { FeatureField } from '../Interfaces/FeatureField.js';
 
 export class UiUtils {
   private static userData: any;
@@ -106,8 +106,8 @@ export class UiUtils {
 
     // If there are existing features for the current bot, create feature cards for them
     if (currentBot.botFeatures && currentBot.botFeatures.length > 0) {
-      currentBot.botFeatures.forEach((botFeature: any) => {
-        UiUtils.createFeatureCard(botFeature);
+      currentBot.botFeatures.forEach((botFeature: any, index: number) => {
+        UiUtils.createFeatureCard(botFeature, index);
       });
     }
 
@@ -193,21 +193,26 @@ export class UiUtils {
    * Bot features methods
    *
    */
-  private static createFeatureCard(botFeature: any): void {
+  private static createFeatureCard(botFeature: any, index: number): void {
     const template = document.getElementById('feature-card-template') as HTMLTemplateElement;
     const clone = document.importNode(template.content, true);
     const featureCard = clone.querySelector('.feature-card') as HTMLElement;
+    featureCard.setAttribute('data-index', index.toString());
 
     // Set the 'trigger' input value
     const triggerInput = featureCard.querySelector('input[name="trigger"]') as HTMLInputElement;
-    triggerInput.value = botFeature.trigger;
+    triggerInput.name = `features[${index}][trigger]`;
+    triggerInput.value = botFeature ? botFeature.trigger : '';
 
     // Populate the 'feature-select' dropdown
     const selectElement = featureCard.querySelector('select[name="feature-select"]') as HTMLSelectElement;
+    selectElement.name = `features[${index}][idBotFeature]`;
     UiUtils.populateFeatureSelect(selectElement);
 
     // Set the selected value
-    selectElement.value = botFeature.idBotFeature.toString();
+    if (botFeature) {
+      selectElement.value = botFeature.idBotFeature.toString();
+    }
 
     // Add event listener for feature selection
     selectElement.addEventListener('change', (event) => {
@@ -216,39 +221,31 @@ export class UiUtils {
     });
 
     // Populate the feature-specific fields
-    UiUtils.updateFeatureFields(featureCard, botFeature.idBotFeature.toString());
+    UiUtils.updateFeatureFields(featureCard, selectElement.value);
 
     // Set the values of the feature-specific fields
-    const featureFieldsContainer = featureCard.querySelector('.feature-fields')!;
-    const inputs = featureFieldsContainer.querySelectorAll('input, select, textarea') as NodeListOf<HTMLInputElement>;
-    inputs.forEach((input: HTMLInputElement) => {
-      const fieldName = input.name;
-      input.value = botFeature[fieldName] || '';
-    });
+    if (botFeature) {
+      const featureFieldsContainer = featureCard.querySelector('.feature-fields')!;
+      const inputs = featureFieldsContainer.querySelectorAll('input, select, textarea');
+      inputs.forEach((inputElement) => {
+        if (inputElement instanceof HTMLInputElement || inputElement instanceof HTMLSelectElement || inputElement instanceof HTMLTextAreaElement) {
+          const fieldName = inputElement.getAttribute('data-field-name')!;
+          inputElement.name = `features[${index}][${fieldName}]`;
+          inputElement.value = botFeature[fieldName] || '';
+        }
+      });
+    }
 
     // Append the feature card to 'bot-features-display'
     UiElements.botFeaturesDisplay.appendChild(featureCard);
   }
 
+
   static addNewFeatureCard(): void {
-    const template = document.getElementById('feature-card-template') as HTMLTemplateElement;
-    const clone = document.importNode(template.content, true);
-    const featureCard = clone.querySelector('.feature-card') as HTMLElement;
-
-    // Populate the feature selection dropdown
-    const selectElement = featureCard.querySelector('select[name="feature-select"]') as HTMLSelectElement;
-    UiUtils.populateFeatureSelect(selectElement);
-
-    // Add event listener for feature selection
-    selectElement.addEventListener('change', (event) => {
-      const selectedFeatureId = (event.target as HTMLSelectElement).value;
-      UiUtils.updateFeatureFields(featureCard, selectedFeatureId);
-    });
-
-    // Append the feature card to 'bot-features-display'
-    const display = document.getElementById('bot-features-display')!;
-    display.appendChild(featureCard);
+    const index = UiElements.botFeaturesDisplay.querySelectorAll('.feature-card').length;
+    UiUtils.createFeatureCard(null, index);
   }
+
 
   static populateFeatureSelect(selectElement: HTMLSelectElement): void {
     // Clear existing options
@@ -279,32 +276,50 @@ export class UiUtils {
     featureFieldsContainer.innerHTML = '';
 
     // Get the relevant fields for the selected feature
-    const featureFields = UiUtils.getFeatureFields(featureId);
+    const featureFields: FeatureField[] = UiUtils.getFeatureFields(featureId);
 
-    // For each field, create an input element
-    featureFields.forEach((field: any) => {
+    const index = featureCard.getAttribute('data-index');
+
+    if (!featureFields || featureFields.length === 0) {
+      // No additional fields for this feature
+      return;
+    }
+
+    // For each field, create an input element with styling
+    featureFields.forEach((field) => {
+      const fieldWrapper = document.createElement('div');
+      fieldWrapper.classList.add('mb-2');
+
       const label = document.createElement('label');
       label.textContent = field.label;
+      label.classList.add('block', 'text-sm', 'font-medium', 'mb-1');
 
-      let input: HTMLElement;
+      let input: HTMLInputElement | HTMLSelectElement;
       if (field.type === 'select') {
         input = document.createElement('select');
-        field.options.forEach((optionValue: string) => {
-          const option = document.createElement('option');
-          option.value = optionValue;
-          option.textContent = optionValue;
-          (input as HTMLSelectElement).appendChild(option);
-        });
+        input.classList.add('w-full', 'p-2', 'bg-gray-700', 'text-white', 'rounded');
+        if (field.options && field.options.length > 0) {
+          field.options.forEach((optionValue: string) => {
+            const option = document.createElement('option');
+            option.value = optionValue;
+            option.textContent = optionValue;
+            input.appendChild(option);
+          });
+        }
       }
       else {
         input = document.createElement('input');
-        (input as HTMLInputElement).type = field.type || 'text';
+        input.type = field.type || 'text';
+        input.classList.add('w-full', 'p-2', 'bg-gray-700', 'text-white', 'rounded');
       }
-      input.setAttribute('name', field.name);
 
-      label.appendChild(input);
-      featureFieldsContainer.appendChild(label);
-      featureFieldsContainer.appendChild(document.createElement('br'));
+      const inputName = `features[${index}][${field.name}]`;
+      input.setAttribute('name', inputName);
+      input.setAttribute('data-field-name', field.name);
+
+      fieldWrapper.appendChild(label);
+      fieldWrapper.appendChild(input);
+      featureFieldsContainer.appendChild(fieldWrapper);
     });
   }
 
@@ -318,5 +333,4 @@ export class UiUtils {
     };
     return featureFieldsMapping[featureId] || [];
   }
-
 }

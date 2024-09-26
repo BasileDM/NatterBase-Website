@@ -51,16 +51,31 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 <section id="app-bot-features" class="hidden">
   <h2>Bot Features</h2>
   <p id="bot-features-placeholder">Please select a bot.</p>
-  <div id="bot-features-display"></div>
+
+  <form id="bot-features-form">
+    <div id="bot-features-display"></div>
+    <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Save Features
+    </button>
+  </form>
 
   <!-- Feature Card Template -->
   <template id="feature-card-template">
-    <div class="feature-card">
-      <input type="text" name="trigger" placeholder="Enter trigger" />
-      <select name="feature-select"></select>
+    <div class="feature-card bg-gray-800 text-white p-4 rounded mb-4">
+      <div class="mb-2">
+        <label class="block text-sm font-medium mb-1">Trigger</label>
+        <input type="text" name="trigger" placeholder="Enter trigger" class="w-full p-2 bg-gray-700 text-white rounded" />
+      </div>
+      <div class="mb-2">
+        <label class="block text-sm font-medium mb-1">Feature</label>
+        <select name="feature-select" class="w-full p-2 bg-gray-700 text-white rounded"></select>
+      </div>
       <div class="feature-fields"></div>
+      <button type="button" class="remove-feature-button mt-2 text-red-500 hover:text-red-700">Remove Feature</button>
     </div>
   </template>
+
+
 </section>
 
 

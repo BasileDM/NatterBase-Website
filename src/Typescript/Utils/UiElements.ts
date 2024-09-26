@@ -32,6 +32,7 @@ export class UiElements {
   // Bot features section
   public static botFeaturesPlaceholder = document.getElementById('bot-features-placeholder') as HTMLElement;
   public static botFeaturesDisplay = document.getElementById('bot-features-display') as HTMLElement;
+  public static botFeaturesForm = document.getElementById('bot-features-form') as HTMLFormElement;
 
   // Sidebar
   public static sidebar = document.getElementById('sidebar') as HTMLElement;
