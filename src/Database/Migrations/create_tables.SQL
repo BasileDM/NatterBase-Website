@@ -96,7 +96,9 @@ INSERT INTO Bot_Feature_Categories (name) VALUES('Game');
 INSERT INTO Bot_Feature_Categories (name) VALUES('AI');
 
 INSERT INTO Bot_Features (name, is_admin, is_subscriber, id_bot_feature_category)
-VALUES('Throw dice', true, false, 1);
+VALUES('Dice throw', true, false, 1);
+INSERT INTO Bot_Features (name, is_admin, is_subscriber, id_bot_feature_category)
+VALUES('AI chat', true, false, 2);
 
 
 INSERT INTO Bot_Language_Models (name) VALUES('gpt-3.5-turbo');

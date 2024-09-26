@@ -299,7 +299,7 @@ export class UiUtils {
       label.textContent = field.label;
       label.classList.add('block', 'text-sm', 'font-medium', 'mb-1');
 
-      let input: HTMLInputElement | HTMLSelectElement;
+      let input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
       if (field.type === 'select') {
         input = document.createElement('select');
         input.classList.add('w-full', 'p-2', 'bg-gray-700', 'text-white', 'rounded');
@@ -311,6 +311,10 @@ export class UiUtils {
             input.appendChild(option);
           });
         }
+      }
+      else if (field.type === 'textarea') {
+        input = document.createElement('textarea');
+        input.classList.add('w-full', 'p-2', 'bg-gray-700', 'text-white', 'rounded');
       }
       else {
         input = document.createElement('input');
@@ -333,6 +337,10 @@ export class UiUtils {
     const featureFieldsMapping: { [key: string]: any[] } = {
       '1': [
         { name: 'diceSidesNumber', label: 'Number of sides on the dice', type: 'number' },
+      ],
+      '2': [
+        { name: 'openAiPrePrompt', label: 'OpenAI pre-prompt', type: 'textarea' },
+        { name: 'maxOpenaiMessageLength', label: 'Max message length', type: 'number' },
       ],
     };
     return featureFieldsMapping[featureId] || [];

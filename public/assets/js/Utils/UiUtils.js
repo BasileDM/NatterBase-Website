@@ -260,6 +260,10 @@ export class UiUtils {
                     });
                 }
             }
+            else if (field.type === 'textarea') {
+                input = document.createElement('textarea');
+                input.classList.add('w-full', 'p-2', 'bg-gray-700', 'text-white', 'rounded');
+            }
             else {
                 input = document.createElement('input');
                 input.type = field.type || 'text';
@@ -278,6 +282,10 @@ export class UiUtils {
         const featureFieldsMapping = {
             '1': [
                 { name: 'diceSidesNumber', label: 'Number of sides on the dice', type: 'number' },
+            ],
+            '2': [
+                { name: 'openAiPrePrompt', label: 'OpenAI pre-prompt', type: 'textarea' },
+                { name: 'maxOpenaiMessageLength', label: 'Max message length', type: 'number' },
             ],
         };
         return featureFieldsMapping[featureId] || [];

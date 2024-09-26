@@ -134,6 +134,7 @@ final class BotService
       // Add to the features array
       $features[] = $feature;
     }
+
     // Set the features to the bot
     $bot->setBotFeatures($features);
 

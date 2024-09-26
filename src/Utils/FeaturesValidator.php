@@ -50,6 +50,26 @@ final class FeaturesValidator
         }
       }
 
+      // Validate 'max_openai_message_length'
+      if (isset($feature['maxOpenaiMessageLength'])) {
+        $result = Validator::validateInt($feature['maxOpenaiMessageLength'], 'maxOpenaiMessageLength');
+        if (isset($result['error'])) {
+          $featureErrors['maxOpenaiMessageLength'] = $result['error'];
+        } else {
+          $sanitizedFeature['maxOpenaiMessageLength'] = $result['sanitized'];
+        }
+      }
+
+      // Validate 'open_ai_pre_prompt'
+      if (isset($feature['openAiPrePrompt'])) {
+        $result = Validator::validateOpenAiPrePrompt($feature['openAiPrePrompt']);
+        if (isset($result['error'])) {
+          $errors['openAiPrePrompt'] = $result['error'];
+        } else {
+          $sanitizedFeature['openAiPrePrompt'] = $result['sanitized'];
+        }
+      }
+
       // If there are errors, add them to the errors array
       if (!empty($featureErrors)) {
         $errors[$index] = $featureErrors;
@@ -67,9 +87,6 @@ final class FeaturesValidator
     // If no errors, return sanitized features only
     return ['sanitized' => $sanitizedFeatures];
   }
-
-
-
 
   private static function validateTrigger(string $trigger): array
   {
