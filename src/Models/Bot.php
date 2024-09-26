@@ -45,8 +45,9 @@ final class Bot
     ];
   }
 
-  public function getBotFeaturesArray(): array
+  public function getBotFeaturesArray(): array|null
   {
+    $featuresArray = [];
     foreach ($this->getBotFeatures() as $feature) {
       $featuresArray[] = $feature->toArray();
     }

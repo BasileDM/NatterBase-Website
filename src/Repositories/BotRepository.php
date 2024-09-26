@@ -152,9 +152,8 @@ final class BotRepository
   public function updateBotFeatures(Bot $bot): bool
   {
     try {
-      $botId = $bot->getIdBot();
       $features = $bot->getBotFeatures();
-
+      
       foreach ($features as $feature) {
         $this->updateOrCreateFeature($feature);
       }
@@ -167,10 +166,6 @@ final class BotRepository
 
   private function updateOrCreateFeature(BotFeature $feature): bool
   {
-    echo '<pre>';
-    print_r($feature);
-    echo '</pre>';
-    exit;
     $query = 'SELECT id_bot_feature FROM Relation_Bots_Features
               WHERE id_bot_feature = :idBotFeature
               AND id_bot = :idBot';
@@ -187,7 +182,9 @@ final class BotRepository
                 SET id_bot = :idBot,
                     id_bot_feature = :idBotFeature,
                     is_admin_override = :isAdminOverride,
-                    is_subscriber_override = :isSubscriberOverride 
+                    is_subscriber_override = :isSubscriberOverride, 
+                    `trigger` = :trigger,
+                    dice_sides_number = :diceSidesNumber
                 WHERE id_bot_feature = :idBotFeature
                 AND id_bot = :idBot';
       $stmt = $this->pdo->prepare($query);
@@ -205,21 +202,25 @@ final class BotRepository
         'idBot' => $feature->getIdBot(),
         'idBotFeature' => $feature->getIdBotFeature(),
         'isAdminOverride' => $feature->isIsAdmin(),
-        'isSubscriberOverride' => $feature->isIsSubscriber()
+        'isSubscriberOverride' => $feature->isIsSubscriber(),
+        'trigger' => $feature->getTrigger(),
+        'diceSidesNumber' => $feature->getDiceSidesNumber()
       ]);
 
     // If the relation doesn't exist, insert it
     } else {
       $query = 'INSERT INTO Relation_Bots_Features
-                (id_bot, id_bot_feature, is_admin_override, is_subscriber_override)
+                (id_bot, id_bot_feature, is_admin_override, is_subscriber_override, `trigger`, dice_sides_number)
                 VALUES
-                (:idBot, :idBotFeature, :isAdminOverride, :isSubscriberOverride)';
+                (:idBot, :idBotFeature, :isAdminOverride, :isSubscriberOverride, :trigger, :diceSidesNumber)';
       $stmt = $this->pdo->prepare($query);
       $stmt->execute([
         'idBot' => $feature->getIdBot(),
         'idBotFeature' => $feature->getIdBotFeature(),
         'isAdminOverride' => $feature->isIsAdmin(),
-        'isSubscriberOverride' => $feature->isIsSubscriber()
+        'isSubscriberOverride' => $feature->isIsSubscriber(),
+        'trigger' => $feature->getTrigger(),
+        'diceSidesNumber' => $feature->getDiceSidesNumber()
       ]);
     }
     return $stmt->rowCount() > 0;
