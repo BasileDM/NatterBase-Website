@@ -183,7 +183,6 @@ export class ControlPanel {
   }
 
   private async submitBotFeatures(): Promise<void> {
-    // Initialize an empty object to hold the form data
     const formObject: any = {};
 
     // Collect feature data based on data-index attribute

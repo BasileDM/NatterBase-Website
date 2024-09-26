@@ -155,7 +155,6 @@ export class ControlPanel {
         });
     }
     async submitBotFeatures() {
-        // Initialize an empty object to hold the form data
         const formObject = {};
         // Collect feature data based on data-index attribute
         const featureCards = UiElements.botFeaturesForm.querySelectorAll('.feature-card');

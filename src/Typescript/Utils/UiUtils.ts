@@ -37,7 +37,6 @@ export class UiUtils {
     }
   }
 
-
   private static updateDashboardSection(): void {
     if (UiElements.dashboardPlaceholder) {
       UiElements.dashboardPlaceholder.classList.add('hidden');
@@ -123,7 +122,6 @@ export class UiUtils {
       UiElements.botFeaturesDisplay.appendChild(addFeatureButton);
     }
   }
-
 
   private static updateAccountSection(user: any): void {
     console.log('Updating account section...', user);
@@ -247,12 +245,10 @@ export class UiUtils {
     UiElements.botFeaturesDisplay.appendChild(featureCard);
   }
 
-
   static addNewFeatureCard(): void {
     const index = UiElements.botFeaturesDisplay.querySelectorAll('.feature-card').length;
     UiUtils.createFeatureCard(null, index);
   }
-
 
   static populateFeatureSelect(selectElement: HTMLSelectElement): void {
     // Clear existing options
@@ -278,17 +274,12 @@ export class UiUtils {
 
   private static updateFeatureFields(featureCard: HTMLElement, featureId: string): void {
     const featureFieldsContainer = featureCard.querySelector('.feature-fields') as HTMLElement;
-
-    // Clear existing fields
     featureFieldsContainer.innerHTML = '';
 
     // Get the relevant fields for the selected feature
     const featureFields: FeatureField[] = UiUtils.getFeatureFields(featureId);
 
-    const index = featureCard.getAttribute('data-index');
-
     if (!featureFields || featureFields.length === 0) {
-      // No additional fields for this feature
       return;
     }
 
@@ -329,7 +320,6 @@ export class UiUtils {
       featureFieldsContainer.appendChild(fieldWrapper);
     });
   }
-
 
   static getFeatureFields(featureId: string): any[] {
     // Define the fields relevant to each feature ID

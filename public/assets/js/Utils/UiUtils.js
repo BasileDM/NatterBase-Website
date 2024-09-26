@@ -227,13 +227,10 @@ export class UiUtils {
     }
     static updateFeatureFields(featureCard, featureId) {
         const featureFieldsContainer = featureCard.querySelector('.feature-fields');
-        // Clear existing fields
         featureFieldsContainer.innerHTML = '';
         // Get the relevant fields for the selected feature
         const featureFields = UiUtils.getFeatureFields(featureId);
-        const index = featureCard.getAttribute('data-index');
         if (!featureFields || featureFields.length === 0) {
-            // No additional fields for this feature
             return;
         }
         // For each field, create an input element with styling
