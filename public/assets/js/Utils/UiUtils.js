@@ -3,6 +3,7 @@ import { ConversionUtils } from './ConversionUtils.js';
 import { FormValidator } from './FormValidator.js';
 import { RequestHelper } from './RequestHelper.js';
 import { UiElements } from './UiElements.js';
+import { Toast } from '../Components/Toast.js';
 export class UiUtils {
     static async updateInterface() {
         const selectedBotIndex = Number(UiElements.botProfileSelector.selectedIndex) - 1;
@@ -183,7 +184,13 @@ export class UiUtils {
         });
         // Event listener for the 'remove feature' button
         const removeFeatureButton = featureCard.querySelector('.remove-feature-button');
-        removeFeatureButton.addEventListener('click', () => {
+        removeFeatureButton.addEventListener('click', async () => {
+            const response = await RequestHelper.delete(`/deleteBotFeature?idBot=${botFeature.idBot}&idFeature=${botFeature.idBotFeature}&trigger=${botFeature.trigger}`);
+            const jsonResponseBody = await RequestHelper.handleResponse(response);
+            if (!jsonResponseBody) {
+                return;
+            }
+            new Toast('success', jsonResponseBody.message);
             featureCard.remove();
         });
         // Populate the feature-specific fields

@@ -141,6 +141,28 @@ final class ApiBotController
 
       $this->jsonResponse(200, ['message' => 'Bot features updated successfully']);
     } catch (Exception $e) {
+      $this->jsonResponse(500, ['message' => "Backend error"]);
+    }
+  }
+
+  #[Route('DELETE', '/deleteBotFeature')]
+  #[Authorization(1)]
+  public function deleteBotFeature(): void
+  {
+    try {
+      if (!isset($_GET['idFeature']) || !isset($_GET['idBot']) || !isset($_GET['trigger'])) {
+        $this->jsonResponse(400, ['message' => 'Invalid parameters']);
+        exit;
+      }
+
+      $result = $this->botService->deleteFeature($_GET['idBot'], $_GET['idFeature'], $_GET['trigger']);
+      if (!$result) {
+        $this->jsonResponse(400, ['message' => 'Could not delete bot feature']);
+        exit;
+      }
+
+      $this->jsonResponse(200, ['message' => 'Bot feature deleted successfully']);
+    } catch (Exception $e) {
       $this->jsonResponse(500, ['message' => "Backend error" . $e->getMessage()]);
     }
   }

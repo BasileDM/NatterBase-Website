@@ -4,6 +4,7 @@ import { FormValidator } from './FormValidator.js';
 import { RequestHelper } from './RequestHelper.js';
 import { UiElements } from './UiElements.js';
 import { FeatureField } from '../Interfaces/FeatureField.js';
+import { Toast } from '../Components/Toast.js';
 
 export class UiUtils {
   private static userData: any;
@@ -221,7 +222,13 @@ export class UiUtils {
 
     // Event listener for the 'remove feature' button
     const removeFeatureButton = featureCard.querySelector('.remove-feature-button') as HTMLButtonElement;
-    removeFeatureButton.addEventListener('click', () => {
+    removeFeatureButton.addEventListener('click', async () => {
+      const response = await RequestHelper.delete(`/deleteBotFeature?idBot=${botFeature.idBot}&idFeature=${botFeature.idBotFeature}&trigger=${botFeature.trigger}`);
+      const jsonResponseBody = await RequestHelper.handleResponse(response);
+      if (!jsonResponseBody) {
+        return;
+      }
+      new Toast('success', jsonResponseBody.message);
       featureCard.remove();
     });
 

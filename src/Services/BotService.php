@@ -140,4 +140,13 @@ final class BotService
     // Proceed to update the database
     return $this->botRepository->updateBotFeatures($bot);
   }
+
+  public function deleteFeature(int $botId, int $featureId, string $trigger): bool
+  {
+    $bot = $this->getBotById($botId);
+    if ($bot === false || $bot->getIdUser() != $_SESSION['userId']) {
+      return false;
+    }
+    return $this->featureRepository->delete($featureId, $botId, $trigger);
+  }
 }

@@ -54,4 +54,19 @@ final class FeatureRepository
     $feature = $statement->fetchObject(BotFeature::class);
     return $feature;
   }
+
+  public function delete(int $featureId, int $botId, string $trigger): bool
+  {
+    $query = 'DELETE FROM Relation_Bots_Features 
+              WHERE id_bot_feature = :featureId 
+              AND id_bot = :botId
+              AND `trigger` = :trigger';
+    $statement = $this->pdo->prepare($query);
+    $statement->execute([
+      ':featureId' => $featureId, 
+      ':botId' => $botId,
+      ':trigger' => $trigger
+    ]);
+    return $statement->rowCount() > 0;
+  }
 }
