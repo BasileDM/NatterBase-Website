@@ -7,6 +7,7 @@ use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
 use src\Services\BotService;
 use src\Services\Response;
+use src\Utils\FeaturesValidator;
 use src\Utils\Validator;
 
 final class ApiBotController
@@ -118,7 +119,11 @@ final class ApiBotController
   public function updateBotFeatures(): void
   {
     try {
-      $validation = Validator::validateInputs();
+      $validation = FeaturesValidator::validateInputs();
+      echo '<pre>';
+      print_r($validation);
+      echo '</pre>';
+      exit;
       if (isset($validation['errors'])) {
         $this->formErrorsResponse(400, $validation['errors']);
         exit;
