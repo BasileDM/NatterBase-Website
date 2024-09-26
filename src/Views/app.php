@@ -74,8 +74,6 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <button type="button" class="remove-feature-button mt-2 text-red-500 hover:text-red-700">Remove Feature</button>
     </div>
   </template>
-
-
 </section>
 
 

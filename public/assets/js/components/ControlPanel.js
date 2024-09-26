@@ -171,9 +171,10 @@ export class ControlPanel {
             });
             featuresData.push(featureData);
         });
+        const formObject = Object.fromEntries(formData.entries());
         try {
             const botId = UiElements.botProfileSelector.value;
-            const response = await RequestHelper.post(`/updateBotFeatures?idBot=${botId}`, formData);
+            const response = await RequestHelper.post(`/updateBotFeatures?idBot=${botId}`, formObject);
             const jsonResponseBody = await RequestHelper.handleResponse(response);
             if (!jsonResponseBody) {
                 return;
