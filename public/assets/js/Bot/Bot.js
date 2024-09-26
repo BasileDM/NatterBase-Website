@@ -33,7 +33,7 @@ export class Bot {
                     reconnect: true,
                 },
                 identity: {
-                    username: 'my_bot_name',
+                    username: 'NatterbaseBot',
                     password: `oauth:${this.settings.twitchToken}`,
                 },
                 channels: this.settings.channels,
