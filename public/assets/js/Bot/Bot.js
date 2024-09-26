@@ -95,8 +95,8 @@ export class Bot {
             cooldown: currentProfile.cooldownTime,
             openAiPrePrompt: currentProfile.openAiPrePrompt,
             maxOpenaiMessageLength: currentProfile.maxOpenaiMessageLength,
-            commands: currentProfile.commands,
-            features: currentProfile.features,
+            commands: currentProfile.botCommands,
+            features: currentProfile.botFeatures,
         };
         return settings;
     }

@@ -5,7 +5,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 
 <!-- Chat / Dashboard -->
 <section id="app-dashboard">
-  <h2>Dashboard</h2>
+  <h2>Chat</h2>
   <p>Welcome, <?= $view_userData["user"]["username"] ?>. <span id="dashboard-placeholder">Please select a bot.</span></p>
   <pre id="chat-display"></pre>
 </section>
