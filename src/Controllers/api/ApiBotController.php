@@ -141,7 +141,7 @@ final class ApiBotController
 
       $this->jsonResponse(200, ['message' => 'Bot features updated successfully']);
     } catch (Exception $e) {
-      $this->jsonResponse(500, ['message' => "Backend error"]);
+      $this->jsonResponse(500, ['message' => "Backend error" . $e->getMessage()]);
     }
   }
 }

@@ -153,7 +153,7 @@ final class BotRepository
   {
     try {
       $features = $bot->getBotFeatures();
-      
+
       foreach ($features as $feature) {
         $this->updateOrCreateFeature($feature);
       }
@@ -166,63 +166,48 @@ final class BotRepository
 
   private function updateOrCreateFeature(BotFeature $feature): bool
   {
+    // Check if there is already a feature with the same trigger for this bot
     $query = 'SELECT id_bot_feature FROM Relation_Bots_Features
-              WHERE id_bot_feature = :idBotFeature
+              WHERE `trigger` = :trigger
               AND id_bot = :idBot';
+
     $stmt = $this->pdo->prepare($query);
     $stmt->execute([
-      'idBotFeature' => $feature->getIdBotFeature(),
-      'idBot' => $feature->getIdBot(),
+      'trigger' => $feature->getTrigger(),
+      'idBot' => $feature->getIdBot()
     ]);
-    $exists = $stmt->fetchColumn() > 0;
 
-    // If the relation exists, update it
-    if ($exists) {
-      $query = 'UPDATE Relation_Bots_Features
-                SET id_bot = :idBot,
-                    id_bot_feature = :idBotFeature,
-                    is_admin_override = :isAdminOverride,
-                    is_subscriber_override = :isSubscriberOverride, 
-                    `trigger` = :trigger,
-                    dice_sides_number = :diceSidesNumber
-                WHERE id_bot_feature = :idBotFeature
-                AND id_bot = :idBot';
-      $stmt = $this->pdo->prepare($query);
+    $existingFeatureId = $stmt->fetchColumn();
 
-      // If admin or subscriber override exists, it is the value we want to use
-      if ($feature->getIsAdminOverride() !== null || !empty($feature->getIsAdminOverride())) {
-        $feature->setIsAdmin($feature->getIsAdminOverride());
-      }
-      
-      if ($feature->getIsSubscriberOverride() !== null || !empty($feature->getIsSubscriberOverride())) {
-        $feature->setIsSubscriber($feature->getIsSubscriberOverride());
-      }
-
-      $stmt->execute([
-        'idBot' => $feature->getIdBot(),
-        'idBotFeature' => $feature->getIdBotFeature(),
-        'isAdminOverride' => $feature->isIsAdmin(),
-        'isSubscriberOverride' => $feature->isIsSubscriber(),
-        'trigger' => $feature->getTrigger(),
-        'diceSidesNumber' => $feature->getDiceSidesNumber()
-      ]);
-
-    // If the relation doesn't exist, insert it
-    } else {
-      $query = 'INSERT INTO Relation_Bots_Features
-                (id_bot, id_bot_feature, is_admin_override, is_subscriber_override, `trigger`, dice_sides_number)
-                VALUES
-                (:idBot, :idBotFeature, :isAdminOverride, :isSubscriberOverride, :trigger, :diceSidesNumber)';
-      $stmt = $this->pdo->prepare($query);
-      $stmt->execute([
-        'idBot' => $feature->getIdBot(),
-        'idBotFeature' => $feature->getIdBotFeature(),
-        'isAdminOverride' => $feature->isIsAdmin(),
-        'isSubscriberOverride' => $feature->isIsSubscriber(),
-        'trigger' => $feature->getTrigger(),
-        'diceSidesNumber' => $feature->getDiceSidesNumber()
-      ]);
+    // If there is an existing feature with the same trigger
+    if ($existingFeatureId && $existingFeatureId != $feature->getIdBotFeature()) {
+      return false;
     }
-    return $stmt->rowCount() > 0;
+
+    // Now we can safely update or insert without duplicate issues
+    $query = 'INSERT INTO Relation_Bots_Features (
+                id_bot, id_bot_feature, is_admin_override, is_subscriber_override, `trigger`, max_openai_message_length, open_ai_pre_prompt, dice_sides_number
+              ) VALUES (
+                :idBot, :idBotFeature, :isAdminOverride, :isSubscriberOverride, :trigger, :maxOpenaiMessageLength, :openAiPrePrompt, :diceSidesNumber
+              ) ON DUPLICATE KEY UPDATE
+                is_admin_override = :isAdminOverride,
+                is_subscriber_override = :isSubscriberOverride,
+                max_openai_message_length = :maxOpenaiMessageLength,
+                open_ai_pre_prompt = :openAiPrePrompt,
+                dice_sides_number = :diceSidesNumber';
+
+    $stmt = $this->pdo->prepare($query);
+    $params = [
+      'idBot' => $feature->getIdBot(),
+      'idBotFeature' => $feature->getIdBotFeature(),
+      'isAdminOverride' => $feature->isIsAdmin(),
+      'isSubscriberOverride' => $feature->isIsSubscriber(),
+      'trigger' => $feature->getTrigger(),
+      'maxOpenaiMessageLength' => $feature->getMaxOpenaiMessageLength(),
+      'openAiPrePrompt' => $feature->getOpenAiPrePrompt(),
+      'diceSidesNumber' => $feature->getDiceSidesNumber()
+    ];
+
+    return $stmt->execute($params);
   }
 }

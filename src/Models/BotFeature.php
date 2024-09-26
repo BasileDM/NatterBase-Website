@@ -20,6 +20,8 @@ final class BotFeature
   private ?bool $isSubscriberOverride = null;
   private ?string $trigger = null;
   private ?int $diceSidesNumber = null;
+  private ?int $maxOpenaiMessageLength = null;
+  private ?string $openAiPrePrompt = null;
 
   use Hydration;
 
@@ -192,4 +194,42 @@ final class BotFeature
   {
     $this->diceSidesNumber = $diceSidesNumber;
   }
+
+  /**
+   * Get the value of maxOpenaiMessageLength
+   */
+  public function getMaxOpenaiMessageLength(): ?int
+  {
+    return $this->maxOpenaiMessageLength;
+  }
+
+    /**
+     * Set the value of maxOpenaiMessageLength
+     *
+     * @param   int  $maxOpenaiMessageLength  
+     * 
+     */
+    public function setMaxOpenaiMessageLength(?int $maxOpenaiMessageLength)
+    {
+        $this->maxOpenaiMessageLength = $maxOpenaiMessageLength;
+    }
+
+  /**
+   * Get the value of openAiPrePrompt
+   */
+  public function getOpenAiPrePrompt(): ?string
+  {
+    return $this->openAiPrePrompt;
+  }
+
+    /**
+     * Set the value of openAiPrePrompt
+     *
+     * @param   string  $openAiPrePrompt  
+     * 
+     */
+    public function setOpenAiPrePrompt(?string $openAiPrePrompt)
+    {
+        $this->openAiPrePrompt = $openAiPrePrompt;
+    }
 }

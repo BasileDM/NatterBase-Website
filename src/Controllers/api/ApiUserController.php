@@ -49,7 +49,7 @@ final class ApiUserController
       }
       $this->jsonResponse(200, ['message' => 'User data updated successfully']);
     } catch (Exception $e) {
-      $this->jsonResponse(500, ['message' => "Backend error"]);
+      $this->jsonResponse(500, ['message' => "Backend error" + $e->getMessage()]);
     }
   }
 

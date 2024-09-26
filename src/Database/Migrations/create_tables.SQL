@@ -71,7 +71,7 @@ CREATE TABLE Bot_Commands(
   PRIMARY KEY(id_bot_command),
   FOREIGN KEY(id_bot) REFERENCES Bots(id_bot) ON DELETE CASCADE
 );
-CREATE TABLE Relation_Bots_Features(
+CREATE TABLE Relation_Bots_Features (
   id_bot INT,
   id_bot_feature INT,
   is_admin_override BOOLEAN,
@@ -80,10 +80,11 @@ CREATE TABLE Relation_Bots_Features(
   max_openai_message_length INT,
   open_ai_pre_prompt VARCHAR(255),
   dice_sides_number INT,
-  PRIMARY KEY(id_bot, id_bot_feature),
-  FOREIGN KEY(id_bot) REFERENCES Bots(id_bot) ON DELETE CASCADE,
-  FOREIGN KEY(id_bot_feature) REFERENCES Bot_Features(id_bot_feature)
+  UNIQUE (`trigger`),
+  FOREIGN KEY (id_bot) REFERENCES Bots(id_bot) ON DELETE CASCADE,
+  FOREIGN KEY (id_bot_feature) REFERENCES Bot_Features(id_bot_feature)
 );
+
 
 INSERT INTO User_Roles (name) VALUES('user');
 INSERT INTO User_Roles (name) VALUES('admin');
