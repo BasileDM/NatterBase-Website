@@ -76,6 +76,10 @@ CREATE TABLE Relation_Bots_Features(
   id_bot_feature INT,
   is_admin_override BOOLEAN,
   is_subscriber_override BOOLEAN,
+  trigger VARCHAR(50),
+  max_openai_message_length INT,
+  open_ai_pre_prompt VARCHAR(255),
+  dice_sides_number INT,
   PRIMARY KEY(id_bot, id_bot_feature),
   FOREIGN KEY(id_bot) REFERENCES Bots(id_bot) ON DELETE CASCADE,
   FOREIGN KEY(id_bot_feature) REFERENCES Bot_Features(id_bot_feature)

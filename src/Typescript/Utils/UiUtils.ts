@@ -210,7 +210,7 @@ export class UiUtils {
 
     // Set the selected value
     if (botFeature) {
-      selectElement.value = botFeature.idBotFeature.toString();
+      selectElement.value = botFeature.idBotFeature;
     }
 
     // Event listener for feature selection

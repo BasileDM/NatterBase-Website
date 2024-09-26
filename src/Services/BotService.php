@@ -76,6 +76,7 @@ final class BotService
   public function getUserBotsArray(int $userId): array
   {
     $bots = $this->getBotsByUserId($userId);
+    
     $botsArray = array_map(fn(Bot $bot) => $bot->toArray(), $bots);
     return $botsArray;
   }
