@@ -3,6 +3,7 @@
 namespace src\Controllers\api;
 
 use Exception;
+use src\Repositories\BotRepository;
 use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
 use src\Services\BotService;
@@ -13,10 +14,12 @@ use src\Utils\Validator;
 final class ApiBotController
 {
   private BotService $botService;
+  private BotRepository $botRepository;
 
   public function __construct()
   {
     $this->botService = new BotService();
+    $this->botRepository = new BotRepository();
   }
 
   use Response;
@@ -120,10 +123,6 @@ final class ApiBotController
   {
     try {
       $validation = FeaturesValidator::validateInputs();
-      echo '<pre>';
-      print_r($validation);
-      echo '</pre>';
-      exit;
       if (isset($validation['errors'])) {
         $this->formErrorsResponse(400, $validation['errors']);
         exit;

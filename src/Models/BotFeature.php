@@ -6,12 +6,20 @@ use src\Services\Hydration;
 
 final class BotFeature
 {
+  // Properties from Bot_Features table
   private int $idBotFeature;
   private string $name;
   private bool $isAdmin;
   private bool $isSubscriber;
   private int $idBotFeatureCategory;
   private string $categoryName;
+
+  // Properties from Relation_Bots_Features table
+  private int $idBot;
+  private ?bool $isAdminOverride = null;
+  private ?bool $isSubscriberOverride = null;
+  private ?string $trigger = null;
+  private ?int $diceSidesNumber = null;
 
   use Hydration;
 
@@ -133,5 +141,55 @@ final class BotFeature
   public function setCategoryName(string $categoryName)
   {
     $this->categoryName = $categoryName;
+  }
+
+  public function getIdBot(): int
+  {
+    return $this->idBot;
+  }
+
+  public function setIdBot(int $idBot)
+  {
+    $this->idBot = $idBot;
+  }
+
+  public function getIsAdminOverride(): ?bool
+  {
+    return $this->isAdminOverride;
+  }
+
+  public function setIsAdminOverride(?bool $isAdminOverride)
+  {
+    $this->isAdminOverride = $isAdminOverride;
+  }
+
+  public function getIsSubscriberOverride(): ?bool
+  {
+    return $this->isSubscriberOverride;
+  }
+
+  public function setIsSubscriberOverride(?bool $isSubscriberOverride)
+  {
+    $this->isSubscriberOverride = $isSubscriberOverride;
+  }
+
+  public function getTrigger(): ?string
+  {
+    return $this->trigger;
+  }
+
+  public function setTrigger(?string $trigger)
+  {
+    $this->trigger = $trigger;
+  }
+
+  public function getDiceSidesNumber(): ?int
+  {
+    return $this->diceSidesNumber;
+  }
+
+  public function setDiceSidesNumber(?int $diceSidesNumber)
+  {
+    $this->diceSidesNumber = $diceSidesNumber;
   }
 }

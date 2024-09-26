@@ -5,6 +5,7 @@ namespace src\Services;
 use DateTime;
 use Exception;
 use src\Models\Bot;
+use src\Models\BotFeature;
 use src\Repositories\BotRepository;
 use src\Repositories\CommandRepository;
 use src\Repositories\FeatureRepository;
@@ -114,11 +115,28 @@ final class BotService
 
   public function updateFeatures(array $inputs, int $botId): bool
   {
+    // Check if the user is the owner of the bot
     $bot = $this->getBotById($botId);
-    if ($bot === false || $bot->getIdUser() !== $_SESSION['userId']) {
+    if ($bot === false || $bot->getIdUser() != $_SESSION['userId']) {
       return false;
     }
-    $bot->setBotFeatures($inputs);
-    return $this->botRepository->update($bot);
+
+    $features = [];
+    foreach ($inputs as $input) {
+      // Ensure the idBot is set in the input array
+      $input['idBot'] = $botId;
+
+      // Instantiate BotFeature using the Hydration trait
+      $feature = $this->featureRepository->getFeatureById($input['idBotFeature']);
+      $feature->hydrateFromInputs($input);
+
+      // Add to the features array
+      $features[] = $feature;
+    }
+    // Set the features to the bot
+    $bot->setBotFeatures($features);
+
+    // Proceed to update the database
+    return $this->botRepository->updateBotFeatures($bot);
   }
 }

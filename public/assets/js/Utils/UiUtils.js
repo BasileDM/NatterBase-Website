@@ -270,7 +270,7 @@ export class UiUtils {
         // Define the fields relevant to each feature ID
         const featureFieldsMapping = {
             '1': [
-                { name: 'dice_sides_number', label: 'Number of sides on the dice', type: 'number' },
+                { name: 'diceSidesNumber', label: 'Number of sides on the dice', type: 'number' },
             ],
         };
         return featureFieldsMapping[featureId] || [];

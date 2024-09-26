@@ -41,4 +41,17 @@ final class FeatureRepository
     $statement->execute([':botId' => $botId]);
     return $statement->fetchAll(PDO::FETCH_CLASS, BotFeature::class);
   }
+
+  public function getFeatureById(int $id): BotFeature|false
+  {
+    $query = 'SELECT Bot_Features.*, Bot_Feature_Categories.name AS categoryName 
+              FROM Bot_Features
+              LEFT JOIN Bot_Feature_Categories
+              ON Bot_Features.id_bot_feature_category = Bot_Feature_Categories.id_bot_feature_category
+              WHERE Bot_Features.id_bot_feature = :id';
+    $statement = $this->pdo->prepare($query);
+    $statement->execute([':id' => $id]);
+    $feature = $statement->fetchObject(BotFeature::class);
+    return $feature;
+  }
 }

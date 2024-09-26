@@ -41,15 +41,13 @@ final class FeaturesValidator
       }
 
       // Validate 'dice_sides_number'
-      if (isset($feature['dice_sides_number'])) {
-        $result = Validator::validateInt($feature['dice_sides_number'], 'dice_sides_number');
+      if (isset($feature['diceSidesNumber'])) {
+        $result = Validator::validateInt($feature['diceSidesNumber'], 'diceSidesNumber');
         if (isset($result['error'])) {
-          $featureErrors['dice_sides_number'] = $result['error'];
+          $featureErrors['diceSidesNumber'] = $result['error'];
         } else {
-          $sanitizedFeature['dice_sides_number'] = $result['sanitized'];
+          $sanitizedFeature['diceSidesNumber'] = $result['sanitized'];
         }
-      } else {
-        $featureErrors['dice_sides_number'] = 'dice_sides_number is required';
       }
 
       // If there are errors, add them to the errors array
