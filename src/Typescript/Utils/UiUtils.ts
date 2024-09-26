@@ -202,12 +202,12 @@ export class UiUtils {
 
     // Set the 'trigger' input value
     const triggerInput = featureCard.querySelector('input[name="trigger"]') as HTMLInputElement;
-    triggerInput.name = `features[${index}][trigger]`;
+    triggerInput.name = 'trigger';
     triggerInput.value = botFeature ? botFeature.trigger : '';
 
     // Populate the 'feature-select' dropdown
     const selectElement = featureCard.querySelector('select[name="feature-select"]') as HTMLSelectElement;
-    selectElement.name = `features[${index}][idBotFeature]`;
+    selectElement.name = 'idBotFeature';
     UiUtils.populateFeatureSelect(selectElement);
 
     // Set the selected value
@@ -237,7 +237,7 @@ export class UiUtils {
       inputs.forEach((inputElement) => {
         if (inputElement instanceof HTMLInputElement || inputElement instanceof HTMLSelectElement || inputElement instanceof HTMLTextAreaElement) {
           const fieldName = inputElement.getAttribute('data-field-name')!;
-          inputElement.name = `features[${index}][${fieldName}]`;
+          inputElement.name = `${fieldName}`;
           inputElement.value = botFeature[fieldName] || '';
         }
       });
@@ -320,7 +320,7 @@ export class UiUtils {
         input.classList.add('w-full', 'p-2', 'bg-gray-700', 'text-white', 'rounded');
       }
 
-      const inputName = `features[${index}][${field.name}]`;
+      const inputName = `${field.name}`;
       input.setAttribute('name', inputName);
       input.setAttribute('data-field-name', field.name);
 

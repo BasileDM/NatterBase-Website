@@ -92,7 +92,7 @@ final class BotService
   public function update(array $inputs, int $botId): bool
   {
     $bot = $this->getBotById($botId);
-    if ($bot === false) {
+    if ($bot === false || $bot->getIdUser() !== $_SESSION['userId']) {
       return false;
     }
     $bot->hydrateFromInputs($inputs);
@@ -110,5 +110,15 @@ final class BotService
     } catch (Exception $e) {
       throw new Exception($e->getMessage());
     }
+  }
+
+  public function updateFeatures(array $inputs, int $botId): bool
+  {
+    $bot = $this->getBotById($botId);
+    if ($bot === false || $bot->getIdUser() !== $_SESSION['userId']) {
+      return false;
+    }
+    $bot->setBotFeatures($inputs);
+    return $this->botRepository->update($bot);
   }
 }

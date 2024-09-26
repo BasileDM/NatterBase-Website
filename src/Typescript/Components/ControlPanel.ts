@@ -183,14 +183,16 @@ export class ControlPanel {
   }
 
   private async submitBotFeatures(): Promise<void> {
-    const formData = new FormData(UiElements.botFeaturesForm);
+    // Initialize an empty object to hold the form data
+    const formObject: any = {};
 
-    // Collect all feature data
-    const featuresData: any = [];
+    // Collect feature data based on data-index attribute
     const featureCards = UiElements.botFeaturesForm.querySelectorAll('.feature-card');
-
     featureCards.forEach((card) => {
       const featureData: any = {};
+      const index = card.getAttribute('data-index') || '0';
+
+      // Collect inputs within the current feature card
       const inputs = card.querySelectorAll('input, select, textarea');
       inputs.forEach((inputElement) => {
         if (
@@ -202,10 +204,9 @@ export class ControlPanel {
         }
       });
 
-      featuresData.push(featureData);
+      // Assign the feature data to the formObject using the index as a key
+      formObject[index] = featureData;
     });
-
-    const formObject = Object.fromEntries(formData.entries());
 
     try {
       const botId = UiElements.botProfileSelector.value;
@@ -228,5 +229,4 @@ export class ControlPanel {
       new Toast('error', 'Failed to save bot features. Try again later.');
     }
   }
-
 }

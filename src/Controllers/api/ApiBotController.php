@@ -112,4 +112,32 @@ final class ApiBotController
       $this->jsonResponse(500, ['message' => "Backend error"]);
     }
   }
+
+  #[Route('POST', '/updateBotFeatures')]
+  #[Authorization(1)]
+  public function updateBotFeatures(): void
+  {
+    try {
+      $validation = Validator::validateInputs();
+      if (isset($validation['errors'])) {
+        $this->formErrorsResponse(400, $validation['errors']);
+        exit;
+      }
+
+      if (!isset($_GET['idBot'])) {
+        $this->jsonResponse(400, ['message' => 'Invalid Id']);
+        exit;
+      }
+
+      $result = $this->botService->updateFeatures($validation['sanitized'], $_GET['idBot']);
+      if (!$result) {
+        $this->jsonResponse(400, ['message' => 'Could not update bot features']);
+        exit;
+      }
+
+      $this->jsonResponse(200, ['message' => 'Bot features updated successfully']);
+    } catch (Exception $e) {
+      $this->jsonResponse(500, ['message' => "Backend error"]);
+    }
+  }
 }

@@ -7,6 +7,10 @@ final class Validator
   public static function validateInputs(): array
   {
     $request = json_decode(file_get_contents('php://input'), true);
+    echo '<pre>';
+    print_r($request);
+    echo '</pre>';
+    exit;
     $inputs = [
       'mail' => $request['mail'] ?? null,
       'username' => $request['username'] ?? null,

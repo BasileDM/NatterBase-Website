@@ -155,12 +155,14 @@ export class ControlPanel {
         });
     }
     async submitBotFeatures() {
-        const formData = new FormData(UiElements.botFeaturesForm);
-        // Collect all feature data
-        const featuresData = [];
+        // Initialize an empty object to hold the form data
+        const formObject = {};
+        // Collect feature data based on data-index attribute
         const featureCards = UiElements.botFeaturesForm.querySelectorAll('.feature-card');
         featureCards.forEach((card) => {
             const featureData = {};
+            const index = card.getAttribute('data-index') || '0';
+            // Collect inputs within the current feature card
             const inputs = card.querySelectorAll('input, select, textarea');
             inputs.forEach((inputElement) => {
                 if (inputElement instanceof HTMLInputElement ||
@@ -169,9 +171,9 @@ export class ControlPanel {
                     featureData[inputElement.name] = inputElement.value;
                 }
             });
-            featuresData.push(featureData);
+            // Assign the feature data to the formObject using the index as a key
+            formObject[index] = featureData;
         });
-        const formObject = Object.fromEntries(formData.entries());
         try {
             const botId = UiElements.botProfileSelector.value;
             const response = await RequestHelper.post(`/updateBotFeatures?idBot=${botId}`, formObject);
