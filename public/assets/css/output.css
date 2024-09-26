@@ -1165,6 +1165,11 @@ p {
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
 
+.bg-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+}
+
 .bg-gray-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
@@ -1182,11 +1187,6 @@ p {
 
 .bg-gray-900\/40 {
   background-color: rgb(17 24 39 / 0.4);
-}
-
-.bg-blue-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
 .p-2 {
@@ -1283,14 +1283,14 @@ p {
   cursor: pointer;
 }
 
-.hover\:bg-gray-600:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-blue-700:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(29 78 216 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-gray-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
 }
 
 .hover\:text-gray-200:hover {

@@ -54,7 +54,8 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 
   <form id="bot-features-form">
     <div id="bot-features-display"></div>
-    <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    <button id="add-feature-button" class="btn btn-base hidden" type="button">Add New Feature</button>
+    <button id="bot-features-save-btn" type="submit" class="btn btn-success mt-4 hidden">
       Save Features
     </button>
   </form>

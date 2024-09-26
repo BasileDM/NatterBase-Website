@@ -95,10 +95,14 @@ export class UiUtils {
     if (!currentBot || !userData) {
       UiElements.botFeaturesDisplay.classList.add('hidden');
       UiElements.botFeaturesPlaceholder.classList.remove('hidden');
+      UiElements.saveFeaturesBtn.classList.add('hidden');
+      UiElements.addFeatureBtn.classList.add('hidden');
       return;
     }
 
     UiElements.botFeaturesDisplay.classList.remove('hidden');
+    UiElements.saveFeaturesBtn.classList.remove('hidden');
+    UiElements.addFeatureBtn.classList.remove('hidden');
     UiElements.botFeaturesPlaceholder.classList.add('hidden');
 
     // Clear existing features
@@ -111,16 +115,11 @@ export class UiUtils {
       });
     }
 
-    // Add the 'Add New Feature' button if it doesn't already exist
-    if (!document.getElementById('add-feature-button')) {
-      const addFeatureButton = document.createElement('button');
-      addFeatureButton.id = 'add-feature-button';
-      addFeatureButton.textContent = 'Add New Feature';
-      addFeatureButton.type = 'button';
-      addFeatureButton.addEventListener('click', () => {
+    // New feature button event listener
+    if (UiElements.addFeatureBtn) {
+      UiElements.addFeatureBtn.addEventListener('click', () => {
         UiUtils.addNewFeatureCard();
       });
-      UiElements.botFeaturesDisplay.appendChild(addFeatureButton);
     }
   }
 
