@@ -84,18 +84,15 @@ export class UiUtils {
         UiElements.saveFeaturesBtn.classList.remove('hidden');
         UiElements.addFeatureBtn.classList.remove('hidden');
         UiElements.botFeaturesPlaceholder.classList.add('hidden');
+        if (currentBot.botFeatures.length === 0) {
+            UiElements.saveFeaturesBtn.classList.add('hidden'); // remove class on add new feature
+        }
         // Clear existing features
         UiElements.botFeaturesDisplay.innerHTML = '';
         // If there are existing features for the current bot, create feature cards for them
         if (currentBot.botFeatures && currentBot.botFeatures.length > 0) {
             currentBot.botFeatures.forEach((botFeature, index) => {
                 UiUtils.createFeatureCard(botFeature, index);
-            });
-        }
-        // New feature button event listener
-        if (UiElements.addFeatureBtn) {
-            UiElements.addFeatureBtn.addEventListener('click', () => {
-                UiUtils.addNewFeatureCard();
             });
         }
     }

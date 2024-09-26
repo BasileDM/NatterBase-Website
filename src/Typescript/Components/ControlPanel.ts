@@ -87,6 +87,11 @@ export class ControlPanel {
       event.preventDefault();
       this.submitBotFeatures();
     });
+    if (UiElements.addFeatureBtn) {
+      UiElements.addFeatureBtn.addEventListener('click', () => {
+        UiUtils.addNewFeatureCard();
+      });
+    }
   }
 
   private async submitBotSettings(): Promise<void> {

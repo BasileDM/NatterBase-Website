@@ -105,6 +105,10 @@ export class UiUtils {
     UiElements.addFeatureBtn.classList.remove('hidden');
     UiElements.botFeaturesPlaceholder.classList.add('hidden');
 
+    if (currentBot.botFeatures.length === 0) {
+      UiElements.saveFeaturesBtn.classList.add('hidden'); // remove class on add new feature
+    }
+
     // Clear existing features
     UiElements.botFeaturesDisplay.innerHTML = '';
 
@@ -112,13 +116,6 @@ export class UiUtils {
     if (currentBot.botFeatures && currentBot.botFeatures.length > 0) {
       currentBot.botFeatures.forEach((botFeature: any, index: number) => {
         UiUtils.createFeatureCard(botFeature, index);
-      });
-    }
-
-    // New feature button event listener
-    if (UiElements.addFeatureBtn) {
-      UiElements.addFeatureBtn.addEventListener('click', () => {
-        UiUtils.addNewFeatureCard();
       });
     }
   }
