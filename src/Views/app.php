@@ -53,7 +53,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
   <p id="bot-features-placeholder">Please select a bot.</p>
 
   <form id="bot-features-form">
-    <div id="bot-features-display"></div>
+    <div id="bot-features-display" class="flex flex-wrap gap-4 justify-start"></div>
     <button id="add-feature-button" class="btn btn-base hidden" type="button">Add New Feature</button>
     <button id="bot-features-save-btn" type="submit" class="btn btn-success mt-4 hidden">
       Save Features
@@ -62,22 +62,21 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 
   <!-- Feature Card Template -->
   <template id="feature-card-template">
-    <div class="feature-card bg-gray-800 text-white p-4 rounded mb-4">
-      <div class="mb-2">
-        <label class="block text-sm font-medium mb-1">Trigger</label>
-        <input type="text" name="trigger" placeholder="Enter trigger" class="w-full p-2 bg-gray-700 text-white rounded" />
-      </div>
+    <div class="feature-card flex flex-col mt-2 bg-gray-800 text-white border-[1px] border-gray-700 shadow-lg p-4 rounded mb-4 min-w-[280px] max-w-[380px] flex-1">
       <div class="mb-2">
         <label class="block text-sm font-medium mb-1">Feature</label>
         <select name="feature-select" class="w-full p-2 bg-gray-700 text-white rounded"></select>
       </div>
-      <div class="feature-fields"></div>
-      <button type="button" class="remove-feature-button mt-2 text-red-500 hover:text-red-700">Remove Feature</button>
+      <div class="mb-2">
+        <label class="block text-sm font-medium mb-1">Trigger</label>
+        <input type="text" name="trigger" placeholder="Enter trigger" class="w-full p-2 bg-gray-700 text-white rounded" />
+      </div>
+      <div class="feature-fields flex-grow"></div>
+      <button type="button" class="remove-feature-button mt-auto text-red-500 hover:text-red-700">Remove Feature</button>
     </div>
   </template>
+
 </section>
-
-
 
 <!-- Account settings -->
 <section id="app-account" class="hidden">
