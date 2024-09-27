@@ -3,9 +3,9 @@ import { UiElements } from '../Utils/UiElements.js';
 import { ChatBoard } from '../ChatBoard.js';
 export class Bot {
     constructor() {
+        this.features = [];
         this.isRunning = false;
         this.client = null;
-        // This is just to avoid undefined values while waiting for async getSettings method.
         this.settings = {
             twitchToken: '',
             channels: [],
@@ -24,44 +24,25 @@ export class Bot {
             return;
         }
         this.settings = await this.getSettings();
-        // Create new client if it doesn't exist or if channels have changed
-        if (!this.client || this.settings.channels != this.client.channels) {
+        this.loadFeatures();
+        if (!this.client || this.settings.channels !== this.client.channels) {
             this.client = new tmi.Client({
-                options: {
-                    skipUpdatingEmotesets: true,
-                },
-                connection: {
-                    secure: true,
-                    reconnect: true,
-                },
+                options: { skipUpdatingEmotesets: true },
+                connection: { secure: true, reconnect: true },
                 identity: {
                     username: 'NatterbaseBot',
                     password: `oauth:${this.settings.twitchToken}`,
                 },
                 channels: this.settings.channels,
             });
-            // Client events
             this.client.on('connected', (address, port) => {
                 this.chatBoard.log(`Connected to ${address}:${port}`, 'green');
             });
             this.client.on('message', (channel, tags, message, self) => {
-                this.chatBoard.displayMessage(`${tags['display-name']}: ${message}`);
                 if (self)
                     return;
-                // Check for the !ask command and call OpenAI
-                if (message.startsWith('!ask ')) {
-                    const prompt = message.replace('!ask ', '');
-                    this.getOpenAIResponse(prompt, this.settings.openAiPrePrompt).then((response) => {
-                        this.client?.say(channel, `@${tags.username}, ${response}`);
-                    }).catch(error => {
-                        this.chatBoard.error('Error getting OpenAI response:' + error);
-                        this.client?.say(channel, `@${tags.username}, I couldn't get an answer right now.`);
-                    });
-                }
-                // Simple hello test command
-                if (message.toLowerCase() === '!hello') {
-                    this.client.say(channel, `@${tags.username}, heya!`);
-                }
+                this.chatBoard.displayMessage(`${tags['display-name']}: ${message}`);
+                this.handleMessage(channel, tags, message);
             });
         }
         this.client.connect().then(() => {
@@ -101,7 +82,6 @@ export class Bot {
         };
         return settings;
     }
-    // Method to send a request to OpenAI and get a response
     async getOpenAIResponse(prompt, prePrompt) {
         const url = 'https://api.openai.com/v1/chat/completions';
         const data = {
@@ -133,6 +113,48 @@ export class Bot {
         catch (error) {
             console.error('Error in OpenAI request:', error);
             throw error;
+        }
+    }
+    loadFeatures() {
+        this.features = this.settings.features.map(feature => ({
+            trigger: feature.trigger,
+            diceSidesNumber: feature.diceSidesNumber ?? null,
+            openAiPrePrompt: feature.openAiPrePrompt ?? null,
+        }));
+    }
+    async handleMessage(channel, tags, message) {
+        const botName = this.client?.getUsername() || '';
+        for (const feature of this.features) {
+            const trigger = feature.trigger;
+            // Check for triggers that are mentions (@BotName)
+            if (trigger === '@' && message.includes(`@${botName}`)) {
+                await this.handleFeatureResponse(channel, tags, message, feature);
+                return;
+            }
+            // Check if message starts with the trigger
+            if (message.startsWith(trigger)) {
+                await this.handleFeatureResponse(channel, tags, message, feature);
+                return;
+            }
+        }
+    }
+    async handleFeatureResponse(channel, tags, message, feature) {
+        // AI Response
+        if (feature.openAiPrePrompt) {
+            const prompt = message.replace(feature.trigger, '').trim();
+            try {
+                const response = await this.getOpenAIResponse(prompt, feature.openAiPrePrompt);
+                this.client?.say(channel, `@${tags.username}, ${response}`);
+            }
+            catch (error) {
+                this.chatBoard.error('Error getting OpenAI response: ' + error);
+                this.client?.say(channel, `@${tags.username}, I couldn't get an answer right now Sadge.`);
+            }
+        }
+        // Dice Roll
+        if (feature.diceSidesNumber) {
+            const diceRoll = Math.floor(Math.random() * feature.diceSidesNumber) + 1;
+            this.client?.say(channel, `@${tags.username}, you rolled a ${diceRoll}`);
         }
     }
 }
