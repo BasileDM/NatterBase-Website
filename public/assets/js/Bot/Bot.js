@@ -1,5 +1,6 @@
 import { RequestHelper } from '../Utils/RequestHelper.js';
 import { UiElements } from '../Utils/UiElements.js';
+import { ChatBoard } from '../ChatBoard.js';
 export class Bot {
     constructor() {
         this.isRunning = false;
@@ -15,10 +16,11 @@ export class Bot {
             commands: [],
             features: [],
         };
+        this.chatBoard = new ChatBoard();
     }
     async start() {
         if (this.isRunning && this.client) {
-            console.log('Bot is already running.');
+            this.chatBoard.warn('Bot is already running.');
             return;
         }
         this.settings = await this.getSettings();
@@ -40,11 +42,10 @@ export class Bot {
             });
             // Client events
             this.client.on('connected', (address, port) => {
-                console.log(`Connected to ${address}:${port}`);
+                this.chatBoard.log(`Connected to ${address}:${port}`, 'green');
             });
             this.client.on('message', (channel, tags, message, self) => {
-                console.log(`${tags['display-name']}: ${message}`);
-                this.displayMessage(`${tags['display-name']}: ${message}`);
+                this.chatBoard.displayMessage(`${tags['display-name']}: ${message}`);
                 if (self)
                     return;
                 // Check for the !ask command and call OpenAI
@@ -53,7 +54,7 @@ export class Bot {
                     this.getOpenAIResponse(prompt, this.settings.openAiPrePrompt).then((response) => {
                         this.client?.say(channel, `@${tags.username}, ${response}`);
                     }).catch(error => {
-                        console.error('Error getting OpenAI response:', error);
+                        this.chatBoard.error('Error getting OpenAI response:' + error);
                         this.client?.say(channel, `@${tags.username}, I couldn't get an answer right now.`);
                     });
                 }
@@ -64,21 +65,21 @@ export class Bot {
             });
         }
         this.client.connect().then(() => {
-            console.log('Bot connected to the channel.');
+            this.chatBoard.log('Bot connected to the channel.', 'green');
             this.isRunning = true;
         }).catch(console.error);
     }
     stop() {
         if (!this.isRunning || !this.client) {
-            console.log('Bot is not running or client is null.');
+            this.chatBoard.warn('Bot is not running or client is null.');
             return;
         }
         if (this.client.readyState() !== 'OPEN') {
-            console.log('Client is not connected.');
+            this.chatBoard.warn('Client is not connected.');
             return;
         }
         this.client.disconnect().then(() => {
-            console.log('Bot disconnected from the channel.');
+            this.chatBoard.log('Bot disconnected from the channel.');
             this.isRunning = false;
             this.client = null;
         }).catch(console.error);
@@ -99,13 +100,6 @@ export class Bot {
             features: currentProfile.botFeatures,
         };
         return settings;
-    }
-    displayMessage(message) {
-        if (UiElements.chatDisplay) {
-            const newText = document.createElement('p');
-            newText.innerText = message;
-            UiElements.chatDisplay.appendChild(newText);
-        }
     }
     // Method to send a request to OpenAI and get a response
     async getOpenAIResponse(prompt, prePrompt) {

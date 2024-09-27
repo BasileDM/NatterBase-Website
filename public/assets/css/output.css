@@ -1139,10 +1139,6 @@ p {
   margin-bottom: calc(1rem * var(--tw-space-y-reverse));
 }
 
-.self-start {
-  align-self: flex-start;
-}
-
 .self-center {
   align-self: center;
 }
