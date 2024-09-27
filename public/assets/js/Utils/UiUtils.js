@@ -85,7 +85,7 @@ export class UiUtils {
         UiElements.addFeatureBtn.classList.remove('hidden');
         UiElements.botFeaturesPlaceholder.classList.add('hidden');
         if (currentBot.botFeatures.length === 0) {
-            UiElements.saveFeaturesBtn.classList.add('hidden'); // remove class on add new feature
+            UiElements.saveFeaturesBtn.classList.add('hidden');
         }
         // Clear existing features
         UiElements.botFeaturesDisplay.innerHTML = '';
@@ -161,6 +161,9 @@ export class UiUtils {
         const clone = document.importNode(template.content, true);
         const featureCard = clone.querySelector('.feature-card');
         featureCard.setAttribute('data-index', index.toString());
+        if (!botFeature) {
+            featureCard.dataset.isNew = true.toString();
+        }
         // Set the 'trigger' input value
         const triggerInput = featureCard.querySelector('input[name="trigger"]');
         triggerInput.name = 'trigger';
@@ -181,6 +184,13 @@ export class UiUtils {
         // Event listener for the 'remove feature' button
         const removeFeatureButton = featureCard.querySelector('.remove-feature-button');
         removeFeatureButton.addEventListener('click', async () => {
+            if (featureCard.dataset.isNew === 'true') {
+                featureCard.remove();
+                if (UiElements.botFeaturesDisplay.childElementCount === 0) {
+                    UiElements.saveFeaturesBtn.classList.add('hidden');
+                }
+                return;
+            }
             const response = await RequestHelper.delete(`/deleteBotFeature?idBot=${botFeature.idBot}&idFeature=${botFeature.idBotFeature}&trigger=${botFeature.trigger}`);
             const jsonResponseBody = await RequestHelper.handleResponse(response);
             if (!jsonResponseBody) {
@@ -205,6 +215,7 @@ export class UiUtils {
         }
         // Append the feature card to 'bot-features-display'
         UiElements.botFeaturesDisplay.appendChild(featureCard);
+        UiElements.saveFeaturesBtn.classList.remove('hidden');
     }
     static addNewFeatureCard() {
         const index = UiElements.botFeaturesDisplay.querySelectorAll('.feature-card').length;

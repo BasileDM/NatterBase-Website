@@ -106,7 +106,7 @@ export class UiUtils {
     UiElements.botFeaturesPlaceholder.classList.add('hidden');
 
     if (currentBot.botFeatures.length === 0) {
-      UiElements.saveFeaturesBtn.classList.add('hidden'); // remove class on add new feature
+      UiElements.saveFeaturesBtn.classList.add('hidden');
     }
 
     // Clear existing features
@@ -125,7 +125,6 @@ export class UiUtils {
   }
 
   private static updateBotsList(bots: any): void {
-
     if (UiElements.botProfileSelector) {
       const currentSelectedIndex = UiElements.botProfileSelector.selectedIndex;
       UiElements.botProfileSelector.options.length = 1;
@@ -195,6 +194,10 @@ export class UiUtils {
     const featureCard = clone.querySelector('.feature-card') as HTMLElement;
     featureCard.setAttribute('data-index', index.toString());
 
+    if (!botFeature) {
+      featureCard.dataset.isNew = true.toString();
+    }
+
     // Set the 'trigger' input value
     const triggerInput = featureCard.querySelector('input[name="trigger"]') as HTMLInputElement;
     triggerInput.name = 'trigger';
@@ -219,6 +222,13 @@ export class UiUtils {
     // Event listener for the 'remove feature' button
     const removeFeatureButton = featureCard.querySelector('.remove-feature-button') as HTMLButtonElement;
     removeFeatureButton.addEventListener('click', async () => {
+      if (featureCard.dataset.isNew === 'true') {
+        featureCard.remove();
+        if (UiElements.botFeaturesDisplay.childElementCount === 0) {
+          UiElements.saveFeaturesBtn.classList.add('hidden');
+        }
+        return;
+      }
       const response = await RequestHelper.delete(`/deleteBotFeature?idBot=${botFeature.idBot}&idFeature=${botFeature.idBotFeature}&trigger=${botFeature.trigger}`);
       const jsonResponseBody = await RequestHelper.handleResponse(response);
       if (!jsonResponseBody) {
@@ -246,6 +256,7 @@ export class UiUtils {
 
     // Append the feature card to 'bot-features-display'
     UiElements.botFeaturesDisplay.appendChild(featureCard);
+    UiElements.saveFeaturesBtn.classList.remove('hidden');
   }
 
   static addNewFeatureCard(): void {
