@@ -6,14 +6,20 @@
   h2 {
     @apply text-2xl font-bold;
   }
+  h3 {
+    @apply text-xl font-bold mb-2 flex;
+  }
   p {
     @apply text-sm text-gray-400;
+  }
+  svg {
+    @apply mr-2;
   }
 }
 
 @layer components {
   .btn {
-    @apply rounded py-1 px-4 hover:cursor-pointer h-fit w-fit;
+    @apply rounded-full py-1 px-4 hover:cursor-pointer h-fit w-fit shadow-sm;
   }
 
   .btn-base {
