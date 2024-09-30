@@ -139,7 +139,7 @@ final class BotService
     $bot->setBotFeatures($features);
 
     // Proceed to update the database
-    return $this->botRepository->updateBotFeatures($bot);
+    return $this->featureRepository->updateBotFeatures($bot);
   }
 
   public function deleteFeature(int $botId, int $featureId, string $trigger): bool
