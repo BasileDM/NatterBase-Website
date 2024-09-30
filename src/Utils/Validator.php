@@ -171,7 +171,7 @@ final class Validator
     return ['sanitized' => $cleanUsername];
   }
 
-  private static function sanitizeString(string $string): string
+  public static function sanitizeString(string $string): string
   {
     $string = trim($string);
     $string = strip_tags($string);
@@ -179,16 +179,19 @@ final class Validator
     return $string;
   }
 
-  private static function validateInt(string $int, string $key): array
+  public static function validateInt(string $int, string $key): array
   {
     $sanitizedInt = filter_var($int, FILTER_SANITIZE_NUMBER_INT);
     if ($sanitizedInt === '' || $int != $sanitizedInt) {
       return ['error' => 'Invalid ' . $key];
     }
+    if ($sanitizedInt < 0) {
+      return ['error' => 'Invalid ' . $key];
+    }
     return ['sanitized' => (int) $sanitizedInt];
   }
 
-  private static function validateOpenAiPrePrompt(string $prompt): array
+  public static function validateOpenAiPrePrompt(string $prompt): array
   {
     $cleanPrompt = self::sanitizeString($prompt);
     if ($cleanPrompt !== $prompt) {

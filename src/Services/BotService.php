@@ -5,30 +5,31 @@ namespace src\Services;
 use DateTime;
 use Exception;
 use src\Models\Bot;
-use src\Repositories\BotCommandRepository;
-use src\Repositories\BotFeatureRepository;
+use src\Models\BotFeature;
 use src\Repositories\BotRepository;
+use src\Repositories\CommandRepository;
+use src\Repositories\FeatureRepository;
 use src\Repositories\UserRepository;
 
 final class BotService
 {
   private UserRepository $userRepository;
   private BotRepository $botRepository;
-  private BotCommandRepository $botCommandRepository;
-  private BotFeatureRepository $botFeatureRepository;
+  private CommandRepository $commandRepository;
+  private FeatureRepository $featureRepository;
 
   public function __construct()
   {
     $this->userRepository = new UserRepository();
     $this->botRepository = new BotRepository();
-    $this->botCommandRepository = new BotCommandRepository();
-    $this->botFeatureRepository = new BotFeatureRepository();
+    $this->commandRepository = new CommandRepository();
+    $this->featureRepository = new FeatureRepository();
   }
 
   public function create(array $inputs): Bot|false
   {
     $newBot = new Bot();
-    // Adding idUser as a key of the saneInputs assoc array (for hydration)
+    // Adding idUser as a key of the saneInputs assoc array for hydration
     $inputs += ['idUser' => $_SESSION['userId']];
     $newBot->hydrateFromInputs($inputs);
     $existingBot = $this->botRepository->getByNameAndUserId($newBot->getName(), $newBot->getIdUser());
@@ -65,8 +66,8 @@ final class BotService
   {
     $botId = $bot->getIdBot();
 
-    $commands = $this->botCommandRepository->getByBotId($botId);
-    $features = $this->botFeatureRepository->getByBotId($botId);
+    $commands = $this->commandRepository->getByBotId($botId);
+    $features = $this->featureRepository->getByBotId($botId);
 
     $bot->setBotCommands($commands);
     $bot->setBotFeatures($features);
@@ -75,6 +76,7 @@ final class BotService
   public function getUserBotsArray(int $userId): array
   {
     $bots = $this->getBotsByUserId($userId);
+    
     $botsArray = array_map(fn(Bot $bot) => $bot->toArray(), $bots);
     return $botsArray;
   }
@@ -92,7 +94,7 @@ final class BotService
   public function update(array $inputs, int $botId): bool
   {
     $bot = $this->getBotById($botId);
-    if ($bot === false) {
+    if ($bot === false || $bot->getIdUser() !== $_SESSION['userId']) {
       return false;
     }
     $bot->hydrateFromInputs($inputs);
@@ -110,5 +112,42 @@ final class BotService
     } catch (Exception $e) {
       throw new Exception($e->getMessage());
     }
+  }
+
+  public function updateFeatures(array $inputs, int $botId): bool
+  {
+    // Check if the user is the owner of the bot
+    $bot = $this->getBotById($botId);
+    if ($bot === false || $bot->getIdUser() != $_SESSION['userId']) {
+      return false;
+    }
+
+    $features = [];
+    foreach ($inputs as $input) {
+      // Ensure the idBot is set in the input array
+      $input['idBot'] = $botId;
+
+      // Instantiate BotFeature using the Hydration trait
+      $feature = $this->featureRepository->getFeatureById($input['idBotFeature']);
+      $feature->hydrateFromInputs($input);
+
+      // Add to the features array
+      $features[] = $feature;
+    }
+
+    // Set the features to the bot
+    $bot->setBotFeatures($features);
+
+    // Proceed to update the database
+    return $this->featureRepository->updateBotFeatures($bot);
+  }
+
+  public function deleteFeature(int $botId, int $featureId, string $trigger): bool
+  {
+    $bot = $this->getBotById($botId);
+    if ($bot === false || $bot->getIdUser() != $_SESSION['userId']) {
+      return false;
+    }
+    return $this->featureRepository->delete($featureId, $botId, $trigger);
   }
 }

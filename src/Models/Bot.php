@@ -41,8 +41,17 @@ final class Bot
       'platformName' => $this->getPlatformName(),
       'idUser' => $this->getIdUser(),
       'botCommands' => $this->getBotCommands(),
-      'botFeatures' => $this->getBotFeatures(),
+      'botFeatures' => $this->getBotFeaturesArray(),
     ];
+  }
+
+  public function getBotFeaturesArray(): array|null
+  {
+    $featuresArray = [];
+    foreach ($this->getBotFeatures() as $feature) {
+      $featuresArray[] = $feature->toArray();
+    }
+    return $featuresArray;
   }
 
   /**

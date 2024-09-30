@@ -5,7 +5,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 
 <!-- Chat / Dashboard -->
 <section id="app-dashboard">
-  <h2>Dashboard</h2>
+  <h2>Chat</h2>
   <p>Welcome, <?= $view_userData["user"]["username"] ?>. <span id="dashboard-placeholder">Please select a bot.</span></p>
   <pre id="chat-display"></pre>
 </section>
@@ -51,7 +51,31 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 <section id="app-bot-features" class="hidden">
   <h2>Bot Features</h2>
   <p id="bot-features-placeholder">Please select a bot.</p>
-  <div id="bot-features-display"></div>
+
+  <form id="bot-features-form">
+    <div id="bot-features-display" class="flex flex-wrap gap-4 justify-start"></div>
+    <button id="add-feature-button" class="btn btn-base hidden" type="button">Add New Feature</button>
+    <button id="bot-features-save-btn" type="submit" class="btn btn-success mt-4 hidden">
+      Save Features
+    </button>
+  </form>
+
+  <!-- Feature Card Template -->
+  <template id="feature-card-template">
+    <div class="feature-card flex flex-col mt-2 bg-gray-800 text-white border-[1px] border-gray-700 shadow-lg p-4 rounded mb-4 min-w-[280px] max-w-[380px] flex-1">
+      <div class="mb-2">
+        <label class="block text-sm font-medium mb-1">Feature</label>
+        <select name="feature-select" class="w-full p-2 bg-gray-700 text-white rounded"></select>
+      </div>
+      <div class="mb-2">
+        <label class="block text-sm font-medium mb-1">Trigger</label>
+        <input type="text" name="trigger" placeholder="Enter trigger" class="w-full p-2 bg-gray-700 text-white rounded" />
+      </div>
+      <div class="feature-fields flex-grow"></div>
+      <button type="button" class="remove-feature-button mt-auto text-red-500 hover:text-red-700">Remove Feature</button>
+    </div>
+  </template>
+
 </section>
 
 <!-- Account settings -->

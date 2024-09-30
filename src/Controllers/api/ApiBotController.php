@@ -3,19 +3,23 @@
 namespace src\Controllers\api;
 
 use Exception;
+use src\Repositories\BotRepository;
 use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
 use src\Services\BotService;
 use src\Services\Response;
+use src\Utils\FeaturesValidator;
 use src\Utils\Validator;
 
 final class ApiBotController
 {
   private BotService $botService;
+  private BotRepository $botRepository;
 
   public function __construct()
   {
     $this->botService = new BotService();
+    $this->botRepository = new BotRepository();
   }
 
   use Response;
@@ -110,6 +114,56 @@ final class ApiBotController
       $this->jsonResponse(200, ['message' => 'Bot profile deleted successfully']);
     } catch (Exception $e) {
       $this->jsonResponse(500, ['message' => "Backend error"]);
+    }
+  }
+
+  #[Route('POST', '/updateBotFeatures')]
+  #[Authorization(1)]
+  public function updateBotFeatures(): void
+  {
+    try {
+      $validation = FeaturesValidator::validateInputs();
+      if (isset($validation['errors'])) {
+        $this->formErrorsResponse(400, $validation['errors']);
+        exit;
+      }
+
+      if (!isset($_GET['idBot'])) {
+        $this->jsonResponse(400, ['message' => 'Invalid Id']);
+        exit;
+      }
+
+      $result = $this->botService->updateFeatures($validation['sanitized'], $_GET['idBot']);
+      if (!$result) {
+        $this->jsonResponse(400, ['message' => 'Could not update bot features']);
+        exit;
+      }
+
+      $this->jsonResponse(200, ['message' => 'Bot features updated successfully']);
+    } catch (Exception $e) {
+      $this->jsonResponse(500, ['message' => "Backend error"]);
+    }
+  }
+
+  #[Route('DELETE', '/deleteBotFeature')]
+  #[Authorization(1)]
+  public function deleteBotFeature(): void
+  {
+    try {
+      if (!isset($_GET['idFeature']) || !isset($_GET['idBot']) || !isset($_GET['trigger'])) {
+        $this->jsonResponse(400, ['message' => 'Invalid parameters']);
+        exit;
+      }
+
+      $result = $this->botService->deleteFeature($_GET['idBot'], $_GET['idFeature'], $_GET['trigger']);
+      if (!$result) {
+        $this->jsonResponse(400, ['message' => 'Could not delete bot feature']);
+        exit;
+      }
+
+      $this->jsonResponse(200, ['message' => 'Bot feature deleted successfully']);
+    } catch (Exception $e) {
+      $this->jsonResponse(500, ['message' => "Backend error" . $e->getMessage()]);
     }
   }
 }

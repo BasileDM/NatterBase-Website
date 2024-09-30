@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Bot } from '../Bot/Bot.js';
 import { FormValidator } from '../Utils/FormValidator.js';
 import { RequestHelper } from '../Utils/RequestHelper.js';
@@ -80,6 +81,17 @@ export class ControlPanel {
     UiElements.changePassBtn.addEventListener('click', async () => {
       UiUtils.displayAccountPassInputs();
     });
+
+    // Bot features
+    UiElements.botFeaturesForm.addEventListener('submit', async (event: SubmitEvent) => {
+      event.preventDefault();
+      this.submitBotFeatures();
+    });
+    if (UiElements.addFeatureBtn) {
+      UiElements.addFeatureBtn.addEventListener('click', () => {
+        UiUtils.addNewFeatureCard();
+      });
+    }
   }
 
   private async submitBotSettings(): Promise<void> {
@@ -173,5 +185,52 @@ export class ControlPanel {
         new Toast('error', 'Failed sending request. Try again later.');
       }
     });
+  }
+
+  private async submitBotFeatures(): Promise<void> {
+    const formObject: any = {};
+
+    // Collect feature data based on data-index attribute
+    const featureCards = UiElements.botFeaturesForm.querySelectorAll('.feature-card');
+    featureCards.forEach((card) => {
+      const featureData: any = {};
+      const index = card.getAttribute('data-index') || '0';
+
+      // Collect inputs within the current feature card
+      const inputs = card.querySelectorAll('input, select, textarea');
+      inputs.forEach((inputElement) => {
+        if (
+          inputElement instanceof HTMLInputElement ||
+          inputElement instanceof HTMLSelectElement ||
+          inputElement instanceof HTMLTextAreaElement
+        ) {
+          featureData[inputElement.name] = inputElement.value;
+        }
+      });
+
+      // Assign the feature data to the formObject using the index as a key
+      formObject[index] = featureData;
+    });
+
+    try {
+      const botId = UiElements.botProfileSelector.value;
+      const response = await RequestHelper.post(`/updateBotFeatures?idBot=${botId}`, formObject);
+      const jsonResponseBody = await RequestHelper.handleResponse(response);
+      if (!jsonResponseBody) {
+        return;
+      }
+
+      if (jsonResponseBody.formErrors) {
+        new FormValidator('bot-features-form').displayFormErrors(jsonResponseBody.formErrors);
+        return;
+      }
+
+      new Toast('success', 'Bot features updated successfully!');
+      UiUtils.updateInterface();
+    }
+    catch (error) {
+      console.error('Unexpected error: ', error);
+      new Toast('error', 'Failed to save bot features. Try again later.');
+    }
   }
 }

@@ -1,3 +1,5 @@
+import { Feature } from './Feature.js';
+
 export interface BotSettings {
   twitchToken: string;
   openAiKey: string;
@@ -6,5 +8,5 @@ export interface BotSettings {
   openAiPrePrompt: string;
   maxOpenaiMessageLength: number;
   commands: string[];
-  features: string[];
+  features: Feature[];
 }

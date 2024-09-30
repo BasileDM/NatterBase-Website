@@ -6,6 +6,7 @@ use Exception;
 use PDO;
 use src\Database\Database;
 use src\Models\Bot;
+use src\Models\BotFeature;
 
 final class BotRepository
 {
@@ -90,12 +91,11 @@ final class BotRepository
   public function getByUserId(int $userId): array|false
   {
     try {
-
       $query = 'SELECT Bots.*, Bot_Language_Models.name AS model_name, Bot_Platforms.name AS platform_name
-    FROM Bots
-    LEFT JOIN Bot_Language_models ON Bots.id_model = Bot_Language_Models.id_model
-    LEFT JOIN Bot_Platforms ON Bots.id_platform = Bot_Platforms.id_platform
-    WHERE id_user = :userId';
+                FROM Bots
+                LEFT JOIN Bot_Language_models ON Bots.id_model = Bot_Language_Models.id_model
+                LEFT JOIN Bot_Platforms ON Bots.id_platform = Bot_Platforms.id_platform
+                WHERE id_user = :userId';
       $statement = $this->pdo->prepare($query);
       $statement->execute([':userId' => $userId]);
       $botProfiles = $statement->fetchAll(PDO::FETCH_CLASS, Bot::class);
