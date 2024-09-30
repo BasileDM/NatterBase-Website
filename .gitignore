@@ -1,5 +1,7 @@
-# Local PHP config file
 config.local.php
+public/assets/js/*.js
+!public/assets/js/lib/
+!public/assets/js/lib/*.js
 /SQL
 /.vscode
 
