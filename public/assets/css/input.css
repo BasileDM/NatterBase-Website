@@ -6,14 +6,20 @@
   h2 {
     @apply text-2xl font-bold;
   }
+  h3 {
+    @apply text-xl font-bold mb-2 flex;
+  }
   p {
     @apply text-sm text-gray-400;
+  }
+  svg {
+    @apply mr-2;
   }
 }
 
 @layer components {
   .btn {
-    @apply rounded py-1 px-4 hover:cursor-pointer h-fit;
+    @apply rounded-full py-1 px-4 hover:cursor-pointer h-fit w-fit shadow-sm;
   }
 
   .btn-base {
@@ -22,6 +28,10 @@
 
   .btn-success {
     @apply bg-green-700 text-white hover:bg-green-800;
+  }
+
+  .btn-disabled {
+    @apply bg-gray-500 text-white hover:bg-gray-600 hover:cursor-not-allowed;
   }
 
   .btn-alert {
@@ -39,7 +49,7 @@
   .toast-error {
     @apply border-l-4 border-l-red-500;
   }
-  
+
   .banner {
     @apply w-full text-center z-50;
     /* @apply w-full text-center fixed top-0 left-0 z-50; */
@@ -58,10 +68,47 @@
   }
 
   .input {
-    @apply text-white disabled:text-gray-400 p-1 rounded-md bg-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500
+    @apply text-white disabled:text-gray-400 p-1 rounded-md bg-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500;
   }
 
   .invalid-input {
     @apply border-red-500 border-[1px];
+  }
+
+  /* Modal classes */
+  .modal {
+    @apply max-h-[80vh] overflow-y-auto border border-gray-700 rounded-lg p-6 max-w-lg mx-auto bg-gray-800 text-white shadow-lg;
+  }
+
+  .modal[open] {
+    @apply animate-modal-open;
+  }
+
+  .modal.closing {
+    @apply animate-modal-close;
+  }
+
+  .modal-content {
+    @apply flex flex-col items-center justify-center;
+  }
+
+  .modal-message {
+    @apply text-lg text-center mb-6;
+  }
+
+  .modal-buttons {
+    @apply flex space-x-4;
+  }
+
+  .confirm-button {
+    @apply bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition duration-200;
+  }
+
+  .cancel-button {
+    @apply bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded transition duration-200;
+  }
+
+  .modal::backdrop {
+    @apply bg-black bg-opacity-50;
   }
 }

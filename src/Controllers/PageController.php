@@ -36,10 +36,10 @@ final class PageController
     exit;
   }
 
-  #[Route('GET', '/features')]
+  #[Route('GET', '/docs')]
   public function displayAboutPage(): void
   {
-    $this->render("features", ["section" => "features"]);
+    $this->render("docs", ["section" => "docs"]);
     exit;
   }
 

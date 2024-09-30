@@ -2,6 +2,14 @@
 import { Toast } from '../Components/Toast.js';
 
 export class RequestHelper {
+
+  /**
+   *
+   * Main requests methods (POST, GET, DELETE)
+   *
+   */
+
+  // POST
   static async post(url: string, data: object): Promise<Response> {
     try {
       const response = await fetch(url, {
@@ -19,6 +27,7 @@ export class RequestHelper {
     }
   }
 
+  // GET
   static async get(url: string): Promise<Response> {
     try {
       const response = await fetch(url);
@@ -35,6 +44,25 @@ export class RequestHelper {
     }
   }
 
+  // DELETE
+  static async delete(url: string): Promise<Response> {
+    try {
+      const response = await fetch(url, {
+        method: 'DELETE',
+      });
+      return response;
+    }
+    catch (error) {
+      console.error('Unexpected error: ', error);
+      throw new Error('Failed sending request. Try again later.');
+    }
+  }
+
+  /**
+   *
+   * Helper methods
+   *
+   */
   static async handleResponse(response: Response): Promise<any|false> {
     const responseBody = await response.json();
     if (!response.ok && responseBody.message) {

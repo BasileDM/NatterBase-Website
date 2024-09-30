@@ -36,12 +36,22 @@ export const theme = {
           transform: 'translateX(150%)',
         },
       },
+      'modal-open': {
+        '0%': { opacity: '0', transform: 'translateY(-20px) scale(0.95)' },
+        '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+      },
+      'modal-close': {
+        '0%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+        '100%': { opacity: '0', transform: 'translateY(-20px) scale(0.95)' },
+      },
     },
     animation: {
       slideIn: 'slideIn 0.5s ease-in-out',
       slideOut: 'slideOut 0.5s ease-in-out',
       toastSlideIn: 'toastSlideIn 0.5s ease-in-out',
       toastSlideOut: 'toastSlideOut 0.5s ease-in-out',
+      'modal-open': 'modal-open 0.3s ease-out forwards',
+      'modal-close': 'modal-close 0.3s ease-in forwards',
     },
   },
 };
