@@ -2,6 +2,8 @@ export class UiElements {
   // Control panel
   public static botProfileSelector = document.getElementById('bot-profiles-selector') as HTMLSelectElement;
   public static runBotButton = document.getElementById('run-bot-btn') as HTMLElement;
+  public static runBotText = document.getElementById('run-bot-text') as HTMLElement;
+  public static runBotIcon = document.getElementById('run-bot-icon') as HTMLElement;
   public static runBotBtnDisabled = document.getElementById('run-bot-btn-disabled') as HTMLElement;
 
   // Dashboard section

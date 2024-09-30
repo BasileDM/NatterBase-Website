@@ -24,10 +24,10 @@ $botProfiles = $view_userData['botProfiles'];
   </div>
   <div id="bot-buttons">
     <div id="run-bot-btn" class="btn btn-success items-center justify-center hidden rounded-full">
-      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+      <svg id="run-bot-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
         <path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z" />
       </svg>
-      Run bot
+      <span id="run-bot-text">Run bot</span>
     </div>
     <div id="run-bot-btn-disabled" class="btn btn-success btn-disabled items-center justify-center rounded-full flex">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">

@@ -36,16 +36,28 @@ export class ControlPanel {
     UiElements.runBotButton.addEventListener('click', () => {
       if (this.bot && this.bot.isRunning) {
         this.bot.stop();
-        UiElements.runBotButton.innerText = 'Run bot';
+        UiElements.runBotButton.classList.add('btn-success');
+        UiElements.runBotButton.classList.remove('btn-alert');
+        UiElements.runBotText.innerText = 'Run bot';
+        // Play icon
+        UiElements.runBotIcon.innerHTML = '<path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z" />';
       }
       else if (this.bot) {
         this.bot.start();
-        UiElements.runBotButton.innerText = 'Stop bot';
+        UiElements.runBotButton.classList.remove('btn-success');
+        UiElements.runBotButton.classList.add('btn-alert');
+        UiElements.runBotText.innerText = 'Stop bot';
+        // Stop icon
+        UiElements.runBotIcon.innerHTML = '<path d="M324-636v312-312ZM218-218v-524h524v524H218Zm106-106h312v-312H324v312Z"/>';
       }
       else {
         this.bot = new Bot();
         this.bot.start();
-        UiElements.runBotButton.innerText = 'Stop bot';
+        UiElements.runBotButton.classList.remove('btn-success');
+        UiElements.runBotButton.classList.add('btn-alert');
+        UiElements.runBotText.innerText = 'Stop bot';
+        // Stop icon
+        UiElements.runBotIcon.innerHTML = '<path d="M324-636v312-312ZM218-218v-524h524v524H218Zm106-106h312v-312H324v312Z"/>';
       }
     });
 
