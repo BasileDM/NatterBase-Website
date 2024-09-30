@@ -27,12 +27,14 @@ export class UiUtils {
       this.updateBotFeaturesSection(currentBot, userData);
       this.updateDashboardSection();
       UiElements.runBotButton.classList.remove('hidden');
+      UiElements.runBotButton.classList.add('flex');
       UiElements.runBotBtnDisabled.classList.add('hidden');
     }
     else {
       this.updateBotSettingsSection(null);
       this.updateBotFeaturesSection(null, null);
       this.resetPlaceholders();
+      UiElements.runBotButton.classList.remove('flex');
       UiElements.runBotButton.classList.add('hidden');
       UiElements.runBotBtnDisabled.classList.remove('hidden');
     }
