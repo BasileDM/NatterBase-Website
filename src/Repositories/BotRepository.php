@@ -166,35 +166,18 @@ final class BotRepository
 
   private function updateOrCreateFeature(BotFeature $feature): bool
   {
-    // Check if there is already a feature with the same trigger for this bot
-    $query = 'SELECT id_bot_feature FROM Relation_Bots_Features
-              WHERE `trigger` = :trigger
-              AND id_bot = :idBot';
-
-    $stmt = $this->pdo->prepare($query);
-    $stmt->execute([
-      'trigger' => $feature->getTrigger(),
-      'idBot' => $feature->getIdBot()
-    ]);
-
-    $existingFeatureId = $stmt->fetchColumn();
-
-    // If there is an existing feature with the same trigger
-    if ($existingFeatureId && $existingFeatureId != $feature->getIdBotFeature()) {
-      return false;
-    }
-
-    // Now we can safely update or insert without duplicate issues
     $query = 'INSERT INTO Relation_Bots_Features (
                 id_bot, id_bot_feature, is_admin_override, is_subscriber_override, `trigger`, max_openai_message_length, open_ai_pre_prompt, dice_sides_number
               ) VALUES (
                 :idBot, :idBotFeature, :isAdminOverride, :isSubscriberOverride, :trigger, :maxOpenaiMessageLength, :openAiPrePrompt, :diceSidesNumber
               ) ON DUPLICATE KEY UPDATE
+                id_bot_feature = :idBotFeature,
                 is_admin_override = :isAdminOverride,
                 is_subscriber_override = :isSubscriberOverride,
                 max_openai_message_length = :maxOpenaiMessageLength,
                 open_ai_pre_prompt = :openAiPrePrompt,
-                dice_sides_number = :diceSidesNumber';
+                dice_sides_number = :diceSidesNumber;
+              ';
 
     $stmt = $this->pdo->prepare($query);
     $params = [
