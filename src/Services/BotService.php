@@ -124,21 +124,13 @@ final class BotService
 
     $features = [];
     foreach ($inputs as $input) {
-      // Ensure the idBot is set in the input array
       $input['idBot'] = $botId;
-
-      // Instantiate BotFeature using the Hydration trait
       $feature = $this->featureRepository->getFeatureById($input['idBotFeature']);
       $feature->hydrateFromInputs($input);
-
-      // Add to the features array
       $features[] = $feature;
     }
 
-    // Set the features to the bot
     $bot->setBotFeatures($features);
-
-    // Proceed to update the database
     return $this->featureRepository->updateBotFeatures($bot);
   }
 

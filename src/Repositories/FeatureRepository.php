@@ -70,7 +70,9 @@ final class FeatureRepository
       ':trigger' => $trigger
     ]);
     return $statement->rowCount() > 0;
-  }public function updateBotFeatures(Bot $bot): bool
+  }
+  
+  public function updateBotFeatures(Bot $bot): bool
   {
     try {
       $features = $bot->getBotFeatures();

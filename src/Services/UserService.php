@@ -29,8 +29,7 @@ final class UserService
     $user->hydrateFromInputs($inputs);
     $existingUser = $this->userRepository->getUserByMail($user->getMail());
 
-    if ($existingUser)
-      return false;
+    if ($existingUser) return false;
     else {
       $user->setIsActivated(false);
       $user->setGdpr(gmdate('Y-m-d H:i:s'));

@@ -40,20 +40,21 @@
     </div>
     <div>
       <label for="password-register" class="block text-sm font-medium">Password*</label>
-      <input id="password-register" type="password" class="w-full input" />
+      <input id="password-register" type="password" class="w-full input" required/>
       <span id="password-register-error-display" class="text-red-500"></span>
     </div>
     <div>
       <label for="password-confirm" class="block text-sm font-medium">Confirm password*</label>
-      <input id="password-confirm" type="password" class="w-full input" />
+      <input id="password-confirm" type="password" class="w-full input" required/>
       <span id="password-confirm-error-display" class="text-red-500"></span>
     </div>
     <div class="flex items-center">
-      <label for="gdpr" class="text-sm font-medium w-auto text-nowrap">I accept the <a href="#">GDPR</a></label>
+      <label for="gdpr" class="text-sm font-medium w-auto text-nowrap">I accept the <a href="#">GDPR*</a></label>
       <input
         id="gdpr"
         type="checkbox"
         class="m-auto p-2 rounded-md bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        required
       />
       <span id="gdpr-error-display" class="text-red-500"></span>
     </div>
