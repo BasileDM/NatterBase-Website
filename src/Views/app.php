@@ -31,11 +31,6 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <div id="account-section-twitch-channel-error-display" class="text-red-500"></div>
     </div>
     <div>
-      <label class="block text-sm font-medium" for="account-section-openai-pre-prompt">OpenAI pre-prompt:</label>
-      <textarea class="input" name="openaiPrePrompt" id="account-section-openai-pre-prompt"></textarea>
-      <div id="account-section-openai-pre-prompt-error-display" class="text-red-500"></div>
-    </div>
-    <div>
       <label class="block text-sm font-medium" for="bot-cooldown">Cooldown</label>
       <input class="input" type="number" name="cooldownTime" id="bot-cooldown">
       <div id="bot-cooldown-error-display" class="text-red-500"></div>

@@ -20,14 +20,13 @@ final class BotRepository
   public function insert(Bot $botProfile): Bot
   {
     try {
-      $query = 'INSERT INTO Bots (name, creation_date, cooldown_time, max_openai_message_length, id_model, id_platform, id_user) 
-              VALUES (:name, :creationDate, :cooldownTime, :maxOpenaiMessageLength, :idModel, :idPlatform, :idUser)';
+      $query = 'INSERT INTO Bots (name, creation_date, cooldown_time, id_model, id_platform, id_user) 
+                VALUES (:name, :creationDate, :cooldownTime, :idModel, :idPlatform, :idUser)';
       $statement = $this->pdo->prepare($query);
       $statement->execute([
         ':name' => $botProfile->getName(),
         ':creationDate' => $botProfile->getCreationDate(),
         ':cooldownTime' => $botProfile->getCooldownTime(),
-        ':maxOpenaiMessageLength' => $botProfile->getMaxOpenaiMessageLength(),
         ':idModel' => $botProfile->getIdModel(),
         ':idPlatform' => $botProfile->getIdPlatform(),
         ':idUser' => $botProfile->getIdUser()
@@ -110,10 +109,8 @@ final class BotRepository
       $query = 'UPDATE Bots 
                 SET name = :name, 
                     creation_date = :creationDate, 
-                    cooldown_time = :cooldownTime, 
-                    max_openai_message_length = :maxOpenaiMessageLength, 
+                    cooldown_time = :cooldownTime,  
                     id_model = :idModel, 
-                    open_ai_pre_prompt = :openAiPrePrompt,
                     twitch_join_channel = :twitchJoinChannel,
                     id_platform = :idPlatform 
                 WHERE id_bot = :idBot';
@@ -123,9 +120,7 @@ final class BotRepository
         ':name' => $botProfile->getName(),
         ':creationDate' => $botProfile->getCreationDate(),
         ':cooldownTime' => $botProfile->getCooldownTime(),
-        ':maxOpenaiMessageLength' => $botProfile->getMaxOpenaiMessageLength(),
         ':idModel' => $botProfile->getIdModel(),
-        ':openAiPrePrompt' => $botProfile->getOpenAiPrePrompt(),
         ':twitchJoinChannel' => $botProfile->getTwitchJoinChannel(),
         ':idPlatform' => $botProfile->getIdPlatform(),
         ':idBot' => $botProfile->getIdBot()

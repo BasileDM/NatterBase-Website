@@ -11,7 +11,7 @@ $db = new Database();
 
 try {
   if ($db->init()) {
-    header("Location: /home?notice=dbCreated");
+    header("Location: ./?notice=dbCreated");
     die();
   }
 } catch (RuntimeException $e) {
