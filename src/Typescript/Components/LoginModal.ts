@@ -73,7 +73,7 @@ export class LoginModal {
 
         try {
           const response = await RequestHelper
-            .post('/login', formData)
+            .post('./login', formData)
             .then(RequestHelper.handleResponse);
 
           if (!response) {
@@ -81,7 +81,7 @@ export class LoginModal {
           }
           this.close();
           sessionStorage.setItem('showToast', 'You are now logged in!');
-          window.location.href = '/app';
+          window.location.href = './app';
         }
         catch {
           new Toast('error', 'Failed sending request. Try again later.');
@@ -104,7 +104,7 @@ export class LoginModal {
 
         try {
           const responseBody = await RequestHelper
-            .post('/register', formData)
+            .post('./register', formData)
             .then(RequestHelper.handleResponse);
 
           if (!responseBody) {
@@ -115,7 +115,7 @@ export class LoginModal {
             return;
           }
           this.close();
-          window.location.href = '/home?notice=registered';
+          window.location.href = './home?notice=registered';
         }
         catch (error) {
           console.error('Unexpected error: ', error);

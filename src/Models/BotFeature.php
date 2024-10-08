@@ -157,7 +157,7 @@ final class BotFeature
 
   public function getIsAdminOverride(): ?bool
   {
-    return $this->isAdminOverride;
+    return $this->isAdminOverride ?? false;
   }
 
   public function setIsAdminOverride(?bool $isAdminOverride)
@@ -167,7 +167,7 @@ final class BotFeature
 
   public function getIsSubscriberOverride(): ?bool
   {
-    return $this->isSubscriberOverride;
+    return $this->isSubscriberOverride ?? false;
   }
 
   public function setIsSubscriberOverride(?bool $isSubscriberOverride)

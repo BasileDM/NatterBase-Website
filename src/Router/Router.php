@@ -61,17 +61,22 @@ class Router
   public function handleRequest(): void
   {
     $requestMethod = $_SERVER['REQUEST_METHOD'];
-    $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    // Get URI without parameters
+    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    // Remove the subdirectory from the URI
+    $subDirectory = dirname($_SERVER['SCRIPT_NAME']);
+    $path = str_replace($subDirectory, '', $uri);
+    
     $route = $this->routes[$requestMethod][$path] ?? null;
     $userAuthLevel = $_SESSION['authLevel'] ?? 0;
 
     if (!$route) {
-      header("Location: /error?code=404");
+      header("Location: ./error?code=404");
       return;
     }
 
     if ($userAuthLevel < $route['authLevel']) {
-      header("Location: /error?code=401");
+      header("Location: ./error?code=401");
       return;
     }
 

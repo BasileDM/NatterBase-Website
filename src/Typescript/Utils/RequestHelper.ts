@@ -74,7 +74,7 @@ export class RequestHelper {
   }
 
   public static async getUserData(): Promise<any|false> {
-    const response = await RequestHelper.get('/api/userData');
+    const response = await RequestHelper.get('./api/userData');
     const jsonResponseBody = await RequestHelper.handleResponse(response);
     return jsonResponseBody;
   }

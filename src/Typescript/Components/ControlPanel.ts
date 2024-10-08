@@ -111,7 +111,7 @@ export class ControlPanel {
     const formObject = Object.fromEntries(formData.entries());
     try {
       const botId = UiElements.botProfileSelector.value;
-      const response = await RequestHelper.post(`/updateBotProfile?idBot=${botId}`, formObject);
+      const response = await RequestHelper.post(`./updateBotProfile?idBot=${botId}`, formObject);
       const jsonResponseBody = await RequestHelper.handleResponse(response);
       if (!jsonResponseBody) {
         return;
@@ -137,7 +137,7 @@ export class ControlPanel {
     this.confirmationModal.open('Are you sure you want to delete this bot profile?', async () => {
       try {
         const botId = UiElements.botProfileSelector.value;
-        const response = await RequestHelper.delete(`/deleteBotProfile?idBot=${botId}`);
+        const response = await RequestHelper.delete(`./deleteBotProfile?idBot=${botId}`);
         const jsonResponseBody = await RequestHelper.handleResponse(response);
         if (!jsonResponseBody) {
           return;
@@ -158,7 +158,7 @@ export class ControlPanel {
     const formData = new FormData(UiElements.accountSettingsForm);
     const formObject = Object.fromEntries(formData.entries());
     try {
-      const response = await RequestHelper.post('/api/updateUserData', formObject);
+      const response = await RequestHelper.post('./api/updateUserData', formObject);
       const jsonResponseBody = await RequestHelper.handleResponse(response);
 
       if (!jsonResponseBody) {
@@ -182,7 +182,7 @@ export class ControlPanel {
   private async deleteAccount() {
     this.confirmationModal.open('This is permanent! Are you sure you want to delete your account?', async () => {
       try {
-        const response = await RequestHelper.delete('/api/deleteUser');
+        const response = await RequestHelper.delete('./api/deleteUser');
         const jsonResponseBody = await RequestHelper.handleResponse(response);
         if (!jsonResponseBody) {
           return;
@@ -226,7 +226,7 @@ export class ControlPanel {
 
     try {
       const botId = UiElements.botProfileSelector.value;
-      const response = await RequestHelper.post(`/updateBotFeatures?idBot=${botId}`, formObject);
+      const response = await RequestHelper.post(`./updateBotFeatures?idBot=${botId}`, formObject);
       const jsonResponseBody = await RequestHelper.handleResponse(response);
       if (!jsonResponseBody) {
         return;

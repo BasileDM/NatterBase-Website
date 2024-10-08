@@ -68,7 +68,7 @@ final class AuthController
   public function logout(): void
   {
     session_destroy();
-    $this->jsonResponse(200, ['message' => 'Logout successful'], '/');
+    $this->jsonResponse(200, ['message' => 'Logout successful'], './');
   }
 
   #[Route('GET', '/dropt')]

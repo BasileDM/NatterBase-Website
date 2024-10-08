@@ -42,7 +42,7 @@ export class FormModal extends AbstractModal {
     const formObject = Object.fromEntries(formData.entries());
 
     try {
-      const response = await RequestHelper.post(`/${this.submitRoute}`, formObject)
+      const response = await RequestHelper.post(`./${this.submitRoute}`, formObject)
         .then(RequestHelper.handleResponse);
 
       if (!response) {
