@@ -50,7 +50,7 @@ final class Database
 
   public function doesUsersTableExists(): bool
   {
-    $sql = "SHOW TABLES FROM " . DB_NAME . " LIKE 'USERS';";
+    $sql = "SHOW TABLES FROM " . DB_NAME . " LIKE 'Users';";
     $result = $this->db->query($sql)->fetch();
     return $result !== false;
   }
