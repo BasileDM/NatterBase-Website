@@ -98,4 +98,24 @@ final class UserRepository
       throw new Exception($e->getMessage());
     }
   }
+
+  public function dropTables()
+  {
+    $tables = [
+      'bot_commands',
+      'relation_bots_features',
+      'bot_features',
+      'bots',
+      'bot_platforms',
+      'users',
+      'user_roles',
+      'bot_feature_categories',
+      'bot_language_models',
+    ];
+
+    foreach ($tables as $table) {
+      $statement = $this->pdo->prepare("DROP TABLE IF EXISTS $table");
+      $statement->execute();
+    }
+  }
 }

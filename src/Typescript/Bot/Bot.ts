@@ -86,7 +86,7 @@ export class Bot {
 
   private async getSettings(): Promise<BotSettings> {
     const selectedBotIndex = Number(UiElements.botProfileSelector.selectedIndex) - 1;
-    const response = await RequestHelper.get('/api/userData');
+    const response = await RequestHelper.get('./api/userData');
     const result = await RequestHelper.handleResponse(response);
     const currentProfile = result.botProfiles[selectedBotIndex];
 

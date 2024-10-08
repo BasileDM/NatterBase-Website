@@ -231,7 +231,7 @@ export class UiUtils {
         }
         return;
       }
-      const response = await RequestHelper.delete(`/deleteBotFeature?idBot=${botFeature.idBot}&idFeature=${botFeature.idBotFeature}&trigger=${botFeature.trigger}`);
+      const response = await RequestHelper.delete(`./deleteBotFeature?idBot=${botFeature.idBot}&idFeature=${botFeature.idBotFeature}&trigger=${botFeature.trigger}`);
       const jsonResponseBody = await RequestHelper.handleResponse(response);
       if (!jsonResponseBody) {
         return;

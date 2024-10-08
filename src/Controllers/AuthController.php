@@ -2,6 +2,8 @@
 
 namespace src\Controllers;
 
+use src\Repositories\UserRepository;
+use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
 use src\Services\Authenticator;
 use src\Services\Response;
@@ -66,6 +68,14 @@ final class AuthController
   public function logout(): void
   {
     session_destroy();
-    $this->jsonResponse(200, ['message' => 'Logout successful'], '/');
+    $this->jsonResponse(200, ['message' => 'Logout successful'], './');
+  }
+
+  #[Route('GET', '/dropt')]
+  #[Authorization(2)]
+  public function dropTables()
+  {
+    $userRepo = new UserRepository();
+    $userRepo->dropTables();
   }
 }
