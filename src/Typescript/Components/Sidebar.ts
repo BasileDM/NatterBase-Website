@@ -25,6 +25,14 @@ export class Sidebar {
     // App navigation buttons
     for (let i = 0; i < UiElements.appNavButtons.length; i++) {
       UiElements.appNavButtons[i].addEventListener('click', () => {
+
+        // Remove active section classes for all buttons
+        UiElements.appNavButtons.forEach((button) => {
+          button.classList.remove('bg-gray-700', 'text-gray-300');
+        });
+        // Add active section classes for the clicked button
+        UiElements.appNavButtons[i].classList.add('bg-gray-700', 'text-gray-300');
+
         // Get the section ID from the data-section attribute
         const sectionId = UiElements.appNavButtons[i].dataset.section;
 
