@@ -25,7 +25,7 @@ final class PageController
   #[Route('GET', '/')]
   public function redirectToHomePage(): void
   {
-    header("Location: /home");
+    header("Location: ./home");
     exit;
   }
 

@@ -2,13 +2,14 @@ import { UiElements } from '../Utils/UiElements.js';
 import { UiUtils } from '../Utils/UiUtils.js';
 
 export class Sidebar {
+  private isAppPage = window.location.pathname.includes('/app');
   private isOpen: boolean = false;
   private openAnimationClass: string;
   private closeAnimationClass: string;
   private animationDuration: number = 450;
 
   constructor() {
-    if (window.location.pathname == '/app') {
+    if (this.isAppPage) {
       UiElements.sidebar.classList.remove('hidden');
     }
     if (window.innerWidth > 640) {
@@ -49,10 +50,10 @@ export class Sidebar {
         UiElements.websiteNavElement.classList.remove('hidden');
         document.getElementById('sidebar-app-button')?.classList.remove('hidden');
       }
-      if (!this.isOpen && window.innerWidth > 640 && window.location.pathname == '/app') {
+      if (!this.isOpen && window.innerWidth > 640 && this.isAppPage) {
         this.open();
       }
-      if (this.isOpen && window.innerWidth > 640 && window.location.pathname != '/app') {
+      if (this.isOpen && window.innerWidth > 640 && !this.isAppPage) {
         this.close();
       }
     });

@@ -70,7 +70,9 @@ final class FeatureRepository
       ':trigger' => $trigger
     ]);
     return $statement->rowCount() > 0;
-  }public function updateBotFeatures(Bot $bot): bool
+  }
+  
+  public function updateBotFeatures(Bot $bot): bool
   {
     try {
       $features = $bot->getBotFeatures();
@@ -104,8 +106,8 @@ final class FeatureRepository
     $params = [
       'idBot' => $feature->getIdBot(),
       'idBotFeature' => $feature->getIdBotFeature(),
-      'isAdminOverride' => $feature->isIsAdmin(),
-      'isSubscriberOverride' => $feature->isIsSubscriber(),
+      'isAdminOverride' => $feature->isIsAdmin() !== null ? (int) $feature->isIsAdmin() : 0,
+      'isSubscriberOverride' => $feature->isIsSubscriber() !== null ? (int) $feature->isIsSubscriber() : 0,
       'trigger' => $feature->getTrigger(),
       'maxOpenaiMessageLength' => $feature->getMaxOpenaiMessageLength(),
       'openAiPrePrompt' => $feature->getOpenAiPrePrompt(),
