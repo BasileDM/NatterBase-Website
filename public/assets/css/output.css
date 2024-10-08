@@ -1117,6 +1117,10 @@ svg {
   animation: toastSlideOut 0.5s ease-in-out;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .resize {
   resize: both;
 }
@@ -1191,6 +1195,10 @@ svg {
 
 .overflow-y-auto {
   overflow-y: auto;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll;
 }
 
 .text-nowrap {
@@ -1414,24 +1422,27 @@ svg {
 /* For Chromium, and Safari */
 
 .custom-scrollbar::-webkit-scrollbar {
+  width: 0.5rem;
+  border-radius: 9999px;
   background-color: transparent;
-  border-radius: 9999px !important;
-  width: 8px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
+  background-color: transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #4b5563;
-  border-radius: 9999px !important;
-  border: 2px solid transparent;
+  border-radius: 9999px;
+  border-width: 2px;
+  border-color: transparent;
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
   background-clip: content-box;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #6b7280;
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
 }
 
 .hover\:cursor-pointer:hover {

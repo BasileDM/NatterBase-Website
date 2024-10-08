@@ -121,23 +121,15 @@
 
   /* For Chromium, and Safari */
   .custom-scrollbar::-webkit-scrollbar {
-    background-color: transparent;
-    border-radius: 9999px !important;
-    width: 8px;
+    @apply w-2 bg-transparent rounded-full;
   }
-
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
+    @apply bg-transparent;
   }
-
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: theme('colors.gray.600');
-    border-radius: 9999px !important;
-    border: 2px solid transparent;
-    background-clip: content-box;
+    @apply bg-gray-600 rounded-full border-2 border-transparent bg-clip-content;
   }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: theme('colors.gray.500');
+  .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    @apply bg-gray-500;
   }
 }
