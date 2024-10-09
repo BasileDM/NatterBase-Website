@@ -6,6 +6,7 @@ use src\Repositories\UserRepository;
 use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
 use src\Services\Authenticator;
+use src\Services\MailService;
 use src\Services\Response;
 use src\Services\UserService;
 use src\Utils\Validator;
@@ -31,11 +32,27 @@ final class AuthController
       exit;
     }
 
-    $result = $this->userService->create($validationResult['sanitized']);
-    if (!$result) {
+    $user = $this->userService->create($validationResult['sanitized']);
+
+    if (!$user) {
       $this->jsonResponse(400, ['message' => 'User already exists']);
     } else {
+      MailService::sendActivationMail($user, FULL_URL);
       $this->jsonResponse(200, ['message' => 'Registration successful']);
+    }
+  }
+
+  #[Route('GET', '/activate')]
+  public function activateUser(): void
+  {
+    $token = $_GET['token'] ?? '';
+
+    $result = $this->userService->activateUser($token);
+
+    if ($result['status'] === 'error') {
+      $this->jsonResponse(400, ['message' => $result['message']]);
+    } else {
+      $this->jsonResponse(200, ['message' => 'Account activated'], './?notice=activated');
     }
   }
 
