@@ -1,7 +1,7 @@
 <?php
 include __DIR__ . '/Includes/header.php';
 ?>
-<h2 class="text-4xl mb-6 border-b border-gray-700 pb-2">NatterBase Documentation</h2>
+<h2 class="text-4xl mb-6 border-b border-gray-700 pb-2">Documentation</h2>
 <p class="mb-8 text-lg leading-relaxed">Welcome to the NatterBase documentation. This guide will help you understand how to use the site and its features.</p>
 
 <div class="flex flex-col sm:flex-row sm:space-x-4">
@@ -74,8 +74,8 @@ include __DIR__ . '/Includes/header.php';
     <li>In the "Bot settings" section, enter the channel name you want the bot to join. Don't forget to click save.</li>
     <li>You can add features to your bot in the "Bot Features" section. More info about each feature can be found down below.</li>
     <li>Click save if you added or modified any features, and click "Run Bot" !</li>
-    <li>There you go, you can go to the chat section and should be able to see the messages of the channel you are connected to.</li>
   </ol>
+  <p class="text-gray-300 pt-4">There you go, you can go to the chat section and should be able to see the messages of the channel you are connected to.</p>
 </section>
 
 <section id="features" class="mb-12">
