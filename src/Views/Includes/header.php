@@ -70,7 +70,7 @@
   <!-- Sidebar and main content -->
   <main class="flex flex-1 relative overflow-hidden">
     <?php include __DIR__ . '/sidebar.php'; ?>
-    <div class="flex-1 p-4 overflow-y-auto">
+    <div class="flex-1 p-4 overflow-y-auto custom-scrollbar">
       <?php
       include __DIR__ . '/Components/toast.html';
       include __DIR__ . '/Components/Modals/loginModal.html';

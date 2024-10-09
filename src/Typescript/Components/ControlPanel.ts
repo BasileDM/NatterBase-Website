@@ -34,30 +34,23 @@ export class ControlPanel {
 
     // Run bot button
     UiElements.runBotButton.addEventListener('click', () => {
-      if (this.bot && this.bot.isRunning) {
-        this.bot.stop();
-        UiElements.runBotButton.classList.add('btn-success');
-        UiElements.runBotButton.classList.remove('btn-alert');
-        UiElements.runBotText.innerText = 'Run bot';
-        // Play icon
-        UiElements.runBotIcon.innerHTML = '<path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z" />';
+      if (!sessionStorage.getItem('natterbaseTwitchToken') && !UiElements.twitchTokenInput.value) {
+        new Toast('error', 'Set a Twitch token in "Local keys" to run the bot.');
+        return;
       }
-      else if (this.bot) {
-        this.bot.start();
-        UiElements.runBotButton.classList.remove('btn-success');
-        UiElements.runBotButton.classList.add('btn-alert');
-        UiElements.runBotText.innerText = 'Stop bot';
-        // Stop icon
-        UiElements.runBotIcon.innerHTML = '<path d="M324-636v312-312ZM218-218v-524h524v524H218Zm106-106h312v-312H324v312Z"/>';
+      if (!UiElements.twitchJoinChannelInput.value || UiElements.twitchJoinChannelInput.value === '') {
+        new Toast('error', 'Set a Twitch channel to join in "Bot settings".');
+        return;
+      }
+      if (!sessionStorage.getItem('natterbaseOpenAiKey') && !UiElements.openAiKeyInput.value) {
+        this.confirmationModal.open('You didn\'t set an OpenAI API key. AI related features will not work. Do you want to continue?', () => {
+          this.runBot();
+          return;
+        });
       }
       else {
-        this.bot = new Bot();
-        this.bot.start();
-        UiElements.runBotButton.classList.remove('btn-success');
-        UiElements.runBotButton.classList.add('btn-alert');
-        UiElements.runBotText.innerText = 'Stop bot';
-        // Stop icon
-        UiElements.runBotIcon.innerHTML = '<path d="M324-636v312-312ZM218-218v-524h524v524H218Zm106-106h312v-312H324v312Z"/>';
+        this.runBot();
+        return;
       }
     });
 
@@ -103,6 +96,34 @@ export class ControlPanel {
       UiElements.addFeatureBtn.addEventListener('click', () => {
         UiUtils.addNewFeatureCard();
       });
+    }
+  }
+
+  private runBot(): void {
+    if (this.bot && this.bot.isRunning) {
+      this.bot.stop();
+      UiElements.runBotButton.classList.add('btn-success');
+      UiElements.runBotButton.classList.remove('btn-alert');
+      UiElements.runBotText.innerText = 'Run bot';
+      // Play icon
+      UiElements.runBotIcon.innerHTML = '<path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z" />';
+    }
+    else if (this.bot) {
+      this.bot.start();
+      UiElements.runBotButton.classList.remove('btn-success');
+      UiElements.runBotButton.classList.add('btn-alert');
+      UiElements.runBotText.innerText = 'Stop bot';
+      // Stop icon
+      UiElements.runBotIcon.innerHTML = '<path d="M324-636v312-312ZM218-218v-524h524v524H218Zm106-106h312v-312H324v312Z"/>';
+    }
+    else {
+      this.bot = new Bot();
+      this.bot.start();
+      UiElements.runBotButton.classList.remove('btn-success');
+      UiElements.runBotButton.classList.add('btn-alert');
+      UiElements.runBotText.innerText = 'Stop bot';
+      // Stop icon
+      UiElements.runBotIcon.innerHTML = '<path d="M324-636v312-312ZM218-218v-524h524v524H218Zm106-106h312v-312H324v312Z"/>';
     }
   }
 

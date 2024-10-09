@@ -77,5 +77,7 @@ final class AuthController
   {
     $userRepo = new UserRepository();
     $userRepo->dropTables();
+    echo 'Tables dropped';
+    exit;
   }
 }

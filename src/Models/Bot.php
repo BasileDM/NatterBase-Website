@@ -10,10 +10,8 @@ final class Bot
   private string $name;
   private string $creationDate;
   private int $cooldownTime = 0;
-  private string $maxOpenaiMessageLength = '120';
   private int $idModel = 1;
   private string $modelName;
-  private string|null $openAiPrePrompt;
   private string|null $twitchJoinChannel;
   private string $platformName;
   private int $idPlatform = 1;
@@ -32,10 +30,8 @@ final class Bot
       'name' => $this->getName(),
       'creationDate' => $this->getCreationDate(),
       'cooldownTime' => $this->getCooldownTime(),
-      'maxOpenaiMessageLength' => $this->getMaxOpenaiMessageLength(),
       'idModel' => $this->getIdModel(),
       'modelName' => $this->getModelName(),
-      'openAiPrePrompt' => $this->getOpenAiPrePrompt(),
       'twitchJoinChannel' => $this->getTwitchJoinChannel(),
       'idPlatform' => $this->getIdPlatform(),
       'platformName' => $this->getPlatformName(),
@@ -62,16 +58,16 @@ final class Bot
     return $this->idBot;
   }
 
-    /**
-     * Set the value of idBot
-     *
-     * @param   int  $idBot  
-     * 
-     */
-    public function setIdBot(int $idBot)
-    {
-        $this->idBot = $idBot;
-    }
+  /**
+   * Set the value of idBot
+   *
+   * @param   int  $idBot  
+   * 
+   */
+  public function setIdBot(int $idBot)
+  {
+    $this->idBot = $idBot;
+  }
 
   /**
    * Get the value of name
@@ -81,16 +77,16 @@ final class Bot
     return $this->name;
   }
 
-    /**
-     * Set the value of name
-     *
-     * @param   string  $name  
-     * 
-     */
-    public function setName(string $name)
-    {
-        $this->name = $name;
-    }
+  /**
+   * Set the value of name
+   *
+   * @param   string  $name  
+   * 
+   */
+  public function setName(string $name)
+  {
+    $this->name = $name;
+  }
 
   /**
    * Get the value of creationDate
@@ -100,16 +96,16 @@ final class Bot
     return $this->creationDate;
   }
 
-    /**
-     * Set the value of creationDate
-     *
-     * @param   string  $creationDate  
-     * 
-     */
-    public function setCreationDate(string $creationDate)
-    {
-        $this->creationDate = $creationDate;
-    }
+  /**
+   * Set the value of creationDate
+   *
+   * @param   string  $creationDate  
+   * 
+   */
+  public function setCreationDate(string $creationDate)
+  {
+    $this->creationDate = $creationDate;
+  }
 
   /**
    * Get the value of cooldownTime
@@ -119,35 +115,16 @@ final class Bot
     return $this->cooldownTime;
   }
 
-    /**
-     * Set the value of cooldownTime
-     *
-     * @param   int  $cooldownTime  
-     * 
-     */
-    public function setCooldownTime(int $cooldownTime)
-    {
-        $this->cooldownTime = $cooldownTime;
-    }
-
   /**
-   * Get the value of maxOpenaiMessageLength
+   * Set the value of cooldownTime
+   *
+   * @param   int  $cooldownTime  
+   * 
    */
-  public function getMaxOpenaiMessageLength(): string
+  public function setCooldownTime(int $cooldownTime)
   {
-    return $this->maxOpenaiMessageLength;
+    $this->cooldownTime = $cooldownTime;
   }
-
-    /**
-     * Set the value of maxOpenaiMessageLength
-     *
-     * @param   string  $maxOpenaiMessageLength  
-     * 
-     */
-    public function setMaxOpenaiMessageLength(string $maxOpenaiMessageLength)
-    {
-        $this->maxOpenaiMessageLength = $maxOpenaiMessageLength;
-    }
 
   /**
    * Get the value of idModel
@@ -157,16 +134,16 @@ final class Bot
     return $this->idModel;
   }
 
-    /**
-     * Set the value of idModel
-     *
-     * @param   int  $idModel  
-     * 
-     */
-    public function setIdModel(int $idModel)
-    {
-        $this->idModel = $idModel;
-    }
+  /**
+   * Set the value of idModel
+   *
+   * @param   int  $idModel  
+   * 
+   */
+  public function setIdModel(int $idModel)
+  {
+    $this->idModel = $idModel;
+  }
 
   /**
    * Get the value of idPlatform
@@ -176,16 +153,16 @@ final class Bot
     return $this->idPlatform;
   }
 
-    /**
-     * Set the value of idPlatform
-     *
-     * @param   int  $idPlatform  
-     * 
-     */
-    public function setIdPlatform(int $idPlatform)
-    {
-        $this->idPlatform = $idPlatform;
-    }
+  /**
+   * Set the value of idPlatform
+   *
+   * @param   int  $idPlatform  
+   * 
+   */
+  public function setIdPlatform(int $idPlatform)
+  {
+    $this->idPlatform = $idPlatform;
+  }
 
   /**
    * Get the value of idUser
@@ -195,16 +172,16 @@ final class Bot
     return $this->idUser;
   }
 
-    /**
-     * Set the value of idUser
-     *
-     * @param   int  $idUser  
-     * 
-     */
-    public function setIdUser(int $idUser)
-    {
-        $this->idUser = $idUser;
-    }
+  /**
+   * Set the value of idUser
+   *
+   * @param   int  $idUser  
+   * 
+   */
+  public function setIdUser(int $idUser)
+  {
+    $this->idUser = $idUser;
+  }
 
   /**
    * Get the value of botCommands
@@ -214,16 +191,16 @@ final class Bot
     return $this->botCommands;
   }
 
-    /**
-     * Set the value of botCommands
-     *
-     * @param   array  $botCommands  
-     * 
-     */
-    public function setBotCommands(array $botCommands)
-    {
-        $this->botCommands = $botCommands;
-    }
+  /**
+   * Set the value of botCommands
+   *
+   * @param   array  $botCommands  
+   * 
+   */
+  public function setBotCommands(array $botCommands)
+  {
+    $this->botCommands = $botCommands;
+  }
 
   /**
    * Get the value of botFeatures
@@ -233,16 +210,16 @@ final class Bot
     return $this->botFeatures;
   }
 
-    /**
-     * Set the value of botFeatures
-     *
-     * @param   array  $botFeatures  
-     * 
-     */
-    public function setBotFeatures(array $botFeatures)
-    {
-        $this->botFeatures = $botFeatures;
-    }
+  /**
+   * Set the value of botFeatures
+   *
+   * @param   array  $botFeatures  
+   * 
+   */
+  public function setBotFeatures(array $botFeatures)
+  {
+    $this->botFeatures = $botFeatures;
+  }
 
   /**
    * Get the value of platformName
@@ -252,16 +229,16 @@ final class Bot
     return $this->platformName;
   }
 
-    /**
-     * Set the value of platformName
-     *
-     * @param   string  $platformName  
-     * 
-     */
-    public function setPlatformName(string $platformName)
-    {
-        $this->platformName = $platformName;
-    }
+  /**
+   * Set the value of platformName
+   *
+   * @param   string  $platformName  
+   * 
+   */
+  public function setPlatformName(string $platformName)
+  {
+    $this->platformName = $platformName;
+  }
 
   /**
    * Get the value of modelName
@@ -271,35 +248,16 @@ final class Bot
     return $this->modelName;
   }
 
-    /**
-     * Set the value of modelName
-     *
-     * @param   string  $modelName  
-     * 
-     */
-    public function setModelName(string $modelName)
-    {
-        $this->modelName = $modelName;
-    }
-
   /**
-   * Get the value of openAiPrePrompt
+   * Set the value of modelName
+   *
+   * @param   string  $modelName  
+   * 
    */
-  public function getOpenAiPrePrompt(): string|null
+  public function setModelName(string $modelName)
   {
-    return $this->openAiPrePrompt;
+    $this->modelName = $modelName;
   }
-
-    /**
-     * Set the value of openAiPrePrompt
-     *
-     * @param   string  $openAiPrePrompt  
-     * 
-     */
-    public function setOpenAiPrePrompt(string|null $openAiPrePrompt)
-    {
-        $this->openAiPrePrompt = $openAiPrePrompt;
-    }
 
   /**
    * Get the value of twitchJoinChannel
@@ -309,14 +267,14 @@ final class Bot
     return $this->twitchJoinChannel;
   }
 
-    /**
-     * Set the value of twitchJoinChannel
-     *
-     * @param   string  $twitchJoinChannel  
-     * 
-     */
-    public function setTwitchJoinChannel(string|null $twitchJoinChannel)
-    {
-        $this->twitchJoinChannel = $twitchJoinChannel;
-    }
+  /**
+   * Set the value of twitchJoinChannel
+   *
+   * @param   string  $twitchJoinChannel  
+   * 
+   */
+  public function setTwitchJoinChannel(string|null $twitchJoinChannel)
+  {
+    $this->twitchJoinChannel = $twitchJoinChannel;
+  }
 }

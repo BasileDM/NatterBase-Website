@@ -5,7 +5,6 @@ namespace src\Services;
 use DateTime;
 use Exception;
 use src\Models\Bot;
-use src\Models\BotFeature;
 use src\Repositories\BotRepository;
 use src\Repositories\CommandRepository;
 use src\Repositories\FeatureRepository;

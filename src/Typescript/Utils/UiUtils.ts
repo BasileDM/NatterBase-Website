@@ -87,10 +87,6 @@ export class UiUtils {
     if (UiElements.twitchJoinChannelInput) {
       UiElements.twitchJoinChannelInput.value = currentBot.twitchJoinChannel;
     }
-
-    if (UiElements.openAiPrePromptInput) {
-      UiElements.openAiPrePromptInput.value = currentBot.openAiPrePrompt;
-    }
   }
 
   private static updateBotFeaturesSection(currentBot: any, userData: any): void {

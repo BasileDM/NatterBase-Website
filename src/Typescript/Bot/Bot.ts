@@ -11,7 +11,7 @@ export class Bot {
   private client: tmiTypes.Client | null;
   private settings: BotSettings;
   private chatBoard: ChatBoard;
-  private features: Feature[] = [];
+  public features: Feature[] = [];
 
   constructor() {
     this.isRunning = false;
@@ -21,8 +21,6 @@ export class Bot {
       channels: [],
       cooldown: 5,
       openAiKey: '',
-      openAiPrePrompt: '',
-      maxOpenaiMessageLength: 1000,
       commands: [],
       features: [],
     };
@@ -95,8 +93,6 @@ export class Bot {
       openAiKey: UiElements.openAiKeyInput.value,
       channels: [currentProfile.twitchJoinChannel],
       cooldown: currentProfile.cooldownTime,
-      openAiPrePrompt: currentProfile.openAiPrePrompt,
-      maxOpenaiMessageLength: currentProfile.maxOpenaiMessageLength,
       commands: currentProfile.botCommands,
       features: currentProfile.botFeatures,
     };
