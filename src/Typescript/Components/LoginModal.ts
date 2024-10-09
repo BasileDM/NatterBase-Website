@@ -115,7 +115,7 @@ export class LoginModal {
             return;
           }
           this.close();
-          window.location.href = './home?notice=registered';
+          window.location.href = './?notice=registered';
         }
         catch (error) {
           console.error('Unexpected error: ', error);
