@@ -10,12 +10,12 @@ include __DIR__ . '/Includes/header.php';
         Manage your bots with ease, create profiles, add AI features and all of this 100% locally.
       </p>
       <div class="flex flex-row space-x-4 items-center justify-evenly sm:justify-start">
-        <a href="./app" class="btn btn-base rounded-lg px-6 py-3 flex">
+        <div href="./app" id="homepage-login-btn" class="btn btn-base rounded-lg px-6 py-3 flex">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
             <path d="M480-120v-80h280v-560H480v-80h280q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H480Zm-80-160-55-58 102-102H120v-80h327L345-622l55-58 200 200-200 200Z" />
           </svg>
           Log in
-        </a>
+        </div>
         <a href="./docs" class="btn flex px-6 py-3 border border-gray-600 text-gray-300 rounded-lg shadow hover:bg-gray-600 transition">
           Learn more
         </a>
