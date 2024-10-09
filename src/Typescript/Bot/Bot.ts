@@ -11,7 +11,7 @@ export class Bot {
   private client: tmiTypes.Client | null;
   private settings: BotSettings;
   private chatBoard: ChatBoard;
-  private features: Feature[] = [];
+  public features: Feature[] = [];
 
   constructor() {
     this.isRunning = false;
