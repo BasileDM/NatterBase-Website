@@ -14,7 +14,7 @@ switch ($notice) {
     break;
     case 'activated':
       $message = '✅ Your account has been activated. You can now login!';
-      $style = 'banner-warning';
+      $style = 'banner-success';
       break;
   case 'success':
     $message = '✅ Success! Your request has been processed.';

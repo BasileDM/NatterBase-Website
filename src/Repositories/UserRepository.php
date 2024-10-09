@@ -73,12 +73,14 @@ final class UserRepository
     try {
       $query = 'UPDATE Users
                 SET username = :username,
-                    password_hash = :passwordHash
+                    password_hash = :passwordHash,
+                    is_activated = :isActivated
                 WHERE id_user = :id';
       $statement = $this->pdo->prepare($query);
       $statement->execute([
         ':username' => $user->getUsername(),
         ':passwordHash' => $user->getPasswordHash(),
+        ':isActivated' => $user->isIsActivated(),
         ':id' => $user->getIdUser()
       ]);
       return $statement->rowCount() > 0;
