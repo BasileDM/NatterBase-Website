@@ -1033,11 +1033,6 @@ svg {
   height: 100vh;
 }
 
-.h-min {
-  height: -moz-min-content;
-  height: min-content;
-}
-
 .min-h-fit {
   min-height: -moz-fit-content;
   min-height: fit-content;
@@ -1071,10 +1066,6 @@ svg {
   width: 100%;
 }
 
-.w-12 {
-  width: 3rem;
-}
-
 .min-w-32 {
   min-width: 8rem;
 }
@@ -1097,20 +1088,6 @@ svg {
 
 .max-w-\[380px\] {
   max-width: 380px;
-}
-
-.max-w-12 {
-  max-width: 3rem;
-}
-
-.max-w-fit {
-  max-width: -moz-fit-content;
-  max-width: fit-content;
-}
-
-.max-w-min {
-  max-width: -moz-min-content;
-  max-width: min-content;
 }
 
 .flex-1 {
@@ -1336,6 +1313,11 @@ svg {
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
 }
 
+.bg-gray-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(107 114 128 / var(--tw-bg-opacity));
+}
+
 .bg-gray-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
@@ -1353,6 +1335,25 @@ svg {
 
 .bg-gray-900\/40 {
   background-color: rgb(17 24 39 / 0.4);
+}
+
+.bg-gray-600 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(75 85 99 / var(--tw-bg-opacity));
+}
+
+.bg-slate-800 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+}
+
+.bg-slate-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(15 23 42 / var(--tw-bg-opacity));
+}
+
+.bg-gray-900\/50 {
+  background-color: rgb(17 24 39 / 0.5);
 }
 
 .p-2 {
@@ -1406,10 +1407,6 @@ svg {
 
 .text-center {
   text-align: center;
-}
-
-.align-middle {
-  vertical-align: middle;
 }
 
 .text-2xl {
