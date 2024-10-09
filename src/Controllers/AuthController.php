@@ -2,6 +2,7 @@
 
 namespace src\Controllers;
 
+use Exception;
 use src\Repositories\UserRepository;
 use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
@@ -25,67 +26,79 @@ final class AuthController
   #[Route('POST', '/register')]
   public function register(): void
   {
-    $validationResult = Validator::validateInputs();
+    try {
 
-    if (isset($validationResult['errors'])) {
-      $this->formErrorsResponse(400, $validationResult['errors']);
-      exit;
-    }
+      $validationResult = Validator::validateInputs();
 
-    $user = $this->userService->create($validationResult['sanitized']);
+      if (isset($validationResult['errors'])) {
+        $this->formErrorsResponse(400, $validationResult['errors']);
+        exit;
+      }
 
-    if (!$user) {
-      $this->jsonResponse(400, ['message' => 'User already exists']);
-    } else {
-      MailService::sendActivationMail($user);
-      $this->jsonResponse(200, ['message' => 'Registration successful']);
+      $user = $this->userService->create($validationResult['sanitized']);
+
+      if (!$user) {
+        $this->jsonResponse(400, ['message' => 'User already exists']);
+      } else {
+        MailService::sendActivationMail($user);
+        $this->jsonResponse(200, ['message' => 'Registration successful']);
+      }
+    } catch (Exception $e) {
+      $this->jsonResponse(500, ['message' => 'Internal server error']);
     }
   }
 
   #[Route('GET', '/activate')]
   public function activateUser(): void
   {
-    $token = $_GET['token'] ?? '';
+    try {
+      $token = $_GET['token'] ?? '';
+      $result = $this->userService->activateUser($token);
 
-    $result = $this->userService->activateUser($token);
+      $notices = [
+        'Invalid or expired activation link' => 'expired',
+        'User not found' => 'invalid',
+        'Account already activated' => 'already',
+      ];
 
-    $notices = [
-      'Invalid or expired activation link' => 'expired',
-      'User not found' => 'invalid',
-      'Account already activated' => 'already',
-    ];
-
-    if ($result['status'] === 'error') {
-      $notice = $notices[$result['message']] ?? 'error';
-      $this->jsonResponse(400, ['message' => $result['message']], './?notice=' . $notice);
-    } else {
-      $this->jsonResponse(200, ['message' => 'Account activated'], './?notice=activated');
+      if ($result['status'] === 'error') {
+        $notice = $notices[$result['message']] ?? 'error';
+        $this->jsonResponse(400, ['message' => $result['message']], './?notice=' . $notice);
+      } else {
+        $this->jsonResponse(200, ['message' => 'Account activated'], './?notice=activated');
+      }
+    } catch (Exception $e) {
+      $this->jsonResponse(500, ['message' => 'Internal server error']);
     }
   }
 
   #[Route('POST', '/login')]
   public function login(): void
   {
-    $request = json_decode(file_get_contents('php://input'), true);
-    $mail = $request['mail'] ?? null;
-    $password = $request['password'] ?? null;
-    $user = Authenticator::authenticate($mail, $password);
+    try {
+      $request = json_decode(file_get_contents('php://input'), true);
+      $mail = $request['mail'] ?? null;
+      $password = $request['password'] ?? null;
+      $user = Authenticator::authenticate($mail, $password);
 
-    $statusCode = match (true) {
-      !$mail || !$password => 400,
-      !$user => 401,
-      !$user->isIsActivated() => 403,
-      default => 200,
-    };
+      $statusCode = match (true) {
+        !$mail || !$password => 400,
+        !$user => 401,
+        !$user->isIsActivated() => 403,
+        default => 200,
+      };
 
-    $message = match ($statusCode) {
-      400 => 'Please fill out all the fields',
-      401 => 'Invalid credentials',
-      403 => 'Check your mails and activate your account first!',
-      200 => 'Login successful',
-    };
+      $message = match ($statusCode) {
+        400 => 'Please fill out all the fields',
+        401 => 'Invalid credentials',
+        403 => 'Check your mails and activate your account first!',
+        200 => 'Login successful',
+      };
 
-    $this->jsonResponse($statusCode, ['message' => $message]);
+      $this->jsonResponse($statusCode, ['message' => $message]);
+    } catch (Exception $e) {
+      $this->jsonResponse(500, ['message' => 'Internal server error']);
+    }
   }
 
   #[Route('GET', '/logout')]

@@ -4,7 +4,7 @@ namespace src\Services;
 
 final class MailService
 {
-  public static function sendActivationMail($user)
+  public static function sendActivationMail($user): bool
   {
     $name = $user->getUsername();
     $email = $user->getMail();
@@ -35,7 +35,7 @@ final class MailService
     return $token;
   }
 
-  public static function verifyActivationToken($token)
+  public static function verifyActivationToken($token): bool|string
   {
     $decoded = base64_decode($token, true);
     if ($decoded === false) {
@@ -47,7 +47,7 @@ final class MailService
       return false;
     }
 
-    list($userId, $expires, $signature) = $parts;
+    [$userId, $expires, $signature] = $parts;
 
     if ($expires < time()) {
       return false;
