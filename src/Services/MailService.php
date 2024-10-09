@@ -4,14 +4,14 @@ namespace src\Services;
 
 final class MailService
 {
-  public static function sendActivationMail($user, $websiteUrl)
+  public static function sendActivationMail($user)
   {
     $name = $user->getUsername();
     $email = $user->getMail();
     $userId = $user->getIdUser();
 
     $token = self::generateActivationToken($userId);
-    $link = $websiteUrl . "activate?token=" . urlencode($token);
+    $link = FULL_URL . "activate?token=" . urlencode($token);
 
     $subject = "Natterbase Account Activation";
     $message = "Hello $name,\n\n"

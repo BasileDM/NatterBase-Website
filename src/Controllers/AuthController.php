@@ -37,7 +37,7 @@ final class AuthController
     if (!$user) {
       $this->jsonResponse(400, ['message' => 'User already exists']);
     } else {
-      MailService::sendActivationMail($user, FULL_URL);
+      MailService::sendActivationMail($user);
       $this->jsonResponse(200, ['message' => 'Registration successful']);
     }
   }
