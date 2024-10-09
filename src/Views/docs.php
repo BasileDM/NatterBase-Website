@@ -2,8 +2,6 @@
 include __DIR__ . '/Includes/header.php';
 ?>
 <h2 class="text-4xl mb-6 border-b border-gray-700 pb-2">Documentation</h2>
-<p class="mb-8 text-lg leading-relaxed">Welcome to the NatterBase documentation. This guide will help you understand how to use the site and its features.</p>
-
 <div class="flex flex-col sm:flex-row sm:space-x-4">
   <nav class="mb-12 bg-gray-900 p-6 rounded-lg shadow-lg w-72 min-w-72">
     <h2 class="text-2xl font-semibold mb-4">Table of Contents</h2>
@@ -53,7 +51,10 @@ include __DIR__ . '/Includes/header.php';
 
   <section id="about" class="mb-12">
     <h2 class="text-2xl font-bold mb-4 border-b border-gray-700 pb-2">About NatterBase</h2>
-    <p class="text-gray-300 leading-relaxed">NatterBase is a platform that allows you to run your own chatbot locally.</p>
+    <p class="text-gray-300 leading-relaxed">
+      Welcome to the NatterBase documentation. This guide will help you understand how to use the site and its features.<br>
+      NatterBase is a platform that allows you to run your own chatbot locally.
+    </p>
   </section>
 </div>
 
