@@ -12,21 +12,21 @@ switch ($notice) {
     $message = '⚠️ Pease check your mails to activate your account.';
     $style = 'banner-warning';
     break;
-    case 'activated':
-      $message = '✅ Your account has been activated. You can now login!';
-      $style = 'banner-success';
-      break;
-  case 'success':
-    $message = '✅ Success! Your request has been processed.';
-    $style = 'banner-success';
-    break;
-  case 'warning':
-    $message = '⚠️ Warning! There was a problem with your request.';
+  case 'already':
+    $message = '⚠️ Account already activated.';
     $style = 'banner-warning';
     break;
-  case 'alert':
-    $message = '❌ Alert! Something went wrong.';
+  case 'expired':
+    $message = '❌ Invalid or expired activation link.';
     $style = 'banner-alert';
+    break;
+  case 'invalid':
+    $message = '❌ User not found.';
+    $style = 'banner-alert';
+    break;
+  case 'activated':
+    $message = '✅ Your account has been activated. You can now login!';
+    $style = 'banner-success';
     break;
   default:
     $message = '';

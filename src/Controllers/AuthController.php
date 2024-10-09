@@ -49,8 +49,15 @@ final class AuthController
 
     $result = $this->userService->activateUser($token);
 
+    $notices = [
+      'Invalid or expired activation link' => 'expired',
+      'User not found' => 'invalid',
+      'Account already activated' => 'already',
+    ];
+
     if ($result['status'] === 'error') {
-      $this->jsonResponse(400, ['message' => $result['message']]);
+      $notice = $notices[$result['message']] ?? 'error';
+      $this->jsonResponse(400, ['message' => $result['message']], './?notice=' . $notice);
     } else {
       $this->jsonResponse(200, ['message' => 'Account activated'], './?notice=activated');
     }
