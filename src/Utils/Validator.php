@@ -16,7 +16,7 @@ final class Validator
       'name' => $request['name'] ?? null,
       'twitchJoinChannel' => $request['twitchJoinChannel'] ?? null,
       'openaiPrePrompt' => $request['openaiPrePrompt'] ?? null,
-      'cooldownTime' => $request['cooldown'] ?? null,
+      'cooldownTime' => $request['cooldownTime'] ?? null,
       'idBot' => $request['idBot'] ?? null,
     ];
 

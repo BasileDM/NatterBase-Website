@@ -26,7 +26,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <input class="input" type="text" name="platform" id="bot-platform" disabled>
     </div>
     <div>
-      <label class="block text-sm font-medium" for="account-section-twitch-channel">Join channel:</label>
+      <label class="block text-sm font-medium" for="account-section-twitch-channel">Join channel</label>
       <input class="input" type="text" name="twitchJoinChannel" id="account-section-twitch-channel">
       <div id="account-section-twitch-channel-error-display" class="text-red-500"></div>
     </div>

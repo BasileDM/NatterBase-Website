@@ -90,11 +90,11 @@ final class BotService
     return $botSettings;
   }
 
-  public function update(array $inputs, int $botId): bool
+  public function update(array $inputs, int $botId): bool|string
   {
     $bot = $this->getBotById($botId);
     if ($bot === false || $bot->getIdUser() !== $_SESSION['userId']) {
-      return false;
+      return 'Bot not found';
     }
     $bot->hydrateFromInputs($inputs);
     return $this->botRepository->update($bot);

@@ -89,8 +89,12 @@ final class ApiBotController
       }
 
       $result = $this->botService->update($validation['sanitized'], $_GET['idBot']);
-      if (!$result) {
+      if ($result === 'Bot not found') {
         $this->jsonResponse(400, ['message' => 'Could not update bot profile']);
+        exit;
+      }
+      if (!$result) {
+        $this->jsonResponse(400, ['message' => 'No changes to be made']);
         exit;
       }
 
