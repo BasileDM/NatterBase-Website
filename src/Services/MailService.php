@@ -19,7 +19,7 @@ final class MailService
         <body>
             <p>Hello $name,</p>
             <p>Please activate your account using the link below:</p>
-            <pre>$link</pre>
+            <p>Not working link yet</p>
             <p>The Natterbase Team.</p>
         </body>
         </html>";
