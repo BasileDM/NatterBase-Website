@@ -25,14 +25,14 @@ final class PageController
   #[Route('GET', '/')]
   public function redirectToHomePage(): void
   {
-    header("Location: ./home");
+    $this->render("home", ["section" => "home"]);
     exit;
   }
 
   #[Route('GET', '/home')]
   public function displayHomePage(): void
   {
-    $this->render("home", ["section" => "home"]);
+    header("Location: ./");
     exit;
   }
 

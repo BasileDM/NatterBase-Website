@@ -1,7 +1,4 @@
-<dialog
-  id="login-modal"
-  class="modal"
->
+<dialog id="login-modal" class="modal overflow-y-auto custom-scrollbar">
   <h3 id="login-modal-title" class="text-lg font-bold mb-4">Login</h3>
   <button id="login-modal-close-btn" class="absolute top-3 right-3 text-gray-400 hover:text-white">X</button>
   <!-- Login form -->
@@ -17,8 +14,9 @@
     <span
       id="modal-register-btn"
       class="hover:underline hover:cursor-pointer flex justify-end text-sm text-gray-400 hover:text-white"
-      >Don't have an account yet? Register now!</span
     >
+      Don't have an account yet? Register now!
+    </span>
     <div class="flex justify-end">
       <button id="login-modal-submit-btn" type="submit" class="btn btn-base">Login</button>
     </div>
@@ -30,32 +28,34 @@
     </div>
     <div>
       <label for="mail-register" class="block text-sm font-medium">Mail*</label>
-      <input id="mail-register" type="text" class="w-full input" />
+      <input id="mail-register" type="text" class="w-full input" required/>
       <span id="mail-register-error-display" class="text-red-500"></span>
     </div>
     <div>
       <label for="username" class="block text-sm font-medium">Username*</label>
-      <input id="username" type="text" class="w-full input" />
+      <input id="username" type="text" class="w-full input" required/>
       <span id="username-error-display" class="text-red-500"></span>
     </div>
     <div>
       <label for="password-register" class="block text-sm font-medium">Password*</label>
-      <input id="password-register" type="password" class="w-full input" required/>
+      <input id="password-register" type="password" class="w-full input" required />
       <span id="password-register-error-display" class="text-red-500"></span>
     </div>
     <div>
       <label for="password-confirm" class="block text-sm font-medium">Confirm password*</label>
-      <input id="password-confirm" type="password" class="w-full input" required/>
+      <input id="password-confirm" type="password" class="w-full input" required />
       <span id="password-confirm-error-display" class="text-red-500"></span>
     </div>
-    <div class="flex items-center">
-      <label for="gdpr" class="text-sm font-medium w-auto text-nowrap">I accept the <a href="#">GDPR*</a></label>
-      <input
-        id="gdpr"
-        type="checkbox"
-        class="m-auto p-2 rounded-md bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        required
-      />
+    <div class="flex flex-col items-center">
+      <div>
+        <label for="gdpr" class="text-sm font-medium w-auto text-nowrap cursor-pointer">I accept the GDPR*</label>
+        <input
+          id="gdpr"
+          type="checkbox"
+          class="m-auto p-2 rounded-md bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+          required
+        />
+      </div>
       <span id="gdpr-error-display" class="text-red-500"></span>
     </div>
     <div class="flex justify-end">

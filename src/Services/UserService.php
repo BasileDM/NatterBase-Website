@@ -74,4 +74,25 @@ final class UserService
     }
     return $this->userRepository->delete($_SESSION['userId']);
   }
+
+  public function activateUser($token): array
+  {
+    $userId = MailService::verifyActivationToken($token);
+    if (!$userId) {
+      return ['status' => 'error', 'message' => 'Invalid or expired activation link'];
+    }
+
+    $user = $this->userRepository->getUserById($userId);
+    if (!$user) {
+      return ['status' => 'error', 'message' => 'User not found'];
+    }
+    if ($user->isIsActivated()) {
+      return ['status' => 'error', 'message' => 'Account already activated'];
+    }
+
+    $user->setIsActivated(true);
+    $this->userRepository->update($user);
+
+    return ['status' => 'success'];
+  }
 }

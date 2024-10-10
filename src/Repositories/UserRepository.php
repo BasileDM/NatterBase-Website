@@ -73,12 +73,14 @@ final class UserRepository
     try {
       $query = 'UPDATE Users
                 SET username = :username,
-                    password_hash = :passwordHash
+                    password_hash = :passwordHash,
+                    is_activated = :isActivated
                 WHERE id_user = :id';
       $statement = $this->pdo->prepare($query);
       $statement->execute([
         ':username' => $user->getUsername(),
         ':passwordHash' => $user->getPasswordHash(),
+        ':isActivated' => $user->isIsActivated(),
         ':id' => $user->getIdUser()
       ]);
       return $statement->rowCount() > 0;
@@ -102,20 +104,26 @@ final class UserRepository
   public function dropTables()
   {
     $tables = [
-      'bot_commands',
-      'relation_bots_features',
-      'bot_features',
-      'bots',
-      'bot_platforms',
-      'users',
-      'user_roles',
-      'bot_feature_categories',
-      'bot_language_models',
+      'Bot_Commands',
+      'Relation_Bots_Features',
+      'Bot_Features',
+      'Bots',
+      'Bot_Platforms',
+      'Users',
+      'User_Roles',
+      'Bot_Feature_Categories',
+      'Bot_Language_Models',
     ];
 
     foreach ($tables as $table) {
-      $statement = $this->pdo->prepare("DROP TABLE IF EXISTS $table");
-      $statement->execute();
+      try {
+        $statement = $this->pdo->prepare("DROP TABLE IF EXISTS $table");
+        $result = $statement->execute();
+        echo "Table $table dropped : $result\n";
+      } catch (Exception $e) {
+        var_dump($e->getMessage());
+        throw new Exception($e->getMessage());
+      }
     }
   }
 }
