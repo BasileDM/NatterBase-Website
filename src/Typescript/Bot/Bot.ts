@@ -54,7 +54,11 @@ export class Bot {
       });
 
       this.client.on('message', (channel: string, tags: tmiTypes.ChatUserstate, message: string, self: boolean) => {
-        this.chatBoard.displayMessage(`${tags['display-name']}: ${message}`);
+        const username = tags['display-name'] || tags.username || 'Unknown';
+        const color = tags.color || null;
+
+        this.chatBoard.displayMessage(username, message, color);
+
         if (self) return;
         this.handleMessage(channel, tags, message);
       });

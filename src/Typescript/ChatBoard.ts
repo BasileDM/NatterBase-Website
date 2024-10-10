@@ -34,12 +34,28 @@ export class ChatBoard {
     }
   }
 
-  public displayMessage(message: string): void {
+  public displayMessage(username: string, message: string, color: string | null): void {
     const messageElement = document.createElement('p');
-    messageElement.textContent = message;
+
+    // Create the username span
+    const usernameElement = document.createElement('span');
+    usernameElement.textContent = username;
+    usernameElement.style.fontWeight = 'bold';
+    usernameElement.style.color = color || 'white';
+
+    // Create the message span
+    const messageTextElement = document.createElement('span');
+    messageTextElement.textContent = `: ${message}`;
+
+    // Append username and message to the messageElement
+    messageElement.appendChild(usernameElement);
+    messageElement.appendChild(messageTextElement);
+
+    // Append the messageElement to the chat display
     this.chatDisplay.appendChild(messageElement);
     this.scrollToBottom();
   }
+
 
   public log(message: string, color: string = this.logColor): void {
     const messageElement = document.createElement('p');
