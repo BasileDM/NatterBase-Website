@@ -147,24 +147,27 @@ export class Bot {
   }
 
   private async handleMessage(channel: string, tags: tmiTypes.ChatUserstate, message: string) {
-    const botName = this.client?.getUsername() || '';
+    const botName = (this.client?.getUsername() || '').trim();
+    const lowerCaseMessage = message.toLowerCase();
+    const lowerCaseBotName = botName.toLowerCase();
 
     for (const feature of this.features) {
       const trigger = feature.trigger;
 
-      // Check for triggers that are mentions (@BotName)
-      if (trigger === '@' && message.includes(`@${botName}`)) {
+      // Check for triggers that are mentions (@BotName), case-insensitive
+      if (trigger === '@' && lowerCaseMessage.includes(`@${lowerCaseBotName}`)) {
         await this.handleFeatureResponse(channel, tags, message, feature);
         return;
       }
 
-      // Check if message starts with the trigger
-      if (message.startsWith(trigger)) {
+      // Check if message starts with the trigger (But not @)
+      if (trigger !== '@' && message.startsWith(trigger)) {
         await this.handleFeatureResponse(channel, tags, message, feature);
         return;
       }
     }
   }
+
 
   public sendMessage(message: string): void {
     if (this.client && this.isRunning) {
