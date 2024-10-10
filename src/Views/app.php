@@ -6,7 +6,11 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 <!-- Chat / Dashboard -->
 <section id="app-dashboard">
   <h2>Chat</h2>
-  <p>Welcome, <?= $view_userData["user"]["username"] ?>. <span id="dashboard-placeholder">Please select a bot.</span></p>
+  <p>Welcome, <?= $view_userData["user"]["username"] ?>.
+  <div id="dashboard-placeholder">
+    Not sure where to start ? <a class="text-blue-400 hover:text-blue-500" href="./docs#getting-started" target="_blank">Check out our getting started guide.</a>
+  </div>
+  </p>
   <pre id="chat-display"></pre>
 </section>
 
@@ -96,7 +100,8 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
         value="<?= htmlspecialchars($view_userData["user"]["mail"] ?? '') ?>" disabled>
     </div>
     <div>
-      <span id="account-settings-password-btn" class="btn btn-alert">Change password</span>
+      <span id="account-settings-password-btn"
+        class="btn btn-alert">Change password</span>
     </div>
     <div id="account-settings-password-inputs" class="hidden">
       <label class="block text-sm font-medium" for="account-section-password">New password</label>
