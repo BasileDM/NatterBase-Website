@@ -1,5 +1,7 @@
 export class ChatBoard {
   private chatDisplay: HTMLElement;
+  private chatInput: HTMLInputElement;
+  private sendButton: HTMLElement;
   private logColor: string = 'white';
   private errorColor: string = 'red';
   private successColor: string = 'green';
@@ -7,21 +9,52 @@ export class ChatBoard {
 
   constructor() {
     this.chatDisplay = document.getElementById('chat-display') as HTMLElement;
+    this.chatInput = document.getElementById('chat-input') as HTMLInputElement;
+    this.sendButton = document.getElementById('chat-send-button') as HTMLElement;
+
+    // Event listeners
+    this.sendButton.addEventListener('click', () => this.handleSendMessage());
+    this.chatInput.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        this.handleSendMessage();
+      }
+    });
   }
 
-  displayMessage(message: string): void {
-    this.chatDisplay.innerHTML += `<p>${message}</p>`;
+  private handleSendMessage(): void {
+    const message = this.chatInput.value.trim();
+    if (message) {
+      this.displayMessage(`You: ${message}`);
+      this.chatInput.value = '';
+      // Optionally, send the message to the server or process it here
+    }
   }
 
-  log(message: string, color: string = this.logColor): void {
-    this.chatDisplay.innerHTML += `<p style="color: ${color}">${message}</p>`;
+  public displayMessage(message: string): void {
+    const messageElement = document.createElement('p');
+    messageElement.textContent = message;
+    this.chatDisplay.appendChild(messageElement);
+    this.scrollToBottom();
   }
 
-  warn(message: string, color: string = this.warningColor): void {
-    this.chatDisplay.innerHTML += `<p style="color: ${color}">${message}</p>`;
+  public log(message: string, color: string = this.logColor): void {
+    const messageElement = document.createElement('p');
+    messageElement.style.color = color;
+    messageElement.textContent = message;
+    this.chatDisplay.appendChild(messageElement);
+    this.scrollToBottom();
   }
 
-  error(message: string, color: string = this.errorColor): void {
-    this.chatDisplay.innerHTML += `<p style="color: ${color}">${message}</p>`;
+  public warn(message: string, color: string = this.warningColor): void {
+    this.log(message, color);
+  }
+
+  public error(message: string, color: string = this.errorColor): void {
+    this.log(message, color);
+  }
+
+  private scrollToBottom(): void {
+    this.chatDisplay.scrollTop = this.chatDisplay.scrollHeight;
   }
 }

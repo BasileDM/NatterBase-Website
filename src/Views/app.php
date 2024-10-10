@@ -4,14 +4,34 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 ?>
 
 <!-- Chat / Dashboard -->
-<section id="app-dashboard">
-  <h2>Chat</h2>
-  <p>Welcome, <?= $view_userData["user"]["username"] ?>.</p>
+<section id="app-dashboard" class="flex flex-col flex-1 overflow-hidden">
+  <h2 class="text-2xl font-bold mb-4">Chat</h2>
   <div id="dashboard-placeholder">
-    Not sure where to start ? <a class="text-blue-400 hover:text-blue-500" href="./docs#getting-started" target="_blank">Check out our getting started guide.</a>
+    <p class="mb-4">Welcome, <?= htmlspecialchars($view_userData["user"]["username"]) ?>.</p>
+    Not sure where to start ?
+    <a class="text-blue-400 hover:text-blue-500" href="./docs#getting-started" target="_blank">Check out our getting started guide.</a>
   </div>
-  <pre id="chat-display"></pre>
+
+  <!-- Chat Display Area -->
+  <div id="chat-display" class="flex-1 overflow-y-auto bg-gray-900 text-white border border-gray-700 shadow-lg p-4 rounded-md mb-4 custom-scrollbar">
+    <!-- Chat messages will appear here -->
+  </div>
+
+  <!-- Input Field and Send Button -->
+  <div class="flex items-center mt-auto">
+    <input
+      id="chat-input"
+      type="text"
+      placeholder="Type your message..."
+      class="flex-1 p-2 bg-gray-700 text-white rounded-l-md focus:outline-none focus:ring-1 focus:ring-blue-500" />
+    <button
+      id="chat-send-button"
+      class="p-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+      Send
+    </button>
+  </div>
 </section>
+
 
 <!-- Bot settings -->
 <section id="app-bot-settings" class="hidden">
