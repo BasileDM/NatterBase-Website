@@ -6,11 +6,10 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 <!-- Chat / Dashboard -->
 <section id="app-dashboard">
   <h2>Chat</h2>
-  <p>Welcome, <?= $view_userData["user"]["username"] ?>.
+  <p>Welcome, <?= $view_userData["user"]["username"] ?>.</p>
   <div id="dashboard-placeholder">
     Not sure where to start ? <a class="text-blue-400 hover:text-blue-500" href="./docs#getting-started" target="_blank">Check out our getting started guide.</a>
   </div>
-  </p>
   <pre id="chat-display"></pre>
 </section>
 
