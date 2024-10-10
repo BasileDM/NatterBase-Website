@@ -28,7 +28,7 @@ final class UserRepository
       ':mail' => $user->getMail(),
       ':username' => $user->getUsername(),
       ':passwordHash' => $user->getPasswordHash(),
-      ':isActivated' => $user->isIsActivated(),
+      ':isActivated' => $user->isIsActivated() ? 1 : 0,
       ':gdpr' => $user->getGdpr(),
       ':idRole' => $roleId
     ]);
@@ -80,7 +80,7 @@ final class UserRepository
       $statement->execute([
         ':username' => $user->getUsername(),
         ':passwordHash' => $user->getPasswordHash(),
-        ':isActivated' => $user->isIsActivated(),
+        ':isActivated' => $user->isIsActivated() ? 1 : 0,
         ':id' => $user->getIdUser()
       ]);
       return $statement->rowCount() > 0;
