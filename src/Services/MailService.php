@@ -14,16 +14,23 @@ final class MailService
     $link = FULL_URL . "activate?token=" . urlencode($token);
 
     $subject = "Natterbase Account Activation";
-    $message = "Hello $name,\n\n"
-      . "Please activate your account using the link below:\n"
-      . "$link\n\n"
-      . "The Natterbase Team.\n";
+    $message = "
+        <html>
+        <body>
+            <p>Hello $name,</p>
+            <p>Please activate your account using the link below:</p>
+            <pre>$link</pre>
+            <p>The Natterbase Team.</p>
+        </body>
+        </html>";
+    $message = wordwrap($message, 70, "\n\n");
 
-    $headers = "From: Natterbase Team <contact@natterbase.com>\r\n"
-      . "Content-Type: text/plain; charset=\"UTF-8\"\n"
-      . "Content-Transfer-Encoding: 8bit\n";
+    $headers = "From: Natterbase <contact@natterbase.com>\r\n";
+    $headers .= "Content-Type: text/html; charset=\"UTF-8\"\n";
+    $headers .= "Content-Transfer-Encoding: 8bit\n";
 
-    return mail($email, $subject, $message, $headers);
+    $sentMail = mail($email, $subject, $message, $headers);
+    return $sentMail;
   }
 
   private static function generateActivationToken($userId): string
