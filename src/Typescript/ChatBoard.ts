@@ -6,8 +6,11 @@ export class ChatBoard {
   private errorColor: string = 'red';
   private successColor: string = 'green';
   private warningColor: string = 'orange';
+  private sendMessageCallback: (message: string) => void;
 
-  constructor() {
+  constructor(sendMessageCallback: (message: string) => void) {
+    this.sendMessageCallback = sendMessageCallback;
+
     this.chatDisplay = document.getElementById('chat-display') as HTMLElement;
     this.chatInput = document.getElementById('chat-input') as HTMLInputElement;
     this.sendButton = document.getElementById('chat-send-button') as HTMLElement;
@@ -25,9 +28,8 @@ export class ChatBoard {
   private handleSendMessage(): void {
     const message = this.chatInput.value.trim();
     if (message) {
-      this.displayMessage(`You: ${message}`);
       this.chatInput.value = '';
-      // Optionally, send the message to the server or process it here
+      this.sendMessageCallback(message);
     }
   }
 

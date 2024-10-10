@@ -7,7 +7,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 <section id="app-dashboard" class="flex flex-col flex-1 overflow-hidden">
   <h2 class="text-2xl font-bold mb-4">Chat</h2>
   <div id="dashboard-placeholder">
-    <p class="mb-4">Welcome, <?= htmlspecialchars($view_userData["user"]["username"]) ?>.</p>
+    <p class="mb-4">Welcome, <?= htmlspecialchars($view_userData["user"]["username"]) ?>. Please select a bot.</p>
     Not sure where to start ?
     <a class="text-blue-400 hover:text-blue-500" href="./docs#getting-started" target="_blank">Check out our getting started guide.</a>
   </div>
@@ -18,7 +18,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
   </div>
 
   <!-- Input Field and Send Button -->
-  <div class="flex items-center mt-auto">
+  <div class="flex items-center mt-auto pb-1 pl-1">
     <input
       id="chat-input"
       type="text"
@@ -27,7 +27,12 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
     <button
       id="chat-send-button"
       class="p-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
-      Send
+      <div class="flex">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+          <path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" />
+        </svg>
+        Send
+      </div>
     </button>
   </div>
 </section>

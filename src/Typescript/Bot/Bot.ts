@@ -24,7 +24,9 @@ export class Bot {
       commands: [],
       features: [],
     };
-    this.chatBoard = new ChatBoard();
+    this.chatBoard = new ChatBoard((message: string) => {
+      this.sendMessage(message);
+    });
   }
 
   public async start() {
@@ -161,6 +163,17 @@ export class Bot {
         await this.handleFeatureResponse(channel, tags, message, feature);
         return;
       }
+    }
+  }
+
+  public sendMessage(message: string): void {
+    if (this.client && this.isRunning) {
+      this.settings.channels.forEach(channel => {
+        this.client?.say(channel, message);
+      });
+    }
+    else {
+      this.chatBoard.error('Bot is not connected.');
     }
   }
 
