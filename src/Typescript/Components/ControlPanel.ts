@@ -42,7 +42,7 @@ export class ControlPanel {
         new Toast('error', 'Set a Twitch channel to join in "Bot settings".');
         return;
       }
-      if (!sessionStorage.getItem('natterbaseOpenAiKey') && !UiElements.openAiKeyInput.value) {
+      if (!sessionStorage.getItem('natterbaseOpenAiKey') && !UiElements.openAiKeyInput.value && (!this.bot || !this.bot.isRunning)) {
         this.confirmationModal.open('You didn\'t set an OpenAI API key. AI related features will not work. Do you want to continue?', () => {
           this.runBot();
           return;

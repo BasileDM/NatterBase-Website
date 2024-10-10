@@ -4,7 +4,7 @@ import { Toast } from './Components/Toast.js';
 
 document.addEventListener('DOMContentLoaded', function() : void {
   new Sidebar();
-  new LoginModal('login-modal', ['navbar-login-button', 'sidebar-login-button']);
+  new LoginModal('login-modal', ['navbar-login-button', 'sidebar-login-button', 'homepage-login-btn']);
 
   // Show toast saved in session storage
   const toastMessage = sessionStorage.getItem('showToast');
