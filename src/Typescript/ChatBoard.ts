@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 export class ChatBoard {
   private chatDisplay: HTMLElement;
   private chatInput: HTMLInputElement;
@@ -6,9 +7,9 @@ export class ChatBoard {
   private errorColor: string = 'red';
   private successColor: string = 'green';
   private warningColor: string = 'orange';
-  private sendMessageCallback: (message: string) => void;
+  private sendMessageCallback: (_message: string) => void;
 
-  constructor(sendMessageCallback: (message: string) => void) {
+  constructor(sendMessageCallback: (_message: string) => void) {
     this.sendMessageCallback = sendMessageCallback;
 
     this.chatDisplay = document.getElementById('chat-display') as HTMLElement;
