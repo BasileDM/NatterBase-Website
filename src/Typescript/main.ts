@@ -12,4 +12,11 @@ document.addEventListener('DOMContentLoaded', function() : void {
     new Toast('success', toastMessage);
     sessionStorage.removeItem('showToast');
   }
+
+  // Hide the YNH overlay switch
+  const ynhOverlaySwitch = document.getElementById('ynh-overlay-switch');
+  if (ynhOverlaySwitch) {
+    ynhOverlaySwitch.classList.add('hidden');
+    ynhOverlaySwitch.style.display = 'none';
+  }
 });

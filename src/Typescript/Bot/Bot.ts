@@ -24,7 +24,9 @@ export class Bot {
       commands: [],
       features: [],
     };
-    this.chatBoard = new ChatBoard();
+    this.chatBoard = new ChatBoard((message: string) => {
+      this.sendMessage(message);
+    });
   }
 
   public async start() {
@@ -52,7 +54,11 @@ export class Bot {
       });
 
       this.client.on('message', (channel: string, tags: tmiTypes.ChatUserstate, message: string, self: boolean) => {
-        this.chatBoard.displayMessage(`${tags['display-name']}: ${message}`);
+        const username = tags['display-name'] || tags.username || 'Unknown';
+        const color = tags.color || null;
+
+        this.chatBoard.displayMessage(username, message, color);
+
         if (self) return;
         this.handleMessage(channel, tags, message);
       });
@@ -145,22 +151,36 @@ export class Bot {
   }
 
   private async handleMessage(channel: string, tags: tmiTypes.ChatUserstate, message: string) {
-    const botName = this.client?.getUsername() || '';
+    const botName = (this.client?.getUsername() || '').trim();
+    const lowerCaseMessage = message.toLowerCase();
+    const lowerCaseBotName = botName.toLowerCase();
 
     for (const feature of this.features) {
       const trigger = feature.trigger;
 
-      // Check for triggers that are mentions (@BotName)
-      if (trigger === '@' && message.includes(`@${botName}`)) {
+      // Check for triggers that are mentions (@BotName), case-insensitive
+      if (trigger === '@' && lowerCaseMessage.includes(`@${lowerCaseBotName}`)) {
         await this.handleFeatureResponse(channel, tags, message, feature);
         return;
       }
 
-      // Check if message starts with the trigger
-      if (message.startsWith(trigger)) {
+      // Check if message starts with the trigger (But not @)
+      if (trigger !== '@' && message.startsWith(trigger)) {
         await this.handleFeatureResponse(channel, tags, message, feature);
         return;
       }
+    }
+  }
+
+
+  public sendMessage(message: string): void {
+    if (this.client && this.isRunning) {
+      this.settings.channels.forEach(channel => {
+        this.client?.say(channel, message);
+      });
+    }
+    else {
+      this.chatBoard.error('Bot is not connected.');
     }
   }
 
