@@ -13,7 +13,7 @@
   <title>NatterBase</title>
 </head>
 
-<body class="bg-gray-800 text-white h-screen flex flex-col overflow-hidden">
+<body class="bg-gray-800 text-white h-screen flex flex-col overflow-hidden bg-gradient-to-b from-gray-800 via-[rgba(31,41,55,0.8)] to-gray-900">
   <header class="bg-gray-900 text-white shadow border-b-[1px] border-gray-700">
     <div class="mx-5 flex justify-between items-center py-2">
       <h1 class="text-2xl font-bold">NatterBase</h1>
