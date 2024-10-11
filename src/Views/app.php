@@ -56,7 +56,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
     <div>
       <label class="block text-sm font-medium" for="bot-name">Profile name</label>
       <input class="input" type="text" name="name" id="bot-name">
-      <div id="bot-name-error-display" class="text-red-500"></div>
+      <div id="name-error-display" class="text-red-500"></div>
     </div>
     <div>
       <label class="block text-sm font-medium" for="bot-platform">Platform</label>
@@ -65,12 +65,12 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
     <div>
       <label class="block text-sm font-medium" for="account-section-twitch-channel">Join channel</label>
       <input class="input" type="text" name="twitchJoinChannel" id="account-section-twitch-channel">
-      <div id="account-section-twitch-channel-error-display" class="text-red-500"></div>
+      <div id="twitchJoinChannel-error-display" class="text-red-500"></div>
     </div>
     <div>
       <label class="block text-sm font-medium" for="bot-cooldown">Cooldown</label>
       <input class="input" type="number" name="cooldownTime" id="bot-cooldown">
-      <div id="bot-cooldown-error-display" class="text-red-500"></div>
+      <div id="cooldownTime-error-display" class="text-red-500"></div>
     </div>
     <div class="flex gap-2">
       <span id="bot-settings-save-btn" class="btn btn-success">Save</span>
@@ -126,7 +126,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <label class="block text-sm font-medium" for="username">Username</label>
       <input class="input" type="text" name="username" id="account-section-username"
         value="<?= htmlspecialchars($view_userData["user"]["username"] ?? '') ?>">
-      <div id="account-section-username-error-display" class="text-red-500"></div>
+      <div id="username-error-display" class="text-red-500"></div>
     </div>
     <div>
       <label class="block text-sm font-medium" for="mail">Mail</label>
@@ -144,6 +144,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <label class="block text-sm font-medium" for="account-section-password-confirm">Confirm password</label>
       <input class="input" type="password" name="confirmPassword" id="account-section-password-confirm" disabled>
       <div id="account-section-password-confirm-error-display" class="text-red-500"></div>
+      <div id="password-error-display" class="text-red-500"></div>
     </div>
     <div class="flex gap-2">
       <span id="account-settings-save-btn" class="btn btn-success flex">
