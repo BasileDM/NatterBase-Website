@@ -4,11 +4,48 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
 ?>
 
 <!-- Chat / Dashboard -->
-<section id="app-dashboard">
-  <h2>Chat</h2>
-  <p>Welcome, <?= $view_userData["user"]["username"] ?>. <span id="dashboard-placeholder">Please select a bot.</span></p>
-  <pre id="chat-display"></pre>
+<section id="app-dashboard" class="flex flex-col flex-1 overflow-hidden">
+  <div class="flex">
+    <h2 class="text-2xl font-bold mb-4">Chat</h2>
+    <div class="flex ml-auto">
+      <div title="Clear chat" id="clear-chat-button">
+        <svg class="mt-2 cursor-pointer text-gray-400" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
+          <path d="M440-520h80v-280q0-17-11.5-28.5T480-840q-17 0-28.5 11.5T440-800v280ZM200-360h560v-80H200v80Zm-58 240h98v-80q0-17 11.5-28.5T280-240q17 0 28.5 11.5T320-200v80h120v-80q0-17 11.5-28.5T480-240q17 0 28.5 11.5T520-200v80h120v-80q0-17 11.5-28.5T680-240q17 0 28.5 11.5T720-200v80h98l-40-160H182l-40 160Zm676 80H142q-39 0-63-31t-14-69l55-220v-80q0-33 23.5-56.5T200-520h160v-280q0-50 35-85t85-35q50 0 85 35t35 85v280h160q33 0 56.5 23.5T840-440v80l55 220q13 38-11.5 69T818-40Zm-58-400H200h560Zm-240-80h-80 80Z" />
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div id="dashboard-placeholder">
+    <p class="mb-4">Welcome, <?= htmlspecialchars($view_userData["user"]["username"]) ?>. Please select a bot.</p>
+    Not sure where to start ?
+    <a class="text-blue-400 hover:text-blue-500" href="./docs#getting-started" target="_blank">Check out our getting started guide.</a>
+  </div>
+
+  <!-- Chat Display Area -->
+  <div id="chat-display" class="flex-1 overflow-y-auto bg-gray-900 text-white border border-gray-700 shadow-lg p-4 rounded-md mb-4 custom-scrollbar">
+    <!-- Chat messages will appear here -->
+  </div>
+
+  <!-- Input Field and Send Button -->
+  <div class="flex items-center mt-auto pb-1 pl-1">
+    <input
+      id="chat-input"
+      type="text"
+      placeholder="Type your message..."
+      class="flex-1 p-2 bg-gray-700 text-white rounded-l-md focus:outline-none focus:ring-1 focus:ring-blue-500" />
+    <button
+      id="chat-send-button"
+      class="p-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+      <div class="flex">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+          <path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" />
+        </svg>
+        Send
+      </div>
+    </button>
+  </div>
 </section>
+
 
 <!-- Bot settings -->
 <section id="app-bot-settings" class="hidden">
@@ -96,7 +133,8 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
         value="<?= htmlspecialchars($view_userData["user"]["mail"] ?? '') ?>" disabled>
     </div>
     <div>
-      <span id="account-settings-password-btn" class="btn btn-alert">Change password</span>
+      <span id="account-settings-password-btn"
+        class="btn btn-alert">Change password</span>
     </div>
     <div id="account-settings-password-inputs" class="hidden">
       <label class="block text-sm font-medium" for="account-section-password">New password</label>

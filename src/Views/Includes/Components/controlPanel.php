@@ -3,14 +3,14 @@ $botProfiles = $view_userData['botProfiles'];
 ?>
 <div id="control-panel" class="pb-4 flex border-b border-gray-700 items-center justify-between">
   <div id="profile-buttons">
-    <div class="flex flex-col items-center gap-2 min-w-32">
-      <div id="create-bot-profile-btn" class="text-center btn btn-success w-full flex">
+    <div class="flex flex-row items-center gap-2 min-w-32">
+      <div id="create-bot-profile-btn" class="text-center btn btn-success w-full text-nowrap flex pl-2">
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
           <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
         </svg>
         New bot
       </div>
-      <select id="bot-profiles-selector" class="py-1 text-black self-center w-full max-w-40 rounded-full text-center hover:cursor-pointer" name="bot-profile">
+      <select id="bot-profiles-selector" class="py-1 px-2 text-nowrap text-black self-center w-full max-w-40 rounded-full text-center hover:cursor-pointer" name="bot-profile">
         <option value="default" selected hidden>Select bot</option>
         <?php foreach ($botProfiles as $key => $botProfile): ?>
           <option
@@ -23,17 +23,17 @@ $botProfiles = $view_userData['botProfiles'];
     </div>
   </div>
   <div id="bot-buttons">
-    <div id="run-bot-btn" class="btn btn-success items-center justify-center hidden rounded-full">
+    <div id="run-bot-btn" class="btn btn-success items-center justify-center hidden rounded-full ml-2">
       <svg id="run-bot-icon" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
         <path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z" />
       </svg>
-      <span id="run-bot-text">Run bot</span>
+      <span id="run-bot-text" class="text-nowrap">Run bot</span>
     </div>
-    <div id="run-bot-btn-disabled" class="btn btn-success btn-disabled items-center justify-center rounded-full flex">
+    <div title="Select a bot first" id="run-bot-btn-disabled" class="btn btn-success btn-disabled items-center justify-center rounded-full flex text-nowrap ml-2">
       <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
         <path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z" />
       </svg>
-      No bot selected
+      Run bot
     </div>
   </div>
 </div>

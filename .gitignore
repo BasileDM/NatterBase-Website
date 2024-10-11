@@ -4,6 +4,7 @@ public/assets/js/**/*.js
 !public/assets/js/lib/*.js
 /SQL
 /.vscode
+/vendor
 
 # Logs
 logs
