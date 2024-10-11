@@ -1078,6 +1078,30 @@ svg {
   width: 100%;
 }
 
+.w-\[200px\] {
+  width: 200px;
+}
+
+.w-\[100px\] {
+  width: 100px;
+}
+
+.w-\[180px\] {
+  width: 180px;
+}
+
+.w-\[120px\] {
+  width: 120px;
+}
+
+.w-\[0px\] {
+  width: 0px;
+}
+
+.w-\[10px\] {
+  width: 10px;
+}
+
 .min-w-32 {
   min-width: 8rem;
 }
