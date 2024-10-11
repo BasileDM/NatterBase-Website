@@ -109,6 +109,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <div class="mb-2">
         <label class="block text-sm font-medium mb-1">Trigger</label>
         <input type="text" name="trigger" placeholder="Enter trigger" class="w-full p-2 bg-gray-700 text-white rounded" />
+        <span id="trigger-error-display" class="text-red-500"></span>
       </div>
       <div class="feature-fields flex-grow"></div>
       <button type="button" class="remove-feature-button mt-auto text-red-500 hover:text-red-700">Remove Feature</button>

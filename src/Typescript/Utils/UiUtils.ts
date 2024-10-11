@@ -331,8 +331,14 @@ export class UiUtils {
       input.setAttribute('name', inputName);
       input.setAttribute('data-field-name', field.name);
 
+      // Error display span element
+      const errorDisplay = document.createElement('span');
+      errorDisplay.setAttribute('id', `${inputName}-error-display`);
+      errorDisplay.classList.add('text-red-500', 'text-sm', 'mt-1');
+
       fieldWrapper.appendChild(label);
       fieldWrapper.appendChild(input);
+      fieldWrapper.appendChild(errorDisplay);
       featureFieldsContainer.appendChild(fieldWrapper);
     });
   }
