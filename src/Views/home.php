@@ -23,7 +23,7 @@ include __DIR__ . '/Includes/header.php';
     </div>
     <!-- Illustration -->
     <div class="flex w-full sm:w-1/2 justify-center">
-      <img src="./assets/img/twitch-chat.png" alt="Illustration" class="h-[75vh] w-auto border-[1px] border-gray-900 shadow-xl rounded-lg">
+      <img src="./assets/img/twitch-chat.png" alt="Illustration" class="h-[75vh] w-auto border-[1px] border-gray-600 shadow-xl rounded-lg">
     </div>
   </section>
 </div>
