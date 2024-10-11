@@ -162,7 +162,7 @@ final class Validator
     $cleanUsername = self::sanitizeString($username);
 
     if ($cleanUsername !== $username) {
-      return ['error' => 'Username can\'t contain special characters'];
+      return ['error' => 'Special characters are not allowed'];
     }
 
     if (strlen($username) < 3 || strlen($username) > 80) {
