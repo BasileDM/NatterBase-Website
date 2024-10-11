@@ -46,7 +46,6 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
   </div>
 </section>
 
-
 <!-- Bot settings -->
 <section id="app-bot-settings" class="hidden">
   <h2>Bot settings</h2>

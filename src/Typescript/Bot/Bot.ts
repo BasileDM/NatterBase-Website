@@ -172,7 +172,6 @@ export class Bot {
     }
   }
 
-
   public sendMessage(message: string): void {
     if (this.client && this.isRunning) {
       this.settings.channels.forEach(channel => {
