@@ -3,6 +3,7 @@ export class ChatBoard {
   private chatDisplay: HTMLElement;
   private chatInput: HTMLInputElement;
   private sendButton: HTMLElement;
+  private clearButton: HTMLElement;
   private logColor: string = 'white';
   private errorColor: string = 'red';
   private successColor: string = 'green';
@@ -15,8 +16,15 @@ export class ChatBoard {
     this.chatDisplay = document.getElementById('chat-display') as HTMLElement;
     this.chatInput = document.getElementById('chat-input') as HTMLInputElement;
     this.sendButton = document.getElementById('chat-send-button') as HTMLElement;
+    this.clearButton = document.getElementById('clear-chat-button') as HTMLElement;
+    this.bindEvents();
+  }
 
-    // Event listeners
+  private bindEvents(): void {
+    this.clearButton.addEventListener('click', () => {
+      this.chatDisplay.innerHTML = '';
+    });
+
     this.sendButton.addEventListener('click', () => this.handleSendMessage());
     this.chatInput.addEventListener('keypress', (event) => {
       if (event.key === 'Enter') {
