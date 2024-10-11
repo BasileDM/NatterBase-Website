@@ -22,12 +22,11 @@ include __DIR__ . '/Includes/header.php';
       </div>
     </div>
     <!-- Illustration -->
-    <div class="flex w-full sm:w-1/2 justify-center">
+    <div class="flex w-full sm:w-1/2 min-w-[308px] justify-center">
       <img src="./assets/img/twitch-chat.png" alt="Illustration" class="h-[75vh] w-auto border-[1px] border-gray-600 shadow-xl rounded-lg">
     </div>
   </section>
 </div>
-
 
 <?php
 include __DIR__ . '/Includes/footer.html';
