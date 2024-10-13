@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./assets/css/output.css">
+  <link rel="icon" type="image/x-icon" href="./assets/img/favicon.png">
   <script type="module" src="./assets/js/main.js" defer></script>
   <?php if (isset($_SESSION['userId']) && $view_section == 'app'): ?>
     <script src="./assets/js/lib/tmi.min.js"></script>
