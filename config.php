@@ -4,6 +4,7 @@ define('DB_HOST', 'localhost');
 define('DB_NAME', '');
 define('DB_USER', '');
 define('DB_PWD', '');
+define('AUTO_MIGRATION', false);
 
 // Mail and account activation
 define('FULL_URL', 'https://your-url-here/');

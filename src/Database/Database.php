@@ -35,6 +35,9 @@ final class Database
 
   public function init(): bool
   {
+    if (!AUTO_MIGRATION) {
+      return false;
+    }
     if ($this->doesUsersTableExists()) {
       return false;
     } else {
