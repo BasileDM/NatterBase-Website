@@ -1009,10 +1009,6 @@ svg {
   margin-top: auto;
 }
 
-.ml-0 {
-  margin-left: 0px;
-}
-
 .block {
   display: block;
 }
@@ -1096,14 +1092,6 @@ svg {
 
 .min-w-\[280px\] {
   min-width: 280px;
-}
-
-.min-w-full {
-  min-width: 100%;
-}
-
-.min-w-\[300px\] {
-  min-width: 300px;
 }
 
 .min-w-\[308px\] {

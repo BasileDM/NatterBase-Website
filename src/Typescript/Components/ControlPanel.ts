@@ -66,11 +66,9 @@ export class ControlPanel {
     // Local keys
     UiElements.twitchTokenInput.addEventListener('change', () => {
       sessionStorage.setItem('natterbaseTwitchToken', UiElements.twitchTokenInput.value);
-      console.log('Twitch token changed:', UiElements.twitchTokenInput.value);
     });
     UiElements.openAiKeyInput.addEventListener('change', () => {
       sessionStorage.setItem('natterbaseOpenAiKey', UiElements.openAiKeyInput.value);
-      console.log('OpenAI key changed:', UiElements.openAiKeyInput.value);
     });
 
     // Save account settings button
