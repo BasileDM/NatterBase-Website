@@ -5,7 +5,7 @@ import tsParser from '@typescript-eslint/parser';
 
 export default [
   {
-    // Apply these settings to JavaScript and TypeScript files
+    // Apply settings to JavaScript and TypeScript files
     files: ['**/*.{js,mjs,cjs,ts}'],
 
     // Set language options for both JS and TS
@@ -28,7 +28,7 @@ export default [
       // TypeScript recommended rules
       ...tseslint.configs.recommended.rules,
 
-      // Custom rules for your project
+      // Custom rules for
       'indent': ['error', 2],
       'quotes': ['error', 'single'],
       'semi': ['error', 'always'],
