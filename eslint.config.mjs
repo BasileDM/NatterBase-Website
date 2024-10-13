@@ -28,7 +28,7 @@ export default [
       // TypeScript recommended rules
       ...tseslint.configs.recommended.rules,
 
-      // Custom rules for
+      // Custom rules
       'indent': ['error', 2],
       'quotes': ['error', 'single'],
       'semi': ['error', 'always'],
