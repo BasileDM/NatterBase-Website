@@ -15,18 +15,10 @@ export class FormModal extends AbstractModal {
     this.submitRoute = this.form.dataset.route as string;
     this.submitButton = this.form.querySelector('button[id*="submit"]') as HTMLElement;
 
-    this.bindEvents(triggerButtonIds);
+    this.bindEvents();
   }
 
-  private bindEvents(triggerButtonIds: string[]): void {
-    // Open buttons
-    triggerButtonIds.forEach(buttonId => {
-      const button = document.getElementById(buttonId);
-      if (button) {
-        button.addEventListener('click', () => this.open());
-      }
-    });
-
+  private bindEvents(): void {
     // Submit form button
     if (this.submitButton) {
       this.submitButton.addEventListener('click', async (event) => {
