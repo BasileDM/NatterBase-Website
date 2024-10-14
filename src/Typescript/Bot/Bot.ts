@@ -172,7 +172,6 @@ export class Bot {
     }
   }
 
-
   public sendMessage(message: string): void {
     if (this.client && this.isRunning) {
       this.settings.channels.forEach(channel => {
@@ -194,7 +193,7 @@ export class Bot {
       }
       catch (error) {
         this.chatBoard.error('Error getting OpenAI response: ' + error);
-        this.client?.say(channel, `@${tags.username}, I couldn't get an answer right now Sadge.`);
+        this.client?.say(channel, `@${tags.username}, I couldn't get an answer right now Sadge`);
       }
     }
 

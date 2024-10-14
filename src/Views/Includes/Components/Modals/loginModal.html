@@ -5,11 +5,11 @@
   <form id="login-form" method="dialog" class="space-y-4">
     <div>
       <label for="mail" class="block text-sm font-medium">Mail*</label>
-      <input id="mail" type="text" class="w-full input" />
+      <input id="mail" type="text" class="w-full input" autocomplete="mail" required/>
     </div>
     <div>
       <label for="password" class="block text-sm font-medium">Password*</label>
-      <input id="password" type="password" class="w-full input" />
+      <input id="password" type="password" class="w-full input" autocomplete="current-password" required/>
     </div>
     <span
       id="modal-register-btn"
@@ -28,23 +28,23 @@
     </div>
     <div>
       <label for="mail-register" class="block text-sm font-medium">Mail*</label>
-      <input id="mail-register" type="text" class="w-full input" required/>
-      <span id="mail-register-error-display" class="text-red-500"></span>
+      <input id="mail-register" type="text" class="w-full input" name="mail" autocomplete="mail" required/>
+      <span id="mail-error-display" class="text-red-500"></span>
     </div>
     <div>
       <label for="username" class="block text-sm font-medium">Username*</label>
-      <input id="username" type="text" class="w-full input" required/>
+      <input id="username" type="text" class="w-full input" name="username" autocomplete="username" required/>
       <span id="username-error-display" class="text-red-500"></span>
     </div>
     <div>
       <label for="password-register" class="block text-sm font-medium">Password*</label>
-      <input id="password-register" type="password" class="w-full input" required />
-      <span id="password-register-error-display" class="text-red-500"></span>
+      <input id="password-register" type="password" class="w-full input" name="password" autocomplete="current-password" required/>
+      <span id="password-error-display" class="text-red-500"></span>
     </div>
     <div>
       <label for="password-confirm" class="block text-sm font-medium">Confirm password*</label>
-      <input id="password-confirm" type="password" class="w-full input" required />
-      <span id="password-confirm-error-display" class="text-red-500"></span>
+      <input id="password-confirm" type="password" class="w-full input" name="passwordConfirm" autocomplete="current-password" required/>
+      <span id="passwordConfirm-error-display" class="text-red-500"></span>
     </div>
     <div class="flex flex-col items-center">
       <div>
@@ -53,6 +53,7 @@
           id="gdpr"
           type="checkbox"
           class="m-auto p-2 rounded-md bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+          name="gdpr"
           required
         />
       </div>

@@ -17,5 +17,6 @@ try {
 } catch (RuntimeException $e) {
   echo $e->getMessage();
 }
+
 $router = new Router();
 $router->handleRequest();

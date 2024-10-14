@@ -4,20 +4,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Natterbase allows you to make your own AI chatbot for twitch.">
+  <meta name="keywords" content="natterbase, twitch, chatbot, AI">
+  <meta name="robots" content="index, follow">
   <link rel="stylesheet" href="./assets/css/output.css">
+  <link rel="icon" type="image/x-icon" href="./assets/img/favicon.png">
   <script type="module" src="./assets/js/main.js" defer></script>
   <?php if (isset($_SESSION['userId']) && $view_section == 'app'): ?>
     <script src="./assets/js/lib/tmi.min.js"></script>
     <script type="module" src="./assets/js/app.js" defer></script>
   <?php endif ?>
-  <title>NatterBase</title>
+  <title>Natterbase |
+    <?php
+    if ($view_section == 'app') {
+      echo 'App';
+    } else if ($view_section == 'docs') {
+      echo 'Docs';
+    } else {
+      echo 'Home';
+    }
+    ?>
+  </title>
 </head>
 
 <body class="bg-gray-800 text-white h-screen flex flex-col overflow-hidden bg-gradient-to-b from-gray-800 via-[rgba(31,41,55,0.8)] to-gray-900">
   <header class="bg-gray-900 text-white shadow border-b-[1px] border-gray-700">
     <div class="mx-5 flex justify-between items-center py-2">
-      <h1 class="text-2xl font-bold">NatterBase</h1>
-
+      <?php include __DIR__ . '/Components/logo.php'; ?>
       <!-- Navigation bar -->
       <div class="hidden sm:flex items-center justify-between w-full">
         <nav class="flex-1">
@@ -34,7 +47,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
                 <path d="M320-240h320v-80H320v80Zm0-160h320v-80H320v80ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z" />
               </svg>
-              <a href="./docs" class="<?= $view_section == 'docs' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300">
+              <a href="./docs" class="<?= $view_section == 'docs' ? 'border-b-[1px] border-white' : '' ?> hover:text-gray-300" aria-label="Go to Documentation section">
                 Docs
               </a>
             </li>

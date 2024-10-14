@@ -22,7 +22,7 @@ final class Database
     return $this->db;
   }
 
-  private function connect(): PDO|string
+  private function connect(): PDO
   {
     try {
       $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME;
@@ -35,6 +35,9 @@ final class Database
 
   public function init(): bool
   {
+    if (!AUTO_MIGRATION) {
+      return false;
+    }
     if ($this->doesUsersTableExists()) {
       return false;
     } else {
@@ -52,6 +55,6 @@ final class Database
   {
     $sql = "SHOW TABLES FROM " . DB_NAME . " LIKE 'Users';";
     $result = $this->db->query($sql)->fetch();
-    return $result !== false;
+    return (bool) $result;
   }
 }

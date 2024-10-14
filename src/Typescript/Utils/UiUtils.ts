@@ -15,10 +15,8 @@ export class UiUtils {
 
     const userData = await RequestHelper.getUserData();
     UiUtils.userData = userData;
-    console.log('Fetched UserData: ', userData);
-    const user = userData.user;
 
-    this.updateAccountSection(user);
+    this.updateAccountSection();
     this.updateBotsList(userData.botProfiles);
 
     if (selectedBotIndex != undefined && selectedBotIndex >= 0) {
@@ -118,8 +116,14 @@ export class UiUtils {
     }
   }
 
-  private static updateAccountSection(user: any): void {
-    console.log('Updating account section...', user);
+  private static updateAccountSection(): void {
+    FormValidator.removeFormErrors('account-settings-form');
+    UiElements.changePassInputsDiv.classList.add('hidden');
+    const inputs = UiElements.changePassInputsDiv.getElementsByTagName('input');
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].value = '';
+    }
+    UiElements.changePassBtn.classList.remove('hidden');
   }
 
   private static updateBotsList(bots: any): void {
@@ -192,19 +196,29 @@ export class UiUtils {
     const featureCard = clone.querySelector('.feature-card') as HTMLElement;
     featureCard.setAttribute('data-index', index.toString());
 
+    // Used to avoid doing a fetch upon deletion
     if (!botFeature) {
       featureCard.dataset.isNew = true.toString();
     }
 
-    // Set the 'trigger' input value
+    // Set the 'trigger' input value and ID
     const triggerInput = featureCard.querySelector('input[name="trigger"]') as HTMLInputElement;
-    triggerInput.name = 'trigger';
+    triggerInput.id = `feature-trigger-${index}`;
     triggerInput.value = botFeature ? botFeature.trigger : '';
+
+    // Set the label's for attribute
+    const triggerLabel = featureCard.querySelector('label[for="trigger-input"]') as HTMLLabelElement;
+    triggerLabel.htmlFor = triggerInput.id;
 
     // Populate the 'feature-select' dropdown
     const selectElement = featureCard.querySelector('select[name="feature-select"]') as HTMLSelectElement;
     selectElement.name = 'idBotFeature';
+    selectElement.id = `feature-select-${index}`;
     UiUtils.populateFeatureSelect(selectElement);
+
+    // Set the 'feature-select' label's for attribute
+    const featureSelectLabel = featureCard.querySelector('label[for="feature-select"]') as HTMLLabelElement;
+    featureSelectLabel.htmlFor = selectElement.id;
 
     // Set the selected value
     if (botFeature) {
@@ -257,6 +271,7 @@ export class UiUtils {
     UiElements.saveFeaturesBtn.classList.remove('hidden');
   }
 
+  // Add a new feature card (called when clicking the 'Add New Feature' button)
   static addNewFeatureCard(): void {
     const index = UiElements.botFeaturesDisplay.querySelectorAll('.feature-card').length;
     UiUtils.createFeatureCard(null, index);
@@ -331,8 +346,14 @@ export class UiUtils {
       input.setAttribute('name', inputName);
       input.setAttribute('data-field-name', field.name);
 
+      // Error display span element
+      const errorDisplay = document.createElement('span');
+      errorDisplay.setAttribute('id', `${inputName}-error-display`);
+      errorDisplay.classList.add('text-red-500', 'text-sm', 'mt-1');
+
       fieldWrapper.appendChild(label);
       fieldWrapper.appendChild(input);
+      fieldWrapper.appendChild(errorDisplay);
       featureFieldsContainer.appendChild(fieldWrapper);
     });
   }
