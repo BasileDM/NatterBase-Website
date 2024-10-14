@@ -36,7 +36,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
     <button
       id="chat-send-button"
       class="p-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
-      <div class="flex">
+      <div class="flex mr-2">
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
           <path d="M120-160v-640l760 320-760 320Zm80-120 474-200-474-200v140l240 60-240 60v140Zm0 0v-400 400Z" />
         </svg>
@@ -45,7 +45,6 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
     </button>
   </div>
 </section>
-
 
 <!-- Bot settings -->
 <section id="app-bot-settings" class="hidden">
@@ -56,7 +55,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
     <div>
       <label class="block text-sm font-medium" for="bot-name">Profile name</label>
       <input class="input" type="text" name="name" id="bot-name">
-      <div id="bot-name-error-display" class="text-red-500"></div>
+      <div id="name-error-display" class="text-red-500"></div>
     </div>
     <div>
       <label class="block text-sm font-medium" for="bot-platform">Platform</label>
@@ -65,12 +64,12 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
     <div>
       <label class="block text-sm font-medium" for="account-section-twitch-channel">Join channel</label>
       <input class="input" type="text" name="twitchJoinChannel" id="account-section-twitch-channel">
-      <div id="account-section-twitch-channel-error-display" class="text-red-500"></div>
+      <div id="twitchJoinChannel-error-display" class="text-red-500"></div>
     </div>
     <div>
       <label class="block text-sm font-medium" for="bot-cooldown">Cooldown</label>
       <input class="input" type="number" name="cooldownTime" id="bot-cooldown">
-      <div id="bot-cooldown-error-display" class="text-red-500"></div>
+      <div id="cooldownTime-error-display" class="text-red-500"></div>
     </div>
     <div class="flex gap-2">
       <span id="bot-settings-save-btn" class="btn btn-success">Save</span>
@@ -109,6 +108,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <div class="mb-2">
         <label class="block text-sm font-medium mb-1">Trigger</label>
         <input type="text" name="trigger" placeholder="Enter trigger" class="w-full p-2 bg-gray-700 text-white rounded" />
+        <span id="trigger-error-display" class="text-red-500"></span>
       </div>
       <div class="feature-fields flex-grow"></div>
       <button type="button" class="remove-feature-button mt-auto text-red-500 hover:text-red-700">Remove Feature</button>
@@ -125,7 +125,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <label class="block text-sm font-medium" for="username">Username</label>
       <input class="input" type="text" name="username" id="account-section-username"
         value="<?= htmlspecialchars($view_userData["user"]["username"] ?? '') ?>">
-      <div id="account-section-username-error-display" class="text-red-500"></div>
+      <div id="username-error-display" class="text-red-500"></div>
     </div>
     <div>
       <label class="block text-sm font-medium" for="mail">Mail</label>
@@ -143,6 +143,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <label class="block text-sm font-medium" for="account-section-password-confirm">Confirm password</label>
       <input class="input" type="password" name="confirmPassword" id="account-section-password-confirm" disabled>
       <div id="account-section-password-confirm-error-display" class="text-red-500"></div>
+      <div id="password-error-display" class="text-red-500"></div>
     </div>
     <div class="flex gap-2">
       <span id="account-settings-save-btn" class="btn btn-success flex">
@@ -173,7 +174,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       </a>
     </div>
     <div>
-      <label class="text-sm font-medium flex mb-2" for="twitchToken">
+      <label class="text-sm font-medium flex mb-2" for="account-section-twitchToken">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
           <path d="M2.149 0l-1.612 4.119v16.836h5.731v3.045h3.224l3.045-3.045h4.657l6.269-6.269v-14.686h-21.314zm19.164 13.612l-3.582 3.582h-5.731l-3.045 3.045v-3.045h-4.836v-15.045h17.194v11.463zm-3.582-7.343v6.262h-2.149v-6.262h2.149zm-5.731 0v6.262h-2.149v-6.262h2.149z" fill-rule="evenodd" clip-rule="evenodd" />
         </svg>
@@ -182,7 +183,7 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
       <input class="input" type="password" name="twitchToken" id="account-section-twitchToken">
     </div>
     <div>
-      <label class="flex text-sm font-medium mb-2" for="openAiKey">
+      <label class="flex text-sm font-medium mb-2" for="account-section-openAiKey">
         <svg fill="currentColor" width="24" height="24" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
           <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>

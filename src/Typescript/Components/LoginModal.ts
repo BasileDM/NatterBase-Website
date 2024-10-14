@@ -102,6 +102,16 @@ export class LoginModal {
           gdpr: (document.getElementById('gdpr') as HTMLInputElement).checked,
         };
 
+        // Front end validation
+        const validator = new FormValidator('register-form');
+        FormValidator.removeFormErrors('register-form');
+        const validationErrors = validator.validateForm();
+
+        if (validationErrors) {
+          validator.displayFormErrors(validationErrors);
+          return;
+        }
+
         try {
           const responseBody = await RequestHelper
             .post('./register', formData)

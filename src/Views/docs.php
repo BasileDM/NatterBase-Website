@@ -4,7 +4,7 @@ include __DIR__ . '/Includes/header.php';
 <h2 class="text-4xl mb-6 border-b border-gray-700 pb-2">Documentation</h2>
 <div class="flex flex-col sm:flex-row sm:space-x-4">
   <nav class="mb-12 bg-gray-900 p-6 rounded-lg shadow-lg w-72 min-w-72">
-    <h2 class="text-2xl font-semibold mb-4">Table of Contents</h2>
+    <h1 class="text-2xl font-semibold mb-4">Table of Contents</h1>
     <ul class="space-y-3">
       <li>
         <a href="#about" class="flex items-center text-blue-400 hover:text-blue-500">
