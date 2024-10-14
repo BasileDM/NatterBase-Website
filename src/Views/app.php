@@ -102,11 +102,11 @@ include __DIR__ . '/Includes/Components/controlPanel.php';
   <template id="feature-card-template">
     <div class="feature-card flex flex-col mt-2 bg-gray-900 text-white border-[1px] border-gray-700 shadow-lg p-4 rounded-md mb-4 min-w-[280px] max-w-[380px] flex-1">
       <div class="mb-2">
-        <label class="block text-sm font-medium mb-1">Feature</label>
+        <label class="block text-sm font-medium mb-1"  for="feature-select">Feature</label>
         <select name="feature-select" class="w-full p-2 bg-gray-700 text-white rounded"></select>
       </div>
       <div class="mb-2">
-        <label class="block text-sm font-medium mb-1">Trigger</label>
+        <label class="block text-sm font-medium mb-1" for="trigger-input">Trigger</label>
         <input type="text" name="trigger" placeholder="Enter trigger" class="w-full p-2 bg-gray-700 text-white rounded" />
         <span id="trigger-error-display" class="text-red-500"></span>
       </div>
