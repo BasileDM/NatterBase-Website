@@ -68,4 +68,27 @@ class ValidatorTest extends TestCase
     $this->assertArrayHasKey("mail", $result["errors"], "Mail key should exist in errors");
     $this->assertArrayNotHasKey("sanitized", $result, "Sanitized key should not exist");
   }
+
+  public function testValidateInputsMismatchPassword(): void
+  {
+    $inputs = [
+      'mail' => 'a@a.com',
+      'username' => 'aaa',
+      'password' => 'aaaaaaaa',
+      'confirmPassword' => 'bbbbbbbb',
+      'gdpr' => true,
+      'name' => 'aaaa',
+      'twitchJoinChannel' => 'aaaa',
+      'openaiPrePrompt' => 'aaaa',
+      'cooldownTime' => '0',
+      'idBot' => '1',
+    ];
+
+    // Validate
+    $result = Validator::validateInputs($inputs);
+
+    $this->assertArrayHasKey("errors", $result, "Errors key should exist");
+    $this->assertArrayHasKey("password", $result["errors"], "Password key should exist in errors");
+    $this->assertArrayNotHasKey("sanitized", $result, "Sanitized key should not exist");
+  }
 }
