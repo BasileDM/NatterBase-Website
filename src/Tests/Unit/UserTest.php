@@ -13,7 +13,7 @@ class UserTest extends TestCase
     $user->setIdUser(1);
     $user->setMail('test@example.com');
     $user->setUsername('TestUser');
-    $user->setPasswordHash('testpassword');
+    $user->setPasswordHash('testPassword');
     $user->setIsActivated(true);
     $user->setGdpr(true);
     $user->setTwitchUsername('TwitchTestUser');

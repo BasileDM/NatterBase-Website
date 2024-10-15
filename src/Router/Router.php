@@ -58,11 +58,10 @@ class Router
     ];
   }
 
-  public function handleRequest(): void
+  public function handleRequest(string $requestMethod, string $requestUri): void
   {
-    $requestMethod = $_SERVER['REQUEST_METHOD'];
     // Get URI without parameters
-    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $uri = parse_url($requestUri, PHP_URL_PATH);
     // Remove the subdirectory from the URI
     $subDirectory = dirname($_SERVER['SCRIPT_NAME']);
     $path = str_replace($subDirectory, '', $uri);
