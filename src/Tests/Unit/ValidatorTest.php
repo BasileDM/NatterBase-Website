@@ -43,7 +43,6 @@ class ValidatorTest extends TestCase
     $this->assertTrue(password_verify("aaaaaaaa", $passwordHash), "Password hash should be valid");
   }
 
-
   public function testValidateInputsInvalidMail(): void
   {
     $wrongInputs = $this->inputs;
