@@ -2,8 +2,6 @@
 
 namespace src\Tests\Unit;
 
-require_once __DIR__ . '/../Classes/TestHelper.php';
-
 use PHPUnit\Framework\TestCase;
 use src\Router\Router;
 use src\Tests\Classes\MockController;
@@ -20,9 +18,6 @@ class RouterTest extends TestCase
   protected function tearDown(): void
   {
     session_destroy();
-    if (function_exists('header_remove')) {
-      header_remove();
-    }
   }
 
   public function testHandleRequestAuthorized(): void
@@ -48,7 +43,6 @@ class RouterTest extends TestCase
   public function testHandleRequestUnauthorized(): void
   {
     $_SESSION['authLevel'] = 0;
-    $GLOBALS['headers'] = [];
 
     $router = new Router([MockController::class]);
     ob_start();
@@ -57,6 +51,5 @@ class RouterTest extends TestCase
 
     $this->assertEquals(401, http_response_code());
     $this->assertEquals('Please login or register to access the app', $output);
-    $headers = $GLOBALS['headers'];
   }
 }
