@@ -1,6 +1,7 @@
 <?php
 include __DIR__ . '/Includes/header.php';
 ?>
+
 <div class="container mx-auto p-2 sm:p-8">
   <h2 class="text-4xl mb-6 border-b border-gray-700 pb-2">Documentation</h2>
   <div class="flex flex-col sm:flex-row sm:space-x-4">
