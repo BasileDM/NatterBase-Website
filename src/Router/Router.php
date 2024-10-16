@@ -70,16 +70,17 @@ class Router
     $userAuthLevel = $_SESSION['authLevel'] ?? 0;
 
     if (!$route) {
-      header("Location: ./error?code=404");
+      http_response_code(404);
+      call_user_func($this->routes['GET']['/error']['callback']);
       return;
     }
 
     if ($userAuthLevel < $route['authLevel']) {
-      header("Location: ./error?code=401");
+      http_response_code(401);
+      call_user_func($this->routes['GET']['/error']['callback']);
       return;
     }
 
-    http_response_code(200);
     call_user_func($route['callback']);
   }
 }

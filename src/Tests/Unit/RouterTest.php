@@ -34,7 +34,14 @@ class RouterTest extends TestCase
     $router->handleRequest('GET', '/auth1');
     $output = ob_get_clean();
 
-    $this->assertEquals('test', $output);
+    $this->assertEquals('{"message":"Authorized"}', $output);
+    $this->assertEquals(200, http_response_code());
+
+    ob_start();
+    $router->handleRequest('GET', '/public');
+    $output = ob_get_clean();
+
+    $this->assertEquals('{"message":"public"}', $output);
     $this->assertEquals(200, http_response_code());
   }
 
@@ -44,9 +51,12 @@ class RouterTest extends TestCase
     $GLOBALS['headers'] = [];
 
     $router = new Router([MockController::class]);
+    ob_start();
     $router->handleRequest('GET', '/auth1');
+    $output = ob_get_clean();
 
+    $this->assertEquals(401, http_response_code());
+    $this->assertEquals('Please login or register to access the app', $output);
     $headers = $GLOBALS['headers'];
-    $this->assertContains('Location: ./error?code=401', $headers);
   }
 }
