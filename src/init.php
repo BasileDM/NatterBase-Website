@@ -19,4 +19,6 @@ try {
 }
 
 $router = new Router();
-$router->handleRequest();
+$requestMethod = $_SERVER['REQUEST_METHOD'];
+$uri = $_SERVER['REQUEST_URI'];
+$router->handleRequest($requestMethod, $uri);

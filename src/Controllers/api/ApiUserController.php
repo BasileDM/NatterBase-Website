@@ -37,7 +37,9 @@ final class ApiUserController
   public function updateUserData()
   {
     try {
-      $validation = Validator::validateInputs();
+      $request = json_decode(file_get_contents('php://input'), true);
+      $validation = Validator::validateInputs($request);
+
       if (isset($validation['errors'])) {
         $this->formErrorsResponse(400, $validation['errors']);
         exit;

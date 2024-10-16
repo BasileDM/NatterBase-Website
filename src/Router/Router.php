@@ -15,9 +15,9 @@ class Router
   private array $routes = [];
   private array $controllers;
 
-  public function __construct()
+  public function __construct(array $controllerClasses = [])
   {
-    $this->controllers = [
+    $this->controllers = $controllerClasses ?: [
       PageController::class,
       AuthController::class,
       ApiBotController::class,
@@ -58,11 +58,10 @@ class Router
     ];
   }
 
-  public function handleRequest(): void
+  public function handleRequest(string $requestMethod, string $requestUri): void
   {
-    $requestMethod = $_SERVER['REQUEST_METHOD'];
     // Get URI without parameters
-    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $uri = parse_url($requestUri, PHP_URL_PATH);
     // Remove the subdirectory from the URI
     $subDirectory = dirname($_SERVER['SCRIPT_NAME']);
     $path = str_replace($subDirectory, '', $uri);
@@ -71,16 +70,17 @@ class Router
     $userAuthLevel = $_SESSION['authLevel'] ?? 0;
 
     if (!$route) {
-      header("Location: ./error?code=404");
+      http_response_code(404);
+      call_user_func($this->routes['GET']['/error']['callback']);
       return;
     }
 
     if ($userAuthLevel < $route['authLevel']) {
-      header("Location: ./error?code=401");
+      http_response_code(401);
+      call_user_func($this->routes['GET']['/error']['callback']);
       return;
     }
 
-    http_response_code(200);
     call_user_func($route['callback']);
   }
 }

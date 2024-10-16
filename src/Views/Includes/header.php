@@ -13,6 +13,7 @@
   <?php if (isset($_SESSION['userId']) && $view_section == 'app'): ?>
     <script src="./assets/js/lib/tmi.min.js"></script>
     <script type="module" src="./assets/js/app.js" defer></script>
+    <script>window.HTTP_STATUS_CODE = <?= $view_code ?? 200 ?></script>
   <?php endif ?>
   <title>Natterbase |
     <?php
