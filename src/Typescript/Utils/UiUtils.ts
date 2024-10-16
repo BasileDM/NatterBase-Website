@@ -360,7 +360,7 @@ export class UiUtils {
 
   static getFeatureFields(featureId: string): any[] {
     // Define the fields relevant to each feature ID
-    const featureFieldsMapping: { [key: string]: any[] } = {
+    const featureFieldsMapping: { [key: string]: FeatureField[] } = {
       '1': [
         { name: 'diceSidesNumber', label: 'Number of sides on the dice', type: 'number' },
       ],
