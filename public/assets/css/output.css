@@ -1033,8 +1033,8 @@ svg {
   height: 1.5rem;
 }
 
-.h-\[75vh\] {
-  height: 75vh;
+.h-auto {
+  height: auto;
 }
 
 .h-full {
@@ -1043,6 +1043,10 @@ svg {
 
 .h-screen {
   height: 100vh;
+}
+
+.max-h-\[75vh\] {
+  max-height: 75vh;
 }
 
 .min-h-fit {
@@ -1094,20 +1098,48 @@ svg {
   min-width: 280px;
 }
 
-.min-w-\[308px\] {
-  min-width: 308px;
+.min-w-\[304px\] {
+  min-width: 304px;
 }
 
 .max-w-40 {
   max-width: 10rem;
 }
 
-.max-w-7xl {
-  max-width: 80rem;
+.max-w-96 {
+  max-width: 24rem;
 }
 
 .max-w-\[380px\] {
   max-width: 380px;
+}
+
+.max-w-\[20px\] {
+  max-width: 20px;
+}
+
+.max-w-\[320px\] {
+  max-width: 320px;
+}
+
+.max-w-\[400px\] {
+  max-width: 400px;
+}
+
+.max-w-\[390px\] {
+  max-width: 390px;
+}
+
+.max-w-\[420px\] {
+  max-width: 420px;
+}
+
+.max-w-\[450px\] {
+  max-width: 450px;
+}
+
+.max-w-\[480px\] {
+  max-width: 480px;
 }
 
 .flex-1 {
@@ -1698,10 +1730,6 @@ svg {
 
   .sm\:h-auto {
     height: auto;
-  }
-
-  .sm\:w-1\/2 {
-    width: 50%;
   }
 
   .sm\:flex-row {
