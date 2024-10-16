@@ -358,7 +358,7 @@ export class UiUtils {
     });
   }
 
-  static getFeatureFields(featureId: string): any[] {
+  static getFeatureFields(featureId: string): FeatureField[] {
     // Define the fields relevant to each feature ID
     const featureFieldsMapping: { [key: string]: FeatureField[] } = {
       '1': [
@@ -367,6 +367,9 @@ export class UiUtils {
       '2': [
         { name: 'openAiPrePrompt', label: 'OpenAI pre-prompt', type: 'textarea' },
         { name: 'maxOpenaiMessageLength', label: 'Max message length', type: 'number' },
+      ],
+      '3': [
+        { name: 'deleteTrigger', label: 'Delete trigger', type: 'text' },
       ],
     };
     return featureFieldsMapping[featureId] || [];

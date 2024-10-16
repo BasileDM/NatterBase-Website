@@ -128,7 +128,6 @@ final class BotService
       $feature->hydrateFromInputs($input);
       $features[] = $feature;
     }
-
     $bot->setBotFeatures($features);
     return $this->featureRepository->updateBotFeatures($bot);
   }

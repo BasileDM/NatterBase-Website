@@ -28,6 +28,17 @@ final class FeaturesValidator
         $featureErrors['trigger'] = 'Trigger is required';
       }
 
+      if (isset($feature['deleteTrigger'])) {
+        $result = self::validateTrigger($feature['deleteTrigger']);
+        if (isset($result['error'])) {
+          $featureErrors['deleteTrigger'] = $result['error'];
+        } else {
+          $sanitizedFeature['deleteTrigger'] = $result['sanitized'];
+        }
+      } else {
+        $featureErrors['deleteTrigger'] = 'DeleteTrigger is required';
+      }
+
       // Validate 'idBotFeature'
       if (isset($feature['idBotFeature'])) {
         $result = Validator::validateInt($feature['idBotFeature'], 'idBotFeature');
