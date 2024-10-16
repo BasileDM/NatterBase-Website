@@ -31,7 +31,7 @@
 <body class="bg-gray-800 text-white h-screen flex flex-col overflow-hidden bg-gradient-to-b from-gray-800 via-[rgba(31,41,55,0.8)] to-gray-900">
   <header class="bg-gray-900 text-white shadow border-b-[1px] border-gray-700">
     <div class="mx-5 flex justify-between items-center py-2">
-      <?php include __DIR__ . '/Components/logo.php'; ?>
+      <?php include __DIR__ . '/Components/logo.html'; ?>
       <!-- Navigation bar -->
       <div class="hidden sm:flex items-center justify-between w-full">
         <nav class="flex-1">
