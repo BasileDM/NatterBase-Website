@@ -84,7 +84,7 @@ export class Sidebar {
     // Logout session storage clearing
     if (UiElements.logoutBtn) {
       UiElements.logoutBtn.addEventListener('click', () => {
-        // sessionStorage.clear();
+        sessionStorage.clear();
         sessionStorage.setItem('showToast', 'You have been logged out.');
       });
     }

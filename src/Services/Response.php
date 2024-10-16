@@ -21,7 +21,10 @@ trait Response
     http_response_code($code);
     header('Content-Type: application/json');
     echo json_encode($data);
-    if (!empty($redirect)) header('Location: ' . $redirect);
+    if (!empty($redirect)) {
+      header('Location: ' . $redirect);
+      exit;
+    }
   }
 
   private function formErrorsResponse(int $code, array $errors): void
