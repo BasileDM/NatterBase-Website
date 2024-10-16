@@ -12,6 +12,10 @@ switch ($notice) {
     $message = '⚠️ Pease check your mails to activate your account.';
     $style = 'banner-warning';
     break;
+  case 'deleted':
+    $message = '✅ Account deleted successfully.';
+    $style = 'banner-success';
+    break;
   case 'already':
     $message = '⚠️ Account already activated.';
     $style = 'banner-warning';

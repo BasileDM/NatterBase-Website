@@ -207,9 +207,9 @@ export class ControlPanel {
           return;
         }
 
-        new Toast('success', jsonResponseBody.message);
         sessionStorage.clear();
-        window.location.href = '/logout';
+        sessionStorage.setItem('showToast', jsonResponseBody.message);
+        window.location.href = './logout';
       }
       catch (error) {
         console.error('Unexpected error: ', error);

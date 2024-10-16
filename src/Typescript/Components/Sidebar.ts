@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { UiElements } from '../Utils/UiElements.js';
 import { UiUtils } from '../Utils/UiUtils.js';
 
 export class Sidebar {
-  private isAppPage = window.location.pathname.includes('/app');
+  private isAppPage = window.location.pathname.includes('/app') && (window as any).HTTP_STATUS_CODE === 200;
   private isOpen: boolean = false;
   private openAnimationClass: string;
   private closeAnimationClass: string;
@@ -83,7 +84,7 @@ export class Sidebar {
     // Logout session storage clearing
     if (UiElements.logoutBtn) {
       UiElements.logoutBtn.addEventListener('click', () => {
-        // sessionStorage.clear();
+        sessionStorage.clear();
         sessionStorage.setItem('showToast', 'You have been logged out.');
       });
     }

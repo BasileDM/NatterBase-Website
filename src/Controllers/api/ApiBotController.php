@@ -29,7 +29,8 @@ final class ApiBotController
   public function createBotProfile(): void
   {
     try {
-      $validation = Validator::validateInputs();
+      $request = json_decode(file_get_contents('php://input'), true);
+      $validation = Validator::validateInputs($request);
 
       if (isset($validation['errors'])) {
         $this->formErrorsResponse(400, $validation['errors']);
@@ -77,7 +78,8 @@ final class ApiBotController
   public function updateBotProfile(): void
   {
     try {
-      $validation = Validator::validateInputs();
+      $request = json_decode(file_get_contents('php://input'), true);
+      $validation = Validator::validateInputs($request);
       if (isset($validation['errors'])) {
         $this->formErrorsResponse(400, $validation['errors']);
         exit;
@@ -126,7 +128,8 @@ final class ApiBotController
   public function updateBotFeatures(): void
   {
     try {
-      $validation = FeaturesValidator::validateInputs();
+      $request = json_decode(file_get_contents('php://input'), true);
+      $validation = FeaturesValidator::validateInputs($request);
       if (isset($validation['errors'])) {
         $this->formErrorsResponse(400, $validation['errors']);
         exit;

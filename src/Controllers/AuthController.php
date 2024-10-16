@@ -27,8 +27,8 @@ final class AuthController
   public function register(): void
   {
     try {
-
-      $validationResult = Validator::validateInputs();
+      $request = json_decode(file_get_contents('php://input'), true);
+      $validationResult = Validator::validateInputs($request);
 
       if (isset($validationResult['errors'])) {
         $this->formErrorsResponse(400, $validationResult['errors']);
@@ -44,7 +44,7 @@ final class AuthController
         $this->jsonResponse(200, ['message' => 'Registration successful']);
       }
     } catch (Exception $e) {
-      $this->jsonResponse(500, ['message' => 'Internal server error' . $e->getMessage()]);
+      $this->jsonResponse(500, ['message' => 'Internal server error']);
     }
   }
 

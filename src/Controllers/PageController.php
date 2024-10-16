@@ -26,21 +26,18 @@ final class PageController
   public function redirectToHomePage(): void
   {
     $this->render("home", ["section" => "home"]);
-    exit;
   }
 
   #[Route('GET', '/home')]
   public function displayHomePage(): void
   {
     header("Location: ./");
-    exit;
   }
 
   #[Route('GET', '/docs')]
   public function displayAboutPage(): void
   {
     $this->render("docs", ["section" => "docs"]);
-    exit;
   }
 
   #[Route('GET', '/app')]
@@ -49,14 +46,13 @@ final class PageController
   {
     $userData = $this->userService->getAllCurrentUserData();
     $this->render("app", ["section" => "app", "userData" => $userData]);
-    exit;
   }
 
   #[Route('GET', '/error')]
   public function displayErrorPage(): void
   {
     [$code, $message] = ErrorUtils::getErrorCodeAndMessage();
+    http_response_code($code);
     $this->render("error", ["section" => "error", "message" => $message, "code" => $code]);
-    exit;
   }
 }

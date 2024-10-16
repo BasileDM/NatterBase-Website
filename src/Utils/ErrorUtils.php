@@ -6,7 +6,7 @@ final class ErrorUtils
 {
   public static function getErrorCodeAndMessage(): array
   {
-    $code = $_GET['code'] ?? null;
+    $code = http_response_code();
     if (!$code) $code = 404;
     $message = match ((int)$code) {
       400 => 'Bad Request',
