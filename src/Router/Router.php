@@ -15,9 +15,9 @@ class Router
   private array $routes = [];
   private array $controllers;
 
-  public function __construct(array $controllerClasses = null)
+  public function __construct(array $controllerClasses = [])
   {
-    $this->controllers = $controllerClasses ?? [
+    $this->controllers = $controllerClasses ?: [
       PageController::class,
       AuthController::class,
       ApiBotController::class,

@@ -2,6 +2,8 @@
 
 namespace src\Tests\Unit;
 
+require_once __DIR__ . '/../Classes/TestHelper.php';
+
 use PHPUnit\Framework\TestCase;
 use src\Router\Router;
 use src\Tests\Classes\MockController;
@@ -29,7 +31,7 @@ class RouterTest extends TestCase
     $router = new Router([MockController::class]);
 
     ob_start();
-    $router->handleRequest('GET', '/test');
+    $router->handleRequest('GET', '/auth1');
     $output = ob_get_clean();
 
     $this->assertEquals('test', $output);
@@ -39,18 +41,12 @@ class RouterTest extends TestCase
   public function testHandleRequestUnauthorized(): void
   {
     $_SESSION['authLevel'] = 0;
-    $_SERVER['SCRIPT_NAME'] = '/index.php';
+    $GLOBALS['headers'] = [];
+
     $router = new Router([MockController::class]);
+    $router->handleRequest('GET', '/auth1');
 
-    header_remove();
-
-    ob_start();
-    $router->handleRequest('GET', '/test');
-    ob_get_clean();
-
-    $headers = headers_list();
-    var_dump($headers);
-
+    $headers = $GLOBALS['headers'];
     $this->assertContains('Location: ./error?code=401', $headers);
   }
 }

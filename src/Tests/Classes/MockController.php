@@ -7,7 +7,7 @@ use src\Router\Attributes\Route;
 
 class MockController
 {
-  #[Route('GET', '/test')]
+  #[Route('GET', '/auth1')]
   #[Authorization(1)]
   public function test(): void
   {
