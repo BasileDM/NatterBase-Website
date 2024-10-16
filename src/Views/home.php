@@ -5,7 +5,7 @@ include __DIR__ . '/Includes/header.php';
 <div class="flex items-center justify-center min-h-fit h-full">
   <section class="h-full min-w-[304px] mx-auto flex flex-col sm:flex-row items-center justify-between space-y-8 sm:space-y-0 sm:space-x-8">
     <div class="text-center sm:text-left min-w-[280px] max-w-[480px]">
-      <h1 class="text-4xl font-bold mb-4">Welcome to NatterBase</h1>
+      <h1 class="text-4xl font-bold mb-4">Welcome to Natterbase</h1>
       <p class="text-gray-300 mb-6">
         Manage your bots with ease, create profiles, add AI features and all of this 100% locally.
       </p>

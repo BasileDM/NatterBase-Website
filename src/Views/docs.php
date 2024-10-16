@@ -3,17 +3,17 @@ include __DIR__ . '/Includes/header.php';
 ?>
 
 <div class="container mx-auto p-2 sm:p-8">
-  <h2 class="text-4xl mb-6 border-b border-gray-700 pb-2">Documentation</h2>
+  <h1 class="text-4xl mb-6 border-b border-gray-700 pb-2">Documentation</h1>
   <div class="flex flex-col sm:flex-row sm:space-x-4">
     <nav class="mb-12 bg-gray-900 p-6 rounded-lg shadow-lg w-72 min-w-72">
-      <h1 class="text-2xl font-semibold mb-4">Table of Contents</h1>
+      <h2 class="text-2xl font-semibold mb-4">Table of Contents</h2>
       <ul class="space-y-3">
         <li>
           <a href="#about" class="flex items-center text-blue-400 hover:text-blue-500">
             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
               <path d="M480-280q17 0 28.5-11.5T520-320q0-17-11.5-28.5T480-360q-17 0-28.5 11.5T440-320q0 17 11.5 28.5T480-280Zm-40-160h80v-240h-80v240Zm40 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
             </svg>
-            About NatterBase
+            About Natterbase
           </a>
         </li>
         <li>
@@ -52,7 +52,7 @@ include __DIR__ . '/Includes/header.php';
     </nav>
   
     <section id="about" class="mb-12">
-      <h2 class="text-2xl font-bold mb-4 border-b border-gray-700 pb-2">About NatterBase</h2>
+      <h2 class="text-2xl font-bold mb-4 border-b border-gray-700 pb-2">About Natterbase</h2>
       <p class="text-gray-300 leading-relaxed">
         Welcome to the NatterBase documentation. This guide will help you understand how to use the site and its features.<br>
         NatterBase is a platform that allows you to run your own chatbot locally.

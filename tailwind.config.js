@@ -3,6 +3,9 @@ export const mode = 'jit';
 export const content = ['./public/**/*.{html,js,php}', './src/Views/**/*.{html,php}'];
 export const theme = {
   extend: {
+    fontFamily: {
+      poppins: ['Poppins', 'sans-serif'],
+    },
     keyframes: {
       slideIn: {
         '0%': {

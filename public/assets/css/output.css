@@ -446,7 +446,20 @@ video {
   display: none;
 }
 
+@font-face {
+  font-family: "Poppins";
+
+  src: url(../fonts/poppins-semibold-webfont.woff2) format("woff2");
+
+  src: url(../fonts/poppins-semibold-webfont.woff) format("woff");
+}
+
+h1 {
+  font-family: Poppins, sans-serif;
+}
+
 h2 {
+  font-family: Poppins, sans-serif;
   font-size: 1.5rem;
   line-height: 2rem;
   font-weight: 700;
@@ -1728,10 +1741,6 @@ svg {
     --tw-space-y-reverse: 0;
     margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(0px * var(--tw-space-y-reverse));
-  }
-
-  .sm\:p-12 {
-    padding: 3rem;
   }
 
   .sm\:p-8 {
