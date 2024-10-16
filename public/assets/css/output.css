@@ -1106,36 +1106,8 @@ svg {
   max-width: 10rem;
 }
 
-.max-w-96 {
-  max-width: 24rem;
-}
-
 .max-w-\[380px\] {
   max-width: 380px;
-}
-
-.max-w-\[20px\] {
-  max-width: 20px;
-}
-
-.max-w-\[320px\] {
-  max-width: 320px;
-}
-
-.max-w-\[400px\] {
-  max-width: 400px;
-}
-
-.max-w-\[390px\] {
-  max-width: 390px;
-}
-
-.max-w-\[420px\] {
-  max-width: 420px;
-}
-
-.max-w-\[450px\] {
-  max-width: 450px;
 }
 
 .max-w-\[480px\] {
@@ -1756,6 +1728,14 @@ svg {
     --tw-space-y-reverse: 0;
     margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(0px * var(--tw-space-y-reverse));
+  }
+
+  .sm\:p-12 {
+    padding: 3rem;
+  }
+
+  .sm\:p-8 {
+    padding: 2rem;
   }
 
   .sm\:text-left {
