@@ -195,7 +195,7 @@ export class Bot {
       }
 
       // Check if message contains text command name
-      const command = this.settings.commands.find(cmd => cmd.name.toLowerCase() === lowerCaseMessage);
+      const command = this.settings.commands.find(cmd => lowerCaseMessage.includes(cmd.name.toLowerCase()));
       if (command) {
         this.client?.say(channel, `@${tags.username}, ${command.text}`);
         return;
