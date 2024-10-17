@@ -104,6 +104,7 @@ export class Bot {
       commands: currentProfile.botCommands,
       features: currentProfile.botFeatures,
     };
+    console.log('settings', settings);
     return settings;
   }
 
@@ -158,9 +159,40 @@ export class Bot {
     const botName = (this.client?.getUsername() || '').trim();
     const lowerCaseMessage = message.toLowerCase();
     const lowerCaseBotName = botName.toLowerCase();
+    console.log('features', this.features);
+
+    const deleteTriggers = this.features
+      .map(feature => feature.deleteTrigger)
+      .filter(trigger => trigger);
+
+    // Check if the message starts with any delete trigger
+    for (const deleteTrigger of deleteTriggers) {
+      if (typeof deleteTrigger === 'string' && message.startsWith(deleteTrigger)) {
+        const cmdToDelete = message.replace(deleteTrigger, '').trim().toLowerCase();
+        console.log('Attempting to delete command:', cmdToDelete);
+        if (this.settings.commands.find(cmd => cmd.name.toLowerCase() === cmdToDelete)) {
+          const response = await RequestHelper.delete(`./api/deleteTextCommand?cmdName=${cmdToDelete}&idBot=${this.settings.botId}`);
+          const jsonResponseBody = await RequestHelper.handleResponse(response);
+
+          if (!jsonResponseBody) {
+            this.client?.say(channel, 'Could not delete command Sadge');
+          }
+          else {
+            this.client?.say(channel, `@${tags.username} Command deleted! :)`);
+            this.settings = await this.getSettings();
+          }
+          return;
+        }
+        else {
+          this.client?.say(channel, `@${tags.username} Command not found. :(`);
+          return;
+        }
+      }
+    }
 
     for (const feature of this.features) {
       const trigger = feature.trigger;
+      console.log('feature', feature);
 
       // Check for triggers that are mentions (@BotName), case-insensitive
       if (trigger === '@' && lowerCaseMessage.includes(`@${lowerCaseBotName}`)) {
@@ -173,34 +205,13 @@ export class Bot {
         await this.handleFeatureResponse(channel, tags, message, feature);
         return;
       }
+    }
 
-      // Delete command : check if message starts with deleteTrigger for text commands
-      console.log('deletetrigger', feature.deleteTrigger);
-      if (feature.deleteTrigger && message.startsWith(feature.deleteTrigger)) {
-        const cmdToDelete = message.replace(feature.deleteTrigger, '').trim().toLowerCase();
-        if (this.settings.commands.find(cmd => cmd.name.toLowerCase() === cmdToDelete)) {
-          const response = await RequestHelper.delete(`./api/deleteTextCommand?cmdName=${cmdToDelete}&idBot=${this.settings.botId}`);
-          const jsonResponseBody = await RequestHelper.handleResponse(response);
-
-          if (!jsonResponseBody) {
-            this.client?.say(channel, 'Could not delete command Sadge');
-          }
-          this.client?.say(channel, '@' + tags.username + ' Command deleted! :)');
-          this.settings = await this.getSettings();
-          return;
-        }
-        else {
-          this.client?.say(channel, '@' + tags.username + ' Command not found. :(');
-          return;
-        }
-      }
-
-      // Check if message contains text command name
-      const command = this.settings.commands.find(cmd => lowerCaseMessage.includes(cmd.name.toLowerCase()));
-      if (command) {
-        this.client?.say(channel, `@${tags.username}, ${command.text}`);
-        return;
-      }
+    // Check if message contains text command name
+    const command = this.settings.commands.find(cmd => lowerCaseMessage.includes(cmd.name.toLowerCase()));
+    if (command) {
+      this.client?.say(channel, `@${tags.username}, ${command.text}`);
+      return;
     }
   }
 
