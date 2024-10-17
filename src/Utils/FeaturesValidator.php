@@ -35,8 +35,6 @@ final class FeaturesValidator
         } else {
           $sanitizedFeature['deleteTrigger'] = $result['sanitized'];
         }
-      } else {
-        $featureErrors['deleteTrigger'] = 'DeleteTrigger is required';
       }
 
       // Validate 'idBotFeature'
