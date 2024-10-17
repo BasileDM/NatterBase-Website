@@ -175,6 +175,7 @@ export class Bot {
       }
 
       // Delete command : check if message starts with deleteTrigger for text commands
+      console.log('deletetrigger', feature.deleteTrigger);
       if (feature.deleteTrigger && message.startsWith(feature.deleteTrigger)) {
         const cmdToDelete = message.replace(feature.deleteTrigger, '').trim().toLowerCase();
         if (this.settings.commands.find(cmd => cmd.name.toLowerCase() === cmdToDelete)) {
@@ -185,7 +186,7 @@ export class Bot {
             this.client?.say(channel, 'Could not delete command Sadge');
           }
           this.client?.say(channel, '@' + tags.username + ' Command deleted! :)');
-          this.settings.commands.splice(this.settings.commands.findIndex(cmd => cmd.name === cmdToDelete), 1);
+          this.settings = await this.getSettings();
           return;
         }
         else {
@@ -236,9 +237,12 @@ export class Bot {
 
     // Add text command
     if (feature.deleteTrigger) {
+      console.log('trigger', feature.trigger);
       const cmdWithoutTrigger = message.replace(feature.trigger, '').trim();
       const cmdName = cmdWithoutTrigger.split(' ')[0].toLowerCase();
       const cmdText = cmdWithoutTrigger.split(' ').slice(1).join(' ');
+      console.log('commands', this.settings.commands);
+      console.log('cmdtoadd name', cmdName);
       if (!this.settings.commands.some((cmd: Command) => cmd.name === cmdName)) {
         const result = await this.addTextCommand(cmdName, cmdText);
         if (result) {
