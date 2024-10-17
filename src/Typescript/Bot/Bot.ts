@@ -174,17 +174,22 @@ export class Bot {
         return;
       }
 
-      // Check if message starts with deleteTrigger for text commands
+      // Delete command : check if message starts with deleteTrigger for text commands
       if (feature.deleteTrigger && message.startsWith(feature.deleteTrigger)) {
         const cmdToDelete = message.replace(feature.deleteTrigger, '').trim().toLowerCase();
         if (this.settings.commands.find(cmd => cmd.name.toLowerCase() === cmdToDelete)) {
           const response = await RequestHelper.delete(`./api/deleteTextCommand?cmdName=${cmdToDelete}&idBot=${this.settings.botId}`);
           const jsonResponseBody = await RequestHelper.handleResponse(response);
-          console.log(jsonResponseBody);
+
           if (!jsonResponseBody) {
             this.client?.say(channel, 'Could not delete command Sadge');
           }
-          this.client?.say(channel, 'Command deleted! :)');
+          this.client?.say(channel, '@' + tags.username + ' Command deleted! :)');
+          this.settings.commands.splice(this.settings.commands.findIndex(cmd => cmd.name === cmdToDelete), 1);
+          return;
+        }
+        else {
+          this.client?.say(channel, '@' + tags.username + ' Command not found. :(');
           return;
         }
       }
@@ -253,8 +258,7 @@ export class Bot {
   private async addTextCommand(cmdName: string, cmdText: string): Promise<boolean> {
     if (cmdName && cmdText) {
       const response = await RequestHelper.post('./api/addTextCommand', { name: cmdName, text: cmdText, idBot: this.settings.botId });
-      const jsonResponseBody = await RequestHelper.handleResponse(response);
-      if (!jsonResponseBody) {
+      if (!response.ok) {
         return false;
       }
       return true;
