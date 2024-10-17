@@ -13,6 +13,16 @@ final class BotCommand
 
   use Hydration;
 
+  public function toArray(): array
+  {
+    return [
+      "idBotCommand" => $this->idBotCommand,
+      "idBot" => $this->idBot,
+      "name" => $this->name,
+      "text" => $this->text
+    ];
+  }
+
   /**
    * Get the value of idBotCommand
    */
@@ -21,16 +31,16 @@ final class BotCommand
     return $this->idBotCommand;
   }
 
-    /**
-     * Set the value of idBotCommand
-     *
-     * @param   int  $idBotCommand  
-     * 
-     */
-    public function setIdBotCommand(int $idBotCommand)
-    {
-        $this->idBotCommand = $idBotCommand;
-    }
+  /**
+   * Set the value of idBotCommand
+   *
+   * @param   int  $idBotCommand  
+   * 
+   */
+  public function setIdBotCommand(int $idBotCommand)
+  {
+    $this->idBotCommand = $idBotCommand;
+  }
 
   /**
    * Get the value of idBot
@@ -40,16 +50,16 @@ final class BotCommand
     return $this->idBot;
   }
 
-    /**
-     * Set the value of idBot
-     *
-     * @param   int  $idBot  
-     * 
-     */
-    public function setIdBot(int $idBot)
-    {
-        $this->idBot = $idBot;
-    }
+  /**
+   * Set the value of idBot
+   *
+   * @param   int  $idBot  
+   * 
+   */
+  public function setIdBot(int $idBot)
+  {
+    $this->idBot = $idBot;
+  }
 
   /**
    * Get the value of name
@@ -59,16 +69,16 @@ final class BotCommand
     return $this->name;
   }
 
-    /**
-     * Set the value of name
-     *
-     * @param   string  $name  
-     * 
-     */
-    public function setName(string $name)
-    {
-        $this->name = $name;
-    }
+  /**
+   * Set the value of name
+   *
+   * @param   string  $name  
+   * 
+   */
+  public function setName(string $name)
+  {
+    $this->name = $name;
+  }
 
   /**
    * Get the value of text
@@ -78,14 +88,14 @@ final class BotCommand
     return $this->text;
   }
 
-    /**
-     * Set the value of text
-     *
-     * @param   string  $text  
-     * 
-     */
-    public function setText(string $text)
-    {
-        $this->text = $text;
-    }
+  /**
+   * Set the value of text
+   *
+   * @param   string  $text  
+   * 
+   */
+  public function setText(string $text)
+  {
+    $this->text = $text;
+  }
 }

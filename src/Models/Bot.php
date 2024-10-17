@@ -36,7 +36,7 @@ final class Bot
       'idPlatform' => $this->getIdPlatform(),
       'platformName' => $this->getPlatformName(),
       'idUser' => $this->getIdUser(),
-      'botCommands' => $this->getBotCommands(),
+      'botCommands' => $this->getBotCommandsArray(),
       'botFeatures' => $this->getBotFeaturesArray(),
     ];
   }
@@ -48,6 +48,15 @@ final class Bot
       $featuresArray[] = $feature->toArray();
     }
     return $featuresArray;
+  }
+
+  public function getBotCommandsArray(): array|null
+  {
+    $commandsArray = [];
+    foreach ($this->getBotCommands() as $command) {
+      $commandsArray[] = $command->toArray();
+    }
+    return $commandsArray;
   }
 
   /**
