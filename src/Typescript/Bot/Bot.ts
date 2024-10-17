@@ -104,7 +104,6 @@ export class Bot {
       commands: currentProfile.botCommands,
       features: currentProfile.botFeatures,
     };
-    console.log('settings', settings);
     return settings;
   }
 
@@ -159,8 +158,8 @@ export class Bot {
     const botName = (this.client?.getUsername() || '').trim();
     const lowerCaseMessage = message.toLowerCase();
     const lowerCaseBotName = botName.toLowerCase();
-    console.log('features', this.features);
 
+    // Get the delete triggers
     const deleteTriggers = this.features
       .map(feature => feature.deleteTrigger)
       .filter(trigger => trigger);
@@ -169,7 +168,8 @@ export class Bot {
     for (const deleteTrigger of deleteTriggers) {
       if (typeof deleteTrigger === 'string' && message.startsWith(deleteTrigger)) {
         const cmdToDelete = message.replace(deleteTrigger, '').trim().toLowerCase();
-        console.log('Attempting to delete command:', cmdToDelete);
+
+        // Check if the command exists
         if (this.settings.commands.find(cmd => cmd.name.toLowerCase() === cmdToDelete)) {
           const response = await RequestHelper.delete(`./api/deleteTextCommand?cmdName=${cmdToDelete}&idBot=${this.settings.botId}`);
           const jsonResponseBody = await RequestHelper.handleResponse(response);
@@ -192,7 +192,6 @@ export class Bot {
 
     for (const feature of this.features) {
       const trigger = feature.trigger;
-      console.log('feature', feature);
 
       // Check for triggers that are mentions (@BotName), case-insensitive
       if (trigger === '@' && lowerCaseMessage.includes(`@${lowerCaseBotName}`)) {
@@ -248,12 +247,11 @@ export class Bot {
 
     // Add text command
     if (feature.deleteTrigger) {
-      console.log('trigger', feature.trigger);
       const cmdWithoutTrigger = message.replace(feature.trigger, '').trim();
       const cmdName = cmdWithoutTrigger.split(' ')[0].toLowerCase();
       const cmdText = cmdWithoutTrigger.split(' ').slice(1).join(' ');
-      console.log('commands', this.settings.commands);
-      console.log('cmdtoadd name', cmdName);
+
+      // Check if command already exists
       if (!this.settings.commands.some((cmd: Command) => cmd.name === cmdName)) {
         const result = await this.addTextCommand(cmdName, cmdText);
         if (result) {
