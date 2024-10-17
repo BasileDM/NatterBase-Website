@@ -17,6 +17,7 @@ export class Bot {
     this.isRunning = false;
     this.client = null;
     this.settings = {
+      botId: 0,
       twitchToken: '',
       channels: [],
       cooldown: 5,
@@ -58,7 +59,6 @@ export class Bot {
         const color = tags.color || null;
 
         this.chatBoard.displayMessage(username, message, color);
-
         if (self) return;
         this.handleMessage(channel, tags, message);
       });
@@ -95,6 +95,7 @@ export class Bot {
     const currentProfile = result.botProfiles[selectedBotIndex];
 
     const settings: BotSettings = {
+      botId: currentProfile.idBot,
       twitchToken: UiElements.twitchTokenInput.value,
       openAiKey: UiElements.openAiKeyInput.value,
       channels: [currentProfile.twitchJoinChannel],
@@ -147,6 +148,8 @@ export class Bot {
       trigger: feature.trigger,
       diceSidesNumber: feature.diceSidesNumber ?? null,
       openAiPrePrompt: feature.openAiPrePrompt ?? null,
+      maxOpenAiMessageLength: feature.maxOpenAiMessageLength ?? null,
+      deleteTrigger: feature.deleteTrigger ?? null,
     }));
   }
 
@@ -168,6 +171,21 @@ export class Bot {
       if (trigger !== '@' && message.startsWith(trigger)) {
         await this.handleFeatureResponse(channel, tags, message, feature);
         return;
+      }
+
+      // Check if message starts with deleteTrigger for text commands
+      if (feature.deleteTrigger && message.startsWith(feature.deleteTrigger)) {
+        const cmdToDelete = message.replace(feature.deleteTrigger, '').trim();
+        const cmdToDeleteLower = cmdToDelete.toLowerCase();
+        if (cmdToDeleteLower === 'help' || cmdToDeleteLower === 'commands') {
+          this.client?.say(channel, 'List of commands: ' + this.settings.commands.join(', '));
+          return;
+        }
+        else if (this.settings.commands.includes(cmdToDeleteLower)) {
+          // Implement delete command DB method
+          this.client?.say(channel, 'Command deleted!');
+          return;
+        }
       }
     }
   }
@@ -202,5 +220,32 @@ export class Bot {
       const diceRoll = Math.floor(Math.random() * feature.diceSidesNumber) + 1;
       this.client?.say(channel, `@${tags.username}, you rolled a ${diceRoll}`);
     }
+
+    // Text command
+    if (feature.deleteTrigger) {
+      const cmdWithoutTrigger = message.replace(feature.trigger, '').trim().toLowerCase();
+      const cmdName = cmdWithoutTrigger.split(' ')[0];
+      const cmdText = cmdWithoutTrigger.split(' ')[1];
+      if (!this.settings.commands.includes(cmdName)) {
+        const result = await this.addTextCommand(cmdName, cmdText);
+        if (result) this.client?.say(channel, `@${tags.username}, new command added!`);
+        else this.client?.say(channel, `@${tags.username}, error adding command Sadge`);
+      }
+      else {
+        this.client?.say(channel, `@${tags.username}, command already exists!`);
+      }
+    }
+  }
+
+  private async addTextCommand(cmdName: string, cmdText: string): Promise<boolean> {
+    if (cmdName && cmdText) {
+      const response = await RequestHelper.post('./api/addTextCommand', { name: cmdName, text: cmdText, idBot: this.settings.botId });
+      const jsonResponseBody = await RequestHelper.handleResponse(response);
+      if (!jsonResponseBody) {
+        return false;
+      }
+      return true;
+    }
+    return false;
   }
 }

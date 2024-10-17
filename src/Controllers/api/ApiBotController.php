@@ -173,4 +173,27 @@ final class ApiBotController
       $this->jsonResponse(500, ['message' => "Backend error" . $e->getMessage()]);
     }
   }
+
+  #[Route('POST', '/api/addTextCommand')]
+  public function addTextCommand(): void
+  {
+    try {
+      $request = json_decode(file_get_contents('php://input'), true);
+      $validation = Validator::validateInputs($request);
+      if (isset($validation['errors'])) {
+        $this->formErrorsResponse(400, $validation['errors']);
+        exit;
+      }
+
+      $result = $this->botService->addTextCommand($validation['sanitized']);
+      if (!$result) {
+        $this->jsonResponse(400, ['message' => 'Could not add text command']);
+        exit;
+      }
+
+      $this->jsonResponse(200, ['message' => 'Text command added successfully']);
+    } catch (Exception $e) {
+      $this->jsonResponse(500, ['message' => 'Backend error']);
+    }
+  }
 }

@@ -2,20 +2,16 @@
 
 namespace src\Models;
 
+use src\Services\Hydration;
+
 final class BotCommand
 {
   private int $idBotCommand;
-  private int $name;
-  private string $text;
   private int $idBot;
+  private string $name;
+  private string $text;
 
-  public function __construct(int $idBotCommand, int $name, string $text, int $idBot)
-  {
-    $this->idBotCommand = $idBotCommand;
-    $this->name = $name;
-    $this->text = $text;
-    $this->idBot = $idBot;
-  }
+  use Hydration;
 
   /**
    * Get the value of idBotCommand
@@ -25,54 +21,16 @@ final class BotCommand
     return $this->idBotCommand;
   }
 
-  /**
-   * Set the value of idBotCommand
-   *
-   * @param   int  $idBotCommand  
-   * 
-   */
-  public function setIdBotCommand(int $idBotCommand)
-  {
-    $this->idBotCommand = $idBotCommand;
-  }
-
-  /**
-   * Get the value of name
-   */
-  public function getName(): int
-  {
-    return $this->name;
-  }
-
-  /**
-   * Set the value of name
-   *
-   * @param   int  $name  
-   * 
-   */
-  public function setName(int $name)
-  {
-    $this->name = $name;
-  }
-
-  /**
-   * Get the value of text
-   */
-  public function getText(): string
-  {
-    return $this->text;
-  }
-
-  /**
-   * Set the value of text
-   *
-   * @param   string  $text  
-   * 
-   */
-  public function setText(string $text)
-  {
-    $this->text = $text;
-  }
+    /**
+     * Set the value of idBotCommand
+     *
+     * @param   int  $idBotCommand  
+     * 
+     */
+    public function setIdBotCommand(int $idBotCommand)
+    {
+        $this->idBotCommand = $idBotCommand;
+    }
 
   /**
    * Get the value of idBot
@@ -82,14 +40,52 @@ final class BotCommand
     return $this->idBot;
   }
 
+    /**
+     * Set the value of idBot
+     *
+     * @param   int  $idBot  
+     * 
+     */
+    public function setIdBot(int $idBot)
+    {
+        $this->idBot = $idBot;
+    }
+
   /**
-   * Set the value of idBot
-   *
-   * @param   int  $idBot  
-   * 
+   * Get the value of name
    */
-  public function setIdBot(int $idBot)
+  public function getName(): string
   {
-    $this->idBot = $idBot;
+    return $this->name;
   }
+
+    /**
+     * Set the value of name
+     *
+     * @param   string  $name  
+     * 
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+    }
+
+  /**
+   * Get the value of text
+   */
+  public function getText(): string
+  {
+    return $this->text;
+  }
+
+    /**
+     * Set the value of text
+     *
+     * @param   string  $text  
+     * 
+     */
+    public function setText(string $text)
+    {
+        $this->text = $text;
+    }
 }

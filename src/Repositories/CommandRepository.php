@@ -23,4 +23,17 @@ final class CommandRepository
     $statement->execute([':botId' => $botId]);
     return $statement->fetchAll(PDO::FETCH_CLASS, BotCommand::class);
   }
+
+  public function insert(BotCommand $botCommand): BotCommand
+  {
+    $query = 'INSERT INTO Bot_Commands (name, text, id_bot) VALUES (:name, :text, :idBot)';
+    $statement = $this->pdo->prepare($query);
+    $statement->execute([
+      ':name' => $botCommand->getName(),
+      ':text' => $botCommand->getText(),
+      ':idBot' => $botCommand->getIdBot()
+    ]);
+    $botCommand->setIdBotCommand($this->pdo->lastInsertId());
+    return $botCommand;
+  }
 }
