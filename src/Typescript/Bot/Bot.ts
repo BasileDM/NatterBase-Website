@@ -176,23 +176,23 @@ export class Bot {
 
       // Check if message starts with deleteTrigger for text commands
       if (feature.deleteTrigger && message.startsWith(feature.deleteTrigger)) {
-        const cmdToDelete = message.replace(feature.deleteTrigger, '').trim();
-        const cmdToDeleteLower = cmdToDelete.toLowerCase();
-        if (cmdToDeleteLower === 'help' || cmdToDeleteLower === 'commands') {
-          this.client?.say(channel, 'List of commands: ' + this.settings.commands.join(', '));
-          return;
-        }
-        else if (this.settings.commands.find(cmd => cmd.name.toLowerCase() === cmdToDeleteLower)) {
-          // Implement delete command DB method
-          this.client?.say(channel, 'Command deleted!');
+        const cmdToDelete = message.replace(feature.deleteTrigger, '').trim().toLowerCase();
+        if (this.settings.commands.find(cmd => cmd.name.toLowerCase() === cmdToDelete)) {
+          const response = await RequestHelper.delete(`./api/deleteTextCommand?cmdName=${cmdToDelete}&idBot=${this.settings.botId}`);
+          const jsonResponseBody = await RequestHelper.handleResponse(response);
+          console.log(jsonResponseBody);
+          if (!jsonResponseBody) {
+            this.client?.say(channel, 'Could not delete command Sadge');
+          }
+          this.client?.say(channel, 'Command deleted! :)');
           return;
         }
       }
 
-      // Check if message contains command name
+      // Check if message contains text command name
       const command = this.settings.commands.find(cmd => cmd.name.toLowerCase() === lowerCaseMessage);
       if (command) {
-        await this.handleCommandResponse(channel, tags, command);
+        this.client?.say(channel, `@${tags.username}, ${command.text}`);
         return;
       }
     }
@@ -231,14 +231,14 @@ export class Bot {
 
     // Add text command
     if (feature.deleteTrigger) {
-      const cmdWithoutTrigger = message.replace(feature.trigger, '').trim().toLowerCase();
-      const cmdName = cmdWithoutTrigger.split(' ')[0];
+      const cmdWithoutTrigger = message.replace(feature.trigger, '').trim();
+      const cmdName = cmdWithoutTrigger.split(' ')[0].toLowerCase();
       const cmdText = cmdWithoutTrigger.split(' ').slice(1).join(' ');
       if (!this.settings.commands.some((cmd: Command) => cmd.name === cmdName)) {
         const result = await this.addTextCommand(cmdName, cmdText);
         if (result) {
           this.client?.say(channel, `@${tags.username}, new command added!`);
-          this.settings.commands.push({ idBot: this.settings.botId, idBotCommand: null, name: cmdName, text: cmdText });
+          this.settings = await this.getSettings();
         }
         else {
           this.client?.say(channel, `@${tags.username}, error adding command Sadge`);
@@ -260,10 +260,5 @@ export class Bot {
       return true;
     }
     return false;
-  }
-
-  private async handleCommandResponse(channel: string, tags: tmiTypes.ChatUserstate, command: Command) {
-    console.log(command);
-    this.client?.say(channel, `@${tags.username}, ${command.text}`);
   }
 }

@@ -157,4 +157,13 @@ final class BotService
       return false;
     }
   }
+
+  public function deleteTextCommand(string $commandName, int $botId): bool
+  {
+    $bot = $this->getBotById($botId);
+    if ($bot === false || $bot->getIdUser() != $_SESSION['userId']) {
+      return false;
+    }
+    return $this->commandRepository->deleteByNameAndBotId($commandName, $botId);
+  }
 }

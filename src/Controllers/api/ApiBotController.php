@@ -170,7 +170,7 @@ final class ApiBotController
 
       $this->jsonResponse(200, ['message' => 'Bot feature deleted successfully']);
     } catch (Exception $e) {
-      $this->jsonResponse(500, ['message' => "Backend error" . $e->getMessage()]);
+      $this->jsonResponse(500, ['message' => "Backend error"]);
     }
   }
 
@@ -192,6 +192,29 @@ final class ApiBotController
       }
 
       $this->jsonResponse(200, ['message' => 'Text command added successfully']);
+    } catch (Exception $e) {
+      $this->jsonResponse(500, ['message' => 'Backend error']);
+    }
+  }
+
+  #[Route('DELETE', '/api/deleteTextCommand')]
+  public function deleteTextCommand(): void
+  {
+    try {
+      if (!isset($_GET['cmdName']) || !isset($_GET['idBot'])) {
+        $this->jsonResponse(400, ['message' => 'Invalid parameters']);
+        exit;
+      }
+
+      $idBot = (int)$_GET['idBot'];
+      $result = $this->botService->deleteTextCommand($_GET['cmdName'], $idBot);
+
+      if (!$result) {
+        $this->jsonResponse(400, ['message' => 'Could not delete text command']);
+        exit;
+      }
+
+      $this->jsonResponse(200, ['message' => 'Text command deleted successfully']);
     } catch (Exception $e) {
       $this->jsonResponse(500, ['message' => 'Backend error']);
     }

@@ -36,4 +36,15 @@ final class CommandRepository
     $botCommand->setIdBotCommand($this->pdo->lastInsertId());
     return $botCommand;
   }
+
+  public function deleteByNameAndBotId(string $name, int $botId)  
+  {
+    $query = 'DELETE FROM Bot_Commands WHERE name = :name AND id_bot = :idBot';
+    $statement = $this->pdo->prepare($query);
+    $statement->execute([
+      ':name' => $name,
+      ':idBot' => $botId
+    ]);
+    return $statement->rowCount();
+  }
 }
