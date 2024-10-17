@@ -1,3 +1,4 @@
+import { Command } from './Command.js';
 import { Feature } from './Feature.js';
 
 export interface BotSettings {
@@ -6,6 +7,6 @@ export interface BotSettings {
   openAiKey: string;
   channels: string[];
   cooldown: number;
-  commands: string[];
+  commands: Command[];
   features: Feature[];
 }

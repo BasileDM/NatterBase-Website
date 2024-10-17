@@ -5,6 +5,7 @@ import { RequestHelper } from '../Utils/RequestHelper.js';
 import { UiElements } from '../Utils/UiElements.js';
 import { ChatBoard } from '../ChatBoard.js';
 import { Feature } from './Interfaces/Feature.js';
+import { Command } from './Interfaces/Command.js';
 
 export class Bot {
   public isRunning: boolean;
@@ -22,7 +23,7 @@ export class Bot {
       channels: [],
       cooldown: 5,
       openAiKey: '',
-      commands: [],
+      commands: [] as Command[],
       features: [],
     };
     this.chatBoard = new ChatBoard((message: string) => {
@@ -181,7 +182,7 @@ export class Bot {
           this.client?.say(channel, 'List of commands: ' + this.settings.commands.join(', '));
           return;
         }
-        else if (this.settings.commands.includes(cmdToDeleteLower)) {
+        else if (this.settings.commands.find(cmd => cmd.name.toLowerCase() === cmdToDeleteLower)) {
           // Implement delete command DB method
           this.client?.say(channel, 'Command deleted!');
           return;
@@ -226,10 +227,16 @@ export class Bot {
       const cmdWithoutTrigger = message.replace(feature.trigger, '').trim().toLowerCase();
       const cmdName = cmdWithoutTrigger.split(' ')[0];
       const cmdText = cmdWithoutTrigger.split(' ')[1];
-      if (!this.settings.commands.includes(cmdName)) {
+      console.log('existing cmds', this.settings.commands);
+      if (!this.settings.commands.some((cmd: Command) => cmd.name === cmdName)) {
         const result = await this.addTextCommand(cmdName, cmdText);
-        if (result) this.client?.say(channel, `@${tags.username}, new command added!`);
-        else this.client?.say(channel, `@${tags.username}, error adding command Sadge`);
+        if (result) {
+          this.client?.say(channel, `@${tags.username}, new command added!`);
+          this.settings.commands.push({ idBot: this.settings.botId, idBotCommand: null, name: cmdName, text: cmdText });
+        }
+        else {
+          this.client?.say(channel, `@${tags.username}, error adding command Sadge`);
+        }
       }
       else {
         this.client?.say(channel, `@${tags.username}, command already exists!`);
