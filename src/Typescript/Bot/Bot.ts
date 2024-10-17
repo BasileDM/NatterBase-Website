@@ -188,6 +188,13 @@ export class Bot {
           return;
         }
       }
+
+      // Check if message contains command name
+      const command = this.settings.commands.find(cmd => cmd.name.toLowerCase() === lowerCaseMessage);
+      if (command) {
+        await this.handleCommandResponse(channel, tags, command);
+        return;
+      }
     }
   }
 
@@ -222,12 +229,11 @@ export class Bot {
       this.client?.say(channel, `@${tags.username}, you rolled a ${diceRoll}`);
     }
 
-    // Text command
+    // Add text command
     if (feature.deleteTrigger) {
       const cmdWithoutTrigger = message.replace(feature.trigger, '').trim().toLowerCase();
       const cmdName = cmdWithoutTrigger.split(' ')[0];
-      const cmdText = cmdWithoutTrigger.split(' ')[1];
-      console.log('existing cmds', this.settings.commands);
+      const cmdText = cmdWithoutTrigger.split(' ').slice(1).join(' ');
       if (!this.settings.commands.some((cmd: Command) => cmd.name === cmdName)) {
         const result = await this.addTextCommand(cmdName, cmdText);
         if (result) {
@@ -254,5 +260,10 @@ export class Bot {
       return true;
     }
     return false;
+  }
+
+  private async handleCommandResponse(channel: string, tags: tmiTypes.ChatUserstate, command: Command) {
+    console.log(command);
+    this.client?.say(channel, `@${tags.username}, ${command.text}`);
   }
 }
