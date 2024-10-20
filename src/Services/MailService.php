@@ -18,7 +18,7 @@ final class MailService
     $token = self::generateActivationToken($userId);
     $link = FULL_URL . "activate?token=" . urlencode($token);
 
-    $mail = new PHPMailer(true);  // Create a new PHPMailer instance
+    $mail = new PHPMailer(true);
 
     try {
       // Gmail SMTP server settings
