@@ -5,6 +5,7 @@ import { RequestHelper } from '../Utils/RequestHelper.js';
 import { UiElements } from '../Utils/UiElements.js';
 import { ChatBoard } from '../ChatBoard.js';
 import { Feature } from './Interfaces/Feature.js';
+import { Command } from './Interfaces/Command.js';
 
 export class Bot {
   public isRunning: boolean;
@@ -17,11 +18,12 @@ export class Bot {
     this.isRunning = false;
     this.client = null;
     this.settings = {
+      botId: 0,
       twitchToken: '',
       channels: [],
       cooldown: 5,
       openAiKey: '',
-      commands: [],
+      commands: [] as Command[],
       features: [],
     };
     this.chatBoard = new ChatBoard((message: string) => {
@@ -58,7 +60,6 @@ export class Bot {
         const color = tags.color || null;
 
         this.chatBoard.displayMessage(username, message, color);
-
         if (self) return;
         this.handleMessage(channel, tags, message);
       });
@@ -95,6 +96,7 @@ export class Bot {
     const currentProfile = result.botProfiles[selectedBotIndex];
 
     const settings: BotSettings = {
+      botId: currentProfile.idBot,
       twitchToken: UiElements.twitchTokenInput.value,
       openAiKey: UiElements.openAiKeyInput.value,
       channels: [currentProfile.twitchJoinChannel],
@@ -147,6 +149,8 @@ export class Bot {
       trigger: feature.trigger,
       diceSidesNumber: feature.diceSidesNumber ?? null,
       openAiPrePrompt: feature.openAiPrePrompt ?? null,
+      maxOpenAiMessageLength: feature.maxOpenAiMessageLength ?? null,
+      deleteTrigger: feature.deleteTrigger ?? null,
     }));
   }
 
@@ -154,6 +158,37 @@ export class Bot {
     const botName = (this.client?.getUsername() || '').trim();
     const lowerCaseMessage = message.toLowerCase();
     const lowerCaseBotName = botName.toLowerCase();
+
+    // Get the delete triggers
+    const deleteTriggers = this.features
+      .map(feature => feature.deleteTrigger)
+      .filter(trigger => trigger);
+
+    // Check if the message starts with any delete trigger
+    for (const deleteTrigger of deleteTriggers) {
+      if (typeof deleteTrigger === 'string' && message.startsWith(deleteTrigger)) {
+        const cmdToDelete = message.replace(deleteTrigger, '').trim().toLowerCase();
+
+        // Check if the command exists
+        if (this.settings.commands.find(cmd => cmd.name.toLowerCase() === cmdToDelete)) {
+          const response = await RequestHelper.delete(`./api/deleteTextCommand?cmdName=${cmdToDelete}&idBot=${this.settings.botId}`);
+          const jsonResponseBody = await RequestHelper.handleResponse(response);
+
+          if (!jsonResponseBody) {
+            this.client?.say(channel, 'Could not delete command Sadge');
+          }
+          else {
+            this.client?.say(channel, `@${tags.username} Command deleted! :)`);
+            this.settings = await this.getSettings();
+          }
+          return;
+        }
+        else {
+          this.client?.say(channel, `@${tags.username} Command not found. :(`);
+          return;
+        }
+      }
+    }
 
     for (const feature of this.features) {
       const trigger = feature.trigger;
@@ -169,6 +204,13 @@ export class Bot {
         await this.handleFeatureResponse(channel, tags, message, feature);
         return;
       }
+    }
+
+    // Check if message contains text command name
+    const command = this.settings.commands.find(cmd => lowerCaseMessage.includes(cmd.name.toLowerCase()));
+    if (command) {
+      this.client?.say(channel, `@${tags.username}, ${command.text}`);
+      return;
     }
   }
 
@@ -202,5 +244,38 @@ export class Bot {
       const diceRoll = Math.floor(Math.random() * feature.diceSidesNumber) + 1;
       this.client?.say(channel, `@${tags.username}, you rolled a ${diceRoll}`);
     }
+
+    // Add text command
+    if (feature.deleteTrigger) {
+      const cmdWithoutTrigger = message.replace(feature.trigger, '').trim();
+      const cmdName = cmdWithoutTrigger.split(' ')[0].toLowerCase();
+      const cmdText = cmdWithoutTrigger.split(' ').slice(1).join(' ');
+
+      // Check if command already exists
+      if (!this.settings.commands.some((cmd: Command) => cmd.name === cmdName)) {
+        const result = await this.addTextCommand(cmdName, cmdText);
+        if (result) {
+          this.client?.say(channel, `@${tags.username}, new command added!`);
+          this.settings = await this.getSettings();
+        }
+        else {
+          this.client?.say(channel, `@${tags.username}, error adding command Sadge`);
+        }
+      }
+      else {
+        this.client?.say(channel, `@${tags.username}, command already exists!`);
+      }
+    }
+  }
+
+  private async addTextCommand(cmdName: string, cmdText: string): Promise<boolean> {
+    if (cmdName && cmdText) {
+      const response = await RequestHelper.post('./api/addTextCommand', { name: cmdName, text: cmdText, idBot: this.settings.botId });
+      if (!response.ok) {
+        return false;
+      }
+      return true;
+    }
+    return false;
   }
 }

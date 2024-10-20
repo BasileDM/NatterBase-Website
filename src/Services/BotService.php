@@ -5,6 +5,7 @@ namespace src\Services;
 use DateTime;
 use Exception;
 use src\Models\Bot;
+use src\Models\BotCommand;
 use src\Repositories\BotRepository;
 use src\Repositories\CommandRepository;
 use src\Repositories\FeatureRepository;
@@ -75,7 +76,7 @@ final class BotService
   public function getUserBotsArray(int $userId): array
   {
     $bots = $this->getBotsByUserId($userId);
-    
+
     $botsArray = array_map(fn(Bot $bot) => $bot->toArray(), $bots);
     return $botsArray;
   }
@@ -128,9 +129,14 @@ final class BotService
       $feature->hydrateFromInputs($input);
       $features[] = $feature;
     }
-
-    $bot->setBotFeatures($features);
-    return $this->featureRepository->updateBotFeatures($bot);
+    try {
+      foreach ($features as $feature) {
+        $this->featureRepository->updateOrCreateFeature($feature);
+      }
+      return true;
+    } catch (Exception $e) {
+      throw new Exception($e->getMessage());
+    }
   }
 
   public function deleteFeature(int $botId, int $featureId, string $trigger): bool
@@ -140,5 +146,30 @@ final class BotService
       return false;
     }
     return $this->featureRepository->delete($featureId, $botId, $trigger);
+  }
+
+  public function addTextCommand(array $inputs): bool
+  {
+    $bot = $this->getBotById($inputs['idBot']);
+    if ($bot === false || $bot->getIdUser() != $_SESSION['userId']) {
+      return false;
+    }
+    $command = new BotCommand();
+    $command->hydrateFromInputs($inputs);
+    $result = $this->commandRepository->insert($command);
+    if ($result) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function deleteTextCommand(string $commandName, int $botId): bool
+  {
+    $bot = $this->getBotById($botId);
+    if ($bot === false || $bot->getIdUser() != $_SESSION['userId']) {
+      return false;
+    }
+    return $this->commandRepository->deleteByNameAndBotId($commandName, $botId);
   }
 }

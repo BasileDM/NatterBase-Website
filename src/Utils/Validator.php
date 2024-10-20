@@ -17,10 +17,20 @@ final class Validator
       'openaiPrePrompt' => $request['openaiPrePrompt'] ?? null,
       'cooldownTime' => $request['cooldownTime'] ?? null,
       'idBot' => $request['idBot'] ?? null,
+      'text' => $request['text'] ?? null
     ];
 
     $errors = [];
     $sanitizedInputs = [];
+
+    if (isset($inputs['text'])) {
+      $result = self::validateOpenAiPrePrompt($inputs['text']);
+      if (isset($result['error'])) {
+        $errors['text'] = $result['error'];
+      } else {
+        $sanitizedInputs['text'] = $result['sanitized'];
+      }
+    }
 
     if (isset($inputs['name'])) {
       $result = self::validateBotProfileName($inputs['name']);
