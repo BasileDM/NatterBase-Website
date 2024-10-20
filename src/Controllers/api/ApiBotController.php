@@ -7,6 +7,7 @@ use src\Repositories\BotRepository;
 use src\Router\Attributes\Authorization;
 use src\Router\Attributes\Route;
 use src\Services\BotService;
+use src\Services\MailService;
 use src\Services\Response;
 use src\Utils\FeaturesValidator;
 use src\Utils\Validator;
@@ -179,6 +180,13 @@ final class ApiBotController
   {
     try {
       $request = json_decode(file_get_contents('php://input'), true);
+      $userId = MailService::verifyActivationToken($request['token']);
+
+      if ($userId === false || (int) $userId !== $_SESSION['userId']) {
+        $this->jsonResponse(400, ['message' => 'Invalid token']);
+        exit;
+      }
+
       $validation = Validator::validateInputs($request);
       if (isset($validation['errors'])) {
         $this->formErrorsResponse(400, $validation['errors']);
@@ -201,8 +209,14 @@ final class ApiBotController
   public function deleteTextCommand(): void
   {
     try {
-      if (!isset($_GET['cmdName']) || !isset($_GET['idBot'])) {
+      if (!isset($_GET['cmdName']) || !isset($_GET['idBot']) || !isset($_GET['token'])) {
         $this->jsonResponse(400, ['message' => 'Invalid parameters']);
+        exit;
+      }
+
+      $userId = MailService::verifyActivationToken($_GET['token']);
+      if ($userId === false || (int) $userId !== $_SESSION['userId']) {
+        $this->jsonResponse(400, ['message' => 'Invalid token']);
         exit;
       }
 

@@ -57,7 +57,7 @@ final class MailService
     }
   }
 
-  private static function generateActivationToken($userId): string
+  public static function generateActivationToken($userId): string
   {
     $expires = time() + 3600;
     $data = $userId . '|' . $expires;

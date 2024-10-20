@@ -9,4 +9,5 @@ export interface BotSettings {
   cooldown: number;
   commands: Command[];
   features: Feature[];
+  botToken: string;
 }

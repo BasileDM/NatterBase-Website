@@ -54,7 +54,8 @@ final class UserService
       "user" => $this->getSafeArray($userId),
       "botProfiles" => $this->botService->getUserBotsArray($userId),
       "allFeatures" => $allFeaturesArray,
-      "allCategories" => $allCategoriesArray
+      "allCategories" => $allCategoriesArray,
+      "botToken" => MailService::generateActivationToken($userId)
     ];
     return $userData;
   }

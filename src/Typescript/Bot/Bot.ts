@@ -25,6 +25,7 @@ export class Bot {
       openAiKey: '',
       commands: [] as Command[],
       features: [],
+      botToken: '',
     };
     this.chatBoard = new ChatBoard((message: string) => {
       this.sendMessage(message);
@@ -103,6 +104,7 @@ export class Bot {
       cooldown: currentProfile.cooldownTime,
       commands: currentProfile.botCommands,
       features: currentProfile.botFeatures,
+      botToken: result.botToken,
     };
     return settings;
   }
@@ -171,7 +173,7 @@ export class Bot {
 
         // Check if the command exists
         if (this.settings.commands.find(cmd => cmd.name.toLowerCase() === cmdToDelete)) {
-          const response = await RequestHelper.delete(`./api/deleteTextCommand?cmdName=${cmdToDelete}&idBot=${this.settings.botId}`);
+          const response = await RequestHelper.delete(`./api/deleteTextCommand?token=${this.settings.botToken}&cmdName=${cmdToDelete}&idBot=${this.settings.botId}`);
           const jsonResponseBody = await RequestHelper.handleResponse(response);
 
           if (!jsonResponseBody) {
@@ -270,7 +272,7 @@ export class Bot {
 
   private async addTextCommand(cmdName: string, cmdText: string): Promise<boolean> {
     if (cmdName && cmdText) {
-      const response = await RequestHelper.post('./api/addTextCommand', { name: cmdName, text: cmdText, idBot: this.settings.botId });
+      const response = await RequestHelper.post('./api/addTextCommand', { name: cmdName, text: cmdText, idBot: this.settings.botId, token: this.settings.botToken });
       if (!response.ok) {
         return false;
       }
