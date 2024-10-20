@@ -180,9 +180,9 @@ final class ApiBotController
   {
     try {
       $request = json_decode(file_get_contents('php://input'), true);
-      $userId = MailService::verifyActivationToken($request['token']);
 
-      if ($userId === false || (int) $userId !== $_SESSION['userId']) {
+      $userId = MailService::verifyActivationToken($request['token']);
+      if ($userId === false) {
         $this->jsonResponse(400, ['message' => 'Invalid token']);
         exit;
       }
@@ -215,7 +215,7 @@ final class ApiBotController
       }
 
       $userId = MailService::verifyActivationToken($_GET['token']);
-      if ($userId === false || (int) $userId !== $_SESSION['userId']) {
+      if ($userId === false) {
         $this->jsonResponse(400, ['message' => 'Invalid token']);
         exit;
       }
