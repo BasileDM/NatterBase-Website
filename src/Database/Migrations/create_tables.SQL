@@ -78,6 +78,7 @@ CREATE TABLE Relation_Bots_Features (
   max_openai_message_length INT,
   open_ai_pre_prompt VARCHAR(255),
   dice_sides_number INT,
+  delete_trigger VARCHAR(50),
   FOREIGN KEY (id_bot) REFERENCES Bots(id_bot) ON DELETE CASCADE,
   FOREIGN KEY (id_bot_feature) REFERENCES Bot_Features(id_bot_feature),
   UNIQUE (id_bot, `trigger`)
@@ -110,20 +111,16 @@ INSERT INTO Bot_Feature_Categories (name)
 VALUES('Game');
 INSERT INTO Bot_Feature_Categories (name)
 VALUES('AI');
-INSERT INTO Bot_Features (
-    name,
-    is_admin,
-    is_subscriber,
-    id_bot_feature_category
-  )
+INSERT INTO Bot_Feature_Categories (name)
+VALUES('Text');
+
+INSERT INTO Bot_Features (name, is_admin, is_subscriber, id_bot_feature_category)
 VALUES('Dice throw', true, false, 1);
-INSERT INTO Bot_Features (
-    name,
-    is_admin,
-    is_subscriber,
-    id_bot_feature_category
-  )
+INSERT INTO Bot_Features (name, is_admin, is_subscriber, id_bot_feature_category)
 VALUES('AI chat', true, false, 2);
+INSERT INTO Bot_Features (name, is_admin, is_subscriber, id_bot_feature_category)
+VALUES('Text command', true, false, 3);
+
 INSERT INTO Bot_Language_Models (name)
 VALUES('gpt-3.5-turbo');
 INSERT INTO Bot_Platforms (name)

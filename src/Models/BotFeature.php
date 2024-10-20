@@ -22,6 +22,7 @@ final class BotFeature
   private ?int $diceSidesNumber = null;
   private ?int $maxOpenaiMessageLength = null;
   private ?string $openAiPrePrompt = null;
+  private ?string $deleteTrigger = null;
 
   use Hydration;
 
@@ -231,5 +232,24 @@ final class BotFeature
     public function setOpenAiPrePrompt(?string $openAiPrePrompt)
     {
         $this->openAiPrePrompt = $openAiPrePrompt;
+    }
+
+  /**
+   * Get the value of deleteTrigger
+   */
+  public function getDeleteTrigger(): ?string
+  {
+    return $this->deleteTrigger;
+  }
+
+    /**
+     * Set the value of deleteTrigger
+     *
+     * @param   string  $deleteTrigger  
+     * 
+     */
+    public function setDeleteTrigger(?string $deleteTrigger)
+    {
+        $this->deleteTrigger = $deleteTrigger;
     }
 }

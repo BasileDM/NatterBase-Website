@@ -446,7 +446,20 @@ video {
   display: none;
 }
 
+@font-face {
+  font-family: "Poppins";
+
+  src: url(../fonts/poppins-semibold-webfont.woff2) format("woff2");
+
+  src: url(../fonts/poppins-semibold-webfont.woff) format("woff");
+}
+
+h1 {
+  font-family: Poppins, sans-serif;
+}
+
 h2 {
+  font-family: Poppins, sans-serif;
   font-size: 1.5rem;
   line-height: 2rem;
   font-weight: 700;
@@ -1033,8 +1046,8 @@ svg {
   height: 1.5rem;
 }
 
-.h-\[75vh\] {
-  height: 75vh;
+.h-auto {
+  height: auto;
 }
 
 .h-full {
@@ -1043,6 +1056,10 @@ svg {
 
 .h-screen {
   height: 100vh;
+}
+
+.max-h-\[75vh\] {
+  max-height: 75vh;
 }
 
 .min-h-fit {
@@ -1094,20 +1111,20 @@ svg {
   min-width: 280px;
 }
 
-.min-w-\[308px\] {
-  min-width: 308px;
+.min-w-\[304px\] {
+  min-width: 304px;
 }
 
 .max-w-40 {
   max-width: 10rem;
 }
 
-.max-w-7xl {
-  max-width: 80rem;
-}
-
 .max-w-\[380px\] {
   max-width: 380px;
+}
+
+.max-w-\[480px\] {
+  max-width: 480px;
 }
 
 .flex-1 {
@@ -1700,10 +1717,6 @@ svg {
     height: auto;
   }
 
-  .sm\:w-1\/2 {
-    width: 50%;
-  }
-
   .sm\:flex-row {
     flex-direction: row;
   }
@@ -1728,6 +1741,10 @@ svg {
     --tw-space-y-reverse: 0;
     margin-top: calc(0px * calc(1 - var(--tw-space-y-reverse)));
     margin-bottom: calc(0px * var(--tw-space-y-reverse));
+  }
+
+  .sm\:p-8 {
+    padding: 2rem;
   }
 
   .sm\:text-left {

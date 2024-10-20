@@ -170,7 +170,53 @@ final class ApiBotController
 
       $this->jsonResponse(200, ['message' => 'Bot feature deleted successfully']);
     } catch (Exception $e) {
-      $this->jsonResponse(500, ['message' => "Backend error" . $e->getMessage()]);
+      $this->jsonResponse(500, ['message' => "Backend error"]);
+    }
+  }
+
+  #[Route('POST', '/api/addTextCommand')]
+  public function addTextCommand(): void
+  {
+    try {
+      $request = json_decode(file_get_contents('php://input'), true);
+      $validation = Validator::validateInputs($request);
+      if (isset($validation['errors'])) {
+        $this->formErrorsResponse(400, $validation['errors']);
+        exit;
+      }
+
+      $result = $this->botService->addTextCommand($validation['sanitized']);
+      if (!$result) {
+        $this->jsonResponse(400, ['message' => 'Could not add text command']);
+        exit;
+      }
+
+      $this->jsonResponse(200, ['message' => 'Text command added successfully']);
+    } catch (Exception $e) {
+      $this->jsonResponse(500, ['message' => 'Backend error']);
+    }
+  }
+
+  #[Route('DELETE', '/api/deleteTextCommand')]
+  public function deleteTextCommand(): void
+  {
+    try {
+      if (!isset($_GET['cmdName']) || !isset($_GET['idBot'])) {
+        $this->jsonResponse(400, ['message' => 'Invalid parameters']);
+        exit;
+      }
+
+      $idBot = (int)$_GET['idBot'];
+      $result = $this->botService->deleteTextCommand($_GET['cmdName'], $idBot);
+
+      if (!$result) {
+        $this->jsonResponse(400, ['message' => 'Could not delete text command']);
+        exit;
+      }
+
+      $this->jsonResponse(200, ['message' => 'Text command deleted successfully']);
+    } catch (Exception $e) {
+      $this->jsonResponse(500, ['message' => 'Backend error']);
     }
   }
 }

@@ -3,8 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+  @font-face {
+    font-family: "Poppins";
+    src: url(../fonts/poppins-semibold-webfont.woff2) format("woff2");
+    src: url(../fonts/poppins-semibold-webfont.woff) format("woff");
+  }
+  h1 {
+    @apply font-poppins;
+  }
   h2 {
-    @apply text-2xl font-bold;
+    @apply font-poppins text-2xl font-bold;
   }
   h3 {
     @apply text-xl font-bold mb-2 flex;

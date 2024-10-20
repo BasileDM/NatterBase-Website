@@ -87,22 +87,24 @@ final class FeatureRepository
     }
   }
 
-  private function updateOrCreateFeature(BotFeature $feature): bool
+  public function updateOrCreateFeature(BotFeature $feature): bool
   {
     $query = 'INSERT INTO Relation_Bots_Features (
-                id_bot, id_bot_feature, is_admin_override, is_subscriber_override, `trigger`, max_openai_message_length, open_ai_pre_prompt, dice_sides_number
+                id_bot, id_bot_feature, is_admin_override, is_subscriber_override, `trigger`, max_openai_message_length, open_ai_pre_prompt, dice_sides_number, delete_trigger
               ) VALUES (
-                :idBot, :idBotFeature, :isAdminOverride, :isSubscriberOverride, :trigger, :maxOpenaiMessageLength, :openAiPrePrompt, :diceSidesNumber
+                :idBot, :idBotFeature, :isAdminOverride, :isSubscriberOverride, :trigger, :maxOpenaiMessageLength, :openAiPrePrompt, :diceSidesNumber, :deleteTrigger
               ) ON DUPLICATE KEY UPDATE
                 id_bot_feature = :idBotFeature,
                 is_admin_override = :isAdminOverride,
                 is_subscriber_override = :isSubscriberOverride,
                 max_openai_message_length = :maxOpenaiMessageLength,
                 open_ai_pre_prompt = :openAiPrePrompt,
-                dice_sides_number = :diceSidesNumber;
+                dice_sides_number = :diceSidesNumber,
+                delete_trigger = :deleteTrigger;
               ';
 
     $stmt = $this->pdo->prepare($query);
+    
     $params = [
       'idBot' => $feature->getIdBot(),
       'idBotFeature' => $feature->getIdBotFeature(),
@@ -111,7 +113,8 @@ final class FeatureRepository
       'trigger' => $feature->getTrigger(),
       'maxOpenaiMessageLength' => $feature->getMaxOpenaiMessageLength(),
       'openAiPrePrompt' => $feature->getOpenAiPrePrompt(),
-      'diceSidesNumber' => $feature->getDiceSidesNumber()
+      'diceSidesNumber' => $feature->getDiceSidesNumber(),
+      'deleteTrigger' => $feature->getDeleteTrigger(),
     ];
 
     return $stmt->execute($params);

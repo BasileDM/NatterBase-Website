@@ -2,10 +2,10 @@
 include __DIR__ . '/Includes/header.php';
 ?>
 
-<div class="flex items-center justify-center min-h-fit">
-  <section class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between space-y-8 sm:space-y-0 sm:space-x-8">
-    <div class="text-center sm:text-left">
-      <h1 class="text-4xl font-bold mb-4">Welcome to NatterBase</h1>
+<div class="flex items-center justify-center min-h-fit h-full">
+  <section class="h-full min-w-[304px] mx-auto flex flex-col sm:flex-row items-center justify-between space-y-8 sm:space-y-0 sm:space-x-8">
+    <div class="text-center sm:text-left min-w-[280px] max-w-[480px]">
+      <h1 class="text-4xl font-bold mb-4">Welcome to Natterbase</h1>
       <p class="text-gray-300 mb-6">
         Manage your bots with ease, create profiles, add AI features and all of this 100% locally.
       </p>
@@ -22,9 +22,7 @@ include __DIR__ . '/Includes/header.php';
       </div>
     </div>
     <!-- Illustration -->
-    <div class="flex w-full sm:w-1/2 min-w-[308px] justify-center">
-      <img src="./assets/img/twitch-chat.png" alt="Illustration" class="h-[75vh] w-auto border-[1px] border-gray-600 shadow-xl rounded-lg">
-    </div>
+    <img src="./assets/img/twitch-chat.png" class="w-auto min-w-auto h-auto max-h-[75vh] border-[1px] border-gray-600 shadow-xl rounded-lg" alt="Natterbase chat application illustration">
   </section>
 </div>
 

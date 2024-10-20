@@ -2,19 +2,25 @@
 
 namespace src\Models;
 
+use src\Services\Hydration;
+
 final class BotCommand
 {
   private int $idBotCommand;
-  private int $name;
-  private string $text;
   private int $idBot;
+  private string $name;
+  private string $text;
 
-  public function __construct(int $idBotCommand, int $name, string $text, int $idBot)
+  use Hydration;
+
+  public function toArray(): array
   {
-    $this->idBotCommand = $idBotCommand;
-    $this->name = $name;
-    $this->text = $text;
-    $this->idBot = $idBot;
+    return [
+      "idBotCommand" => $this->idBotCommand,
+      "idBot" => $this->idBot,
+      "name" => $this->name,
+      "text" => $this->text
+    ];
   }
 
   /**
@@ -37,9 +43,28 @@ final class BotCommand
   }
 
   /**
+   * Get the value of idBot
+   */
+  public function getIdBot(): int
+  {
+    return $this->idBot;
+  }
+
+  /**
+   * Set the value of idBot
+   *
+   * @param   int  $idBot  
+   * 
+   */
+  public function setIdBot(int $idBot)
+  {
+    $this->idBot = $idBot;
+  }
+
+  /**
    * Get the value of name
    */
-  public function getName(): int
+  public function getName(): string
   {
     return $this->name;
   }
@@ -47,10 +72,10 @@ final class BotCommand
   /**
    * Set the value of name
    *
-   * @param   int  $name  
+   * @param   string  $name  
    * 
    */
-  public function setName(int $name)
+  public function setName(string $name)
   {
     $this->name = $name;
   }
@@ -72,24 +97,5 @@ final class BotCommand
   public function setText(string $text)
   {
     $this->text = $text;
-  }
-
-  /**
-   * Get the value of idBot
-   */
-  public function getIdBot(): int
-  {
-    return $this->idBot;
-  }
-
-  /**
-   * Set the value of idBot
-   *
-   * @param   int  $idBot  
-   * 
-   */
-  public function setIdBot(int $idBot)
-  {
-    $this->idBot = $idBot;
   }
 }
