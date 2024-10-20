@@ -87,7 +87,7 @@ final class FeatureRepository
     }
   }
 
-  private function updateOrCreateFeature(BotFeature $feature): bool
+  public function updateOrCreateFeature(BotFeature $feature): bool
   {
     $query = 'INSERT INTO Relation_Bots_Features (
                 id_bot, id_bot_feature, is_admin_override, is_subscriber_override, `trigger`, max_openai_message_length, open_ai_pre_prompt, dice_sides_number, delete_trigger

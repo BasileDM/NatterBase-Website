@@ -129,8 +129,14 @@ final class BotService
       $feature->hydrateFromInputs($input);
       $features[] = $feature;
     }
-    $bot->setBotFeatures($features);
-    return $this->featureRepository->updateBotFeatures($bot);
+    try {
+      foreach ($features as $feature) {
+        $this->featureRepository->updateOrCreateFeature($feature);
+      }
+      return true;
+    } catch (Exception $e) {
+      throw new Exception($e->getMessage());
+    }
   }
 
   public function deleteFeature(int $botId, int $featureId, string $trigger): bool
